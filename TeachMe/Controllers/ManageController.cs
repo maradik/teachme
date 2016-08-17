@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TeachMe.Models;
+using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Controllers
 {
@@ -16,11 +17,13 @@ namespace TeachMe.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
+        public ManageController(IProjectTypeProvider projectTypeProvider) 
+            : base(projectTypeProvider)
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider) 
+            : base(projectTypeProvider)
         {
             UserManager = userManager;
             SignInManager = signInManager;

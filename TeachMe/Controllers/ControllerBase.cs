@@ -5,10 +5,17 @@ namespace TeachMe.Controllers
 {
     public class ControllerBase : Controller
     {
+        private readonly IProjectTypeProvider projectTypeProvider;
+
+        public ControllerBase(IProjectTypeProvider projectTypeProvider)
+        {
+            this.projectTypeProvider = projectTypeProvider;
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            ViewBag.ProjectType = new ProjectTypeProvider().Get(filterContext.HttpContext);
+            ViewBag.ProjectType = projectTypeProvider.Get(filterContext.HttpContext);
         }
     }
 }
