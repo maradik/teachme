@@ -17,6 +17,11 @@ namespace TeachMe.Models
             
         }
 
+        public ApplicationUserStore(string connectionNameOrUrl, string dbName) : base(connectionNameOrUrl, dbName)
+        {
+            
+        }
+
         public Task SetEmailAsync(ApplicationUser user, string email)
         {
             ThrowIfDisposed();
