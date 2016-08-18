@@ -204,8 +204,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUserStore.cs" />
+    <Compile Include="Models\UserAccess.cs" />
     <Compile Include="Models\UserStore.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="ProjectsSupport\IProjectTypeProvider.cs" />
     <Compile Include="ProjectsSupport\ProjectType.cs" />

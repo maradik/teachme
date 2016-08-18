@@ -6,6 +6,7 @@ namespace TeachMe.Controllers
     public class ControllerBase : Controller
     {
         private readonly IProjectTypeProvider projectTypeProvider;
+        protected ProjectType ProjectType;
 
         public ControllerBase(IProjectTypeProvider projectTypeProvider)
         {
@@ -15,7 +16,8 @@ namespace TeachMe.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            ViewBag.ProjectType = projectTypeProvider.Get(filterContext.HttpContext);
+            ProjectType = projectTypeProvider.Get(filterContext.HttpContext);
+            ViewBag.ProjectType = ProjectType;
         }
     }
 }

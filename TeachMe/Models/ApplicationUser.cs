@@ -1,8 +1,8 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using MongoDB.AspNet.Identity;
+using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Models
 {
@@ -19,6 +19,7 @@ namespace TeachMe.Models
         public bool PhoneNumberConfirmed { get; set; }
         public bool TwoFactorEnabled { get; set; }
         public UserAccess Access { get { return access ?? (access = new UserAccess()); } set { access = value; } }
+        public ProjectType ProjectType { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -27,12 +28,5 @@ namespace TeachMe.Models
             // Здесь добавьте утверждения пользователя
             return userIdentity;
         }
-    }
-
-    public class UserAccess
-    {
-        public int AccessFailedCount { get; set; }
-        public DateTimeOffset LockoutEndDate { get; set; }
-        public bool LockoutEnabled { get; set; }
     }
 }
