@@ -1,14 +1,25 @@
-﻿using System.Data.Entity;
+﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using MongoDB.AspNet.Identity;
 
 namespace TeachMe.Models
 {
     // Чтобы добавить данные профиля для пользователя, можно добавить дополнительные свойства в класс ApplicationUser. Дополнительные сведения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=317594.
     public class ApplicationUser : IdentityUser
     {
+        private UserAccess access;
+        private string userName;
+
+        public override string UserName { get { return userName; } set { userName = value.ToLowerInvariant(); } }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public UserAccess Access { get { return access ?? (access = new UserAccess()); } set { access = value; } }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
@@ -18,16 +29,10 @@ namespace TeachMe.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class UserAccess
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
+        public int AccessFailedCount { get; set; }
+        public DateTimeOffset LockoutEndDate { get; set; }
+        public bool LockoutEnabled { get; set; }
     }
 }
