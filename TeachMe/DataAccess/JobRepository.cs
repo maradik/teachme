@@ -39,5 +39,10 @@ namespace TeachMe.DataAccess
                 throw new ArgumentNullException(nameof(studentUserId));
             return Collection.Find(Query<Job>.EQ(x => x.StudentUserId, studentUserId)).ToArray();
         }
+
+        public void Remove(Guid id)
+        {
+            Collection.Remove(Query<Job>.EQ(x => x.Id, id));
+        }
     }
 }

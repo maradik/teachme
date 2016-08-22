@@ -15,13 +15,13 @@ namespace TeachMe.Areas.Student.Controllers
     [Authorize]
     public class JobController : StudentControllerBase
     {
-        private readonly JobRepository jobRepository;
+        private readonly IJobRepository jobRepository;
         private readonly IUploadedFileRepository uploadedFileRepository;
         private readonly IUploadedFileConverter uploadFileConverter;
         private readonly IJobAttachmentConverter attachmentConverter;
         private readonly ISubjectReference subjectReference;
 
-        public JobController(JobRepository jobRepository,
+        public JobController(IJobRepository jobRepository,
                              IUploadedFileRepository uploadedFileRepository,
                              IUploadedFileConverter uploadFileConverter,
                              IJobAttachmentConverter attachmentConverter,
@@ -121,7 +121,8 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Delete(Guid id)
         {
-            return View();
+            var job = jobRepository.Get(id);
+            return View(job);
         }
 
         // POST: Job/Delete/5
@@ -129,16 +130,26 @@ namespace TeachMe.Areas.Student.Controllers
         [HttpPost]
         public ActionResult Delete(Guid id, FormCollection collection)
         {
+            var job = jobRepository.Get(id);
+
             try
             {
-                // TODO: Add delete logic here
+                AssertJobMayBeDeleted(job);
+
+                jobRepository.Remove(id);
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(job);
             }
+        }
+
+        private static void AssertJobMayBeDeleted(Job job)
+        {
+            if (!string.IsNullOrEmpty(job.TeacherUserId))
+                throw new InvalidOperationException($"Невозможно удалить Job, за которым закреплен исполнитель (JobId = {job.Id})");
         }
     }
 }

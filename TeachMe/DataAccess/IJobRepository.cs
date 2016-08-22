@@ -8,5 +8,6 @@ namespace TeachMe.DataAccess
         Job Get(Guid id);
         Job[] GetAllByStudentUserId(string studentUserId);
         void Write(Job job);
+        void Remove(Guid id);
     }
 }
