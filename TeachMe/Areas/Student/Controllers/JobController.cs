@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,8 +8,9 @@ using TeachMe.DataAccess;
 using TeachMe.Models;
 using TeachMe.ProjectsSupport;
 using TeachMe.References;
+using ControllerBase = TeachMe.Controllers.ControllerBase;
 
-namespace TeachMe.Controllers
+namespace TeachMe.Areas.Student.Controllers
 {
     [Authorize]
     public class JobController : ControllerBase
@@ -37,7 +37,7 @@ namespace TeachMe.Controllers
         }
 
         // GET: Job
-
+        
         public ActionResult Index()
         {
             return View();
@@ -72,10 +72,13 @@ namespace TeachMe.Controllers
                     return View();
                 }
 
-                var uploadedJobAttachments = uploadedFiles.Where(x => x != null).Select(uploadFileConverter.ToUploadedJobAttachment).ToArray();
-                uploadedFileRepository.Save(uploadedJobAttachments);
+                if (uploadedFiles != null)
+                {
+                    var uploadedJobAttachments = uploadedFiles.Where(x => x != null).Select(uploadFileConverter.ToUploadedJobAttachment).ToArray();
+                    uploadedFileRepository.Save(uploadedJobAttachments);
+                    job.Attachments = uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment).ToList();
+                }
 
-                job.Attachments = uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment).ToList();
                 job.StudentUserId = User.Identity.GetUserId();
                 job.TeacherUserId = string.Empty;
                 job.Status = JobStatus.Draft;

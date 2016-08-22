@@ -48,9 +48,15 @@
             </div>
         </div>
 
-        <input type="file" name="uploadedFiles[0]" /><br />
-        <input type="file" name="uploadedFiles[1]" /><br />
-        <input type="file" name="uploadedFiles[2]" /><br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attachments, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="uploadedFileInputContainer"></div>
+                @Html.EditorFor(model => model.Attachments, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Attachments, "", new {@class = "text-danger"})
+                <div><a href="#" id="addUploadedFile">Добавить</a></div>
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -66,4 +72,18 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(function() {
+            var addUploadedFileInput = function () {
+                var inputsCount = $("input[name^='uploadedFiles']").length;
+                var newInput = $('<input type="file" name="uploadedFiles[' + inputsCount + ']" class="form-control"/>');
+                $("#uploadedFileInputContainer").append(newInput);
+            };
+            $("#addUploadedFile").click(function() {
+                addUploadedFileInput();
+            });
+            addUploadedFileInput();
+        });
+    </script>
 }

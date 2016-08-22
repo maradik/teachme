@@ -203,10 +203,11 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Areas\Student\Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Converters\IJobAttachmentConverter.cs" />
     <Compile Include="Converters\JobAttachmentConverter.cs" />
@@ -250,6 +251,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Student\Views\web.config" />
+    <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -300,10 +303,12 @@
     <Content Include="Views\Home\_IndexRecall.cshtml" />
     <Content Include="Views\Home\_IndexTasks.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
-    <None Include="Views\Job\Create.cshtml" />
+    <None Include="Areas\Student\Views\Job\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Student\Models\" />
+    <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
