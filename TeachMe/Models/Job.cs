@@ -10,13 +10,19 @@ namespace TeachMe.Models
 
         public Guid Id { get; set; }
 
+        [Display(Name = "Предмет")]
         public int Subject { get; set; }
+
+        [Display(Name = "Заголовок")]
+        public string Title { get; set; }
 
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
+        [Display(Name = "Статус")]
         public JobStatus Status { get; set; }
 
+        [Display(Name = "Стоимость")]
         public decimal Cost { get; set; }
 
         public List<JobAttachment> Attachments { get { return attachments ?? (attachments = new List<JobAttachment>()); } set { attachments = value; } }
