@@ -6,6 +6,7 @@ namespace TeachMe.DataAccess
     public interface IJobRepository
     {
         Job Get(Guid id);
+        Job[] GetAllByStudentUserId(string studentUserId);
         void Write(Job job);
     }
 }

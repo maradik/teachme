@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using System.Linq;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using TeachMe.Models;
 
 namespace TeachMe.DataAccess
@@ -20,6 +22,7 @@ namespace TeachMe.DataAccess
             if (job.Id == Guid.Empty)
             {
                 job.Id = Guid.NewGuid();
+                job.CreationTicks = DateTime.UtcNow.Ticks;
             }
 
             Collection.Save(job);
@@ -28,6 +31,13 @@ namespace TeachMe.DataAccess
         public Job Get(Guid id)
         {
             return Collection.FindOneById(id);
+        }
+
+        public Job[] GetAllByStudentUserId(string studentUserId)
+        {
+            if (studentUserId == null)
+                throw new ArgumentNullException(nameof(studentUserId));
+            return Collection.Find(Query<Job>.EQ(x => x.StudentUserId, studentUserId)).ToArray();
         }
     }
 }

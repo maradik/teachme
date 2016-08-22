@@ -33,5 +33,7 @@ namespace TeachMe.Models
         public string TeacherUserId { get; set; }
 
         public string StudentUserId { get; set; }
+
+        public long CreationTicks { get; set; }
     }
 }

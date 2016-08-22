@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TeachMe.Models.Job>
+
+@{
+    ViewBag.Title = "Задачи";
+}
+
+<h2>Мои задачи</h2>
+
+<p>
+    @Html.ActionLink("Создать новую", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cost)
+        </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.Status)
+        </th>
+        <td>
+            @Html.ActionLink("Просмотреть", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

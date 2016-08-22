@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -39,7 +40,8 @@ namespace TeachMe.Areas.Student.Controllers
         
         public ActionResult Index()
         {
-            return View();
+            var currentUserJobs = jobRepository.GetAllByStudentUserId(ApplicationUser.Id).OrderByDescending(x => x.CreationTicks).ToArray();
+            return View(currentUserJobs);
         }
 
         // GET: Job/Details/5
@@ -117,7 +119,7 @@ namespace TeachMe.Areas.Student.Controllers
 
         // GET: Job/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return View();
         }
@@ -125,7 +127,7 @@ namespace TeachMe.Areas.Student.Controllers
         // POST: Job/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Guid id, FormCollection collection)
         {
             try
             {
