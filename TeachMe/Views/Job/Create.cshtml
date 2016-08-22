@@ -1,18 +1,17 @@
 ﻿@model TeachMe.Models.Job
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Новая задача";
 }
 
-<h2>Create</h2>
+<h2>Новая задача</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Job", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Job</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -55,9 +54,13 @@
             </div>
         </div>
 
+        <input type="file" name="uploadedFiles[0]" /><br />
+        <input type="file" name="uploadedFiles[1]" /><br />
+        <input type="file" name="uploadedFiles[2]" /><br />
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Создать" class="btn btn-default" />
             </div>
         </div>
     </div>

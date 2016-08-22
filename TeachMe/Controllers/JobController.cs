@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TeachMe.Converters;
 using TeachMe.DataAccess;
 using TeachMe.Models;
 using TeachMe.ProjectsSupport;
@@ -13,12 +14,21 @@ namespace TeachMe.Controllers
     public class JobController : ControllerBase
     {
         private readonly JobRepository jobRepository;
+        private readonly IUploadedFileRepository uploadedFileRepository;
+        private readonly IUploadedFileConverter uploadFileConverter;
+        private readonly IJobAttachmentConverter attachmentConverter;
 
         public JobController(JobRepository jobRepository,
+                             IUploadedFileRepository uploadedFileRepository,
+                             IUploadedFileConverter uploadFileConverter,
+                             IJobAttachmentConverter attachmentConverter,
                              IProjectTypeProvider projectTypeProvider)
             : base(projectTypeProvider)
         {
             this.jobRepository = jobRepository;
+            this.uploadedFileRepository = uploadedFileRepository;
+            this.uploadFileConverter = uploadFileConverter;
+            this.attachmentConverter = attachmentConverter;
         }
 
         // GET: Job
@@ -45,7 +55,7 @@ namespace TeachMe.Controllers
         // POST: Job/Create
 
         [HttpPost]
-        public ActionResult Create(Job job)
+        public ActionResult Create(Job job, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
             try
             {
@@ -54,6 +64,10 @@ namespace TeachMe.Controllers
                     return View();
                 }
 
+                var uploadedJobAttachments = uploadedFiles.Where(x => x != null).Select(uploadFileConverter.ToUploadedJobAttachment).ToArray();
+                uploadedFileRepository.Save(uploadedJobAttachments);
+
+                job.Attachments = uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment).ToList();
                 jobRepository.Write(job);
 
                 return RedirectToAction("Index");

@@ -208,14 +208,21 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Converters\IJobAttachmentConverter.cs" />
+    <Compile Include="Converters\JobAttachmentConverter.cs" />
+    <Compile Include="Converters\IUploadedFileConverter.cs" />
+    <Compile Include="Converters\UploadedFileConverter.cs" />
     <Compile Include="DataAccess\IJobRepository.cs" />
+    <Compile Include="DataAccess\IUploadedFileRepository.cs" />
     <Compile Include="DataAccess\JobRepository.cs" />
     <Compile Include="DataAccess\JobRepositoryParameters.cs" />
+    <Compile Include="DataAccess\UploadedFileRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUserStore.cs" />
+    <Compile Include="Models\UploadedJobAttachment.cs" />
     <Compile Include="Models\JobAttachment.cs" />
     <Compile Include="Models\JobStatus.cs" />
     <Compile Include="Models\Job.cs" />
@@ -293,6 +300,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
