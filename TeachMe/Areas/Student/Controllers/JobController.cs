@@ -8,12 +8,11 @@ using TeachMe.DataAccess;
 using TeachMe.Models;
 using TeachMe.ProjectsSupport;
 using TeachMe.References;
-using ControllerBase = TeachMe.Controllers.ControllerBase;
 
 namespace TeachMe.Areas.Student.Controllers
 {
     [Authorize]
-    public class JobController : ControllerBase
+    public class JobController : StudentControllerBase
     {
         private readonly JobRepository jobRepository;
         private readonly IUploadedFileRepository uploadedFileRepository;
