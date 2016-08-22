@@ -11,7 +11,8 @@ namespace TeachMe.Models
         public Guid Id { get; set; }
 
         [Display(Name = "Предмет")]
-        public int Subject { get; set; }
+        [Range(1, int.MaxValue)]
+        public int SubjectId { get; set; }
 
         [Display(Name = "Заголовок")]
         public string Title { get; set; }

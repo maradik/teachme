@@ -220,6 +220,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUserStore.cs" />
     <Compile Include="Models\UploadedJobAttachment.cs" />
@@ -234,6 +235,9 @@
     <Compile Include="ProjectsSupport\ProjectType.cs" />
     <Compile Include="ProjectsSupport\ProjectTypeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="References\ISubjectReference.cs" />
+    <Compile Include="References\Subject.cs" />
+    <Compile Include="References\SubjectReference.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\NinjectDependencyResolver.cs" />
   </ItemGroup>

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TeachMe.Converters;
 using TeachMe.DataAccess;
 using TeachMe.Models;
 using TeachMe.ProjectsSupport;
+using TeachMe.References;
 
 namespace TeachMe.Controllers
 {
@@ -17,11 +19,13 @@ namespace TeachMe.Controllers
         private readonly IUploadedFileRepository uploadedFileRepository;
         private readonly IUploadedFileConverter uploadFileConverter;
         private readonly IJobAttachmentConverter attachmentConverter;
+        private readonly ISubjectReference subjectReference;
 
         public JobController(JobRepository jobRepository,
                              IUploadedFileRepository uploadedFileRepository,
                              IUploadedFileConverter uploadFileConverter,
                              IJobAttachmentConverter attachmentConverter,
+                             ISubjectReference subjectReference,
                              IProjectTypeProvider projectTypeProvider)
             : base(projectTypeProvider)
         {
@@ -29,6 +33,7 @@ namespace TeachMe.Controllers
             this.uploadedFileRepository = uploadedFileRepository;
             this.uploadFileConverter = uploadFileConverter;
             this.attachmentConverter = attachmentConverter;
+            this.subjectReference = subjectReference;
         }
 
         // GET: Job
@@ -49,7 +54,8 @@ namespace TeachMe.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Subjects = subjectReference.GetAll();
+            return View(new Job());
         }
 
         // POST: Job/Create
@@ -57,6 +63,8 @@ namespace TeachMe.Controllers
         [HttpPost]
         public ActionResult Create(Job job, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
+            ViewBag.Subjects = subjectReference.GetAll();
+
             try
             {
                 if (!ModelState.IsValid)
@@ -68,6 +76,9 @@ namespace TeachMe.Controllers
                 uploadedFileRepository.Save(uploadedJobAttachments);
 
                 job.Attachments = uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment).ToList();
+                job.StudentUserId = User.Identity.GetUserId();
+                job.TeacherUserId = string.Empty;
+                job.Status = JobStatus.Draft;
                 jobRepository.Write(job);
 
                 return RedirectToAction("Index");
