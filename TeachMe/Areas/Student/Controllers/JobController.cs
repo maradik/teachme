@@ -93,19 +93,38 @@ namespace TeachMe.Areas.Student.Controllers
 
         // GET: Job/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
+            AssertJobMayBeEdited(job);
+            return View(job);
         }
 
         // POST: Job/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Guid id, Job jobViewModel, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
+            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
+            AssertJobMayBeEdited(job);
+
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+
+                UpdateJobFromViewModel(job, jobViewModel);
+
+                if (uploadedFiles != null)
+                {
+                    var uploadedJobAttachments = uploadedFiles.Where(x => x != null).Select(uploadFileConverter.ToUploadedJobAttachment).ToArray();
+                    uploadedFileRepository.Save(uploadedJobAttachments);
+                    job.Attachments.AddRange(uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment));
+                }
+                
+                jobRepository.Write(job);
 
                 return RedirectToAction("Index");
             }
@@ -144,10 +163,24 @@ namespace TeachMe.Areas.Student.Controllers
             }
         }
 
+        private static void UpdateJobFromViewModel(Job job, Job jobViewModel)
+        {
+            job.SubjectId = jobViewModel.SubjectId;
+            job.Description = jobViewModel.Description;
+            job.Title = jobViewModel.Title;
+            job.Cost = jobViewModel.Cost;
+        }
+
         private static void AssertJobMayBeDeleted(Job job)
         {
             if (!string.IsNullOrEmpty(job.TeacherUserId))
                 throw new InvalidOperationException($"Невозможно удалить Job, за которым закреплен исполнитель (JobId = {job.Id})");
+        }
+
+        private static void AssertJobMayBeEdited(Job job)
+        {
+            if (!string.IsNullOrEmpty(job.TeacherUserId))
+                throw new InvalidOperationException($"Невозможно изменить Job, за которым закреплен исполнитель (JobId = {job.Id})");
         }
     }
 }
