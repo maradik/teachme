@@ -12,6 +12,17 @@ namespace TeachMe.References
             new Subject(3, "Физика"), 
         }.ToDictionary(x => x.Id);
 
+        private static ISubjectReference instance;
+
+        public static ISubjectReference Instance => instance ?? (instance = new SubjectReference());
+
+        public Subject Get(int id)
+        {
+            return Reference.ContainsKey(id)
+                       ? Reference[id]
+                       : null;
+        }
+
         public Subject[] GetAll()
         {
             return Reference.Values.ToArray();

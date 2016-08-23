@@ -1,0 +1,5 @@
+﻿@model long
+@{
+    var utcDate = new DateTime(Model, DateTimeKind.Utc);
+}
+@utcDate.ToString("dd.MM.yyyy")

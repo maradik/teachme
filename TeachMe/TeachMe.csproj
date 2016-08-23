@@ -220,6 +220,7 @@
     <Compile Include="DataAccess\JobRepositoryParameters.cs" />
     <Compile Include="DataAccess\NotAllowedUploadedJobAttachmentException.cs" />
     <Compile Include="DataAccess\UploadedFileRepository.cs" />
+    <Compile Include="Extensions\JobExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,6 +259,7 @@
     <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Student\Views\Job\Index.cshtml" />
     <Content Include="Areas\Student\Views\Job\Delete.cshtml" />
+    <Content Include="Areas\Student\Views\Job\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -309,6 +311,7 @@
     <Content Include="Views\Home\_IndexTasks.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <None Include="Areas\Student\Views\Job\Create.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTimeUtcTicks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

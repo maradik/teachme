@@ -19,7 +19,6 @@ namespace TeachMe.Areas.Student.Controllers
         private readonly IUploadedFileRepository uploadedFileRepository;
         private readonly IUploadedFileConverter uploadFileConverter;
         private readonly IJobAttachmentConverter attachmentConverter;
-        private readonly ISubjectReference subjectReference;
 
         public JobController(IJobRepository jobRepository,
                              IUploadedFileRepository uploadedFileRepository,
@@ -33,7 +32,8 @@ namespace TeachMe.Areas.Student.Controllers
             this.uploadedFileRepository = uploadedFileRepository;
             this.uploadFileConverter = uploadFileConverter;
             this.attachmentConverter = attachmentConverter;
-            this.subjectReference = subjectReference;
+
+            ViewBag.Subjects = subjectReference.GetAll();
         }
 
         // GET: Job
@@ -46,16 +46,16 @@ namespace TeachMe.Areas.Student.Controllers
 
         // GET: Job/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
+            return View(job);
         }
 
         // GET: Job/Create
 
         public ActionResult Create()
         {
-            ViewBag.Subjects = subjectReference.GetAll();
             return View(new Job());
         }
 
@@ -64,8 +64,6 @@ namespace TeachMe.Areas.Student.Controllers
         [HttpPost]
         public ActionResult Create(Job job, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
-            ViewBag.Subjects = subjectReference.GetAll();
-
             try
             {
                 if (!ModelState.IsValid)
@@ -121,7 +119,7 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Delete(Guid id)
         {
-            var job = jobRepository.Get(id);
+            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
             return View(job);
         }
 
@@ -130,13 +128,13 @@ namespace TeachMe.Areas.Student.Controllers
         [HttpPost]
         public ActionResult Delete(Guid id, FormCollection collection)
         {
-            var job = jobRepository.Get(id);
+            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
 
             try
             {
                 AssertJobMayBeDeleted(job);
 
-                jobRepository.Remove(id);
+                jobRepository.Remove(job.Id);
 
                 return RedirectToAction("Index");
             }

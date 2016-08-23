@@ -34,6 +34,7 @@ namespace TeachMe.Models
 
         public string StudentUserId { get; set; }
 
+        [DisplayName("Дата создания")]
         public long CreationTicks { get; set; }
     }
 }

@@ -33,6 +33,14 @@ namespace TeachMe.DataAccess
             return Collection.FindOneById(id);
         }
 
+        public Job GetByIdAndStudentUserId(Guid id, string studentUserId)
+        {
+            var job = Get(id);
+            return job.StudentUserId == studentUserId
+                       ? job
+                       : null;
+        }
+
         public Job[] GetAllByStudentUserId(string studentUserId)
         {
             if (studentUserId == null)
