@@ -9,7 +9,8 @@ namespace TeachMe.Converters
             return new JobAttachment
             {
                 FileName = uploadedJobAttachment.FileName,
-                OriginFileName = uploadedJobAttachment.OriginFileName
+                OriginFileName = uploadedJobAttachment.OriginFileName,
+                Type = uploadedJobAttachment.Type
             };
         }
     }

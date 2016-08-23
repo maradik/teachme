@@ -6,7 +6,7 @@ namespace TeachMe.DataAccess
 {
     public interface IUploadedFileRepository
     {
-        void Save(IEnumerable<UploadedJobAttachment> uploadedJobAttachments);
+        void Save(UploadedJobAttachment[] uploadedJobAttachments);
         void Save(UploadedJobAttachment uploadedJobAttachment);
     }
 }
