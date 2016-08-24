@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TeachMe.Models.Job>
+﻿@using TeachMe.Extensions
+@model IEnumerable<TeachMe.Models.Job>
 
 @{
     ViewBag.Title = "Задачи";
@@ -29,7 +30,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.SubjectId)
+            @Html.DisplayFor(modelItem => item.GetSubject().Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
