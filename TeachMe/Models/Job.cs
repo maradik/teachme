@@ -30,9 +30,14 @@ namespace TeachMe.Models
         [DisplayName("Фото, документы")]
         public List<JobAttachment> Attachments { get { return attachments ?? (attachments = new List<JobAttachment>()); } set { attachments = value; } }
 
+        [DisplayName("Исполнитель")]
         public string TeacherUserId { get; set; }
 
+        [DisplayName("Заказчик")]
         public string StudentUserId { get; set; }
+
+        [DisplayName("Срок исполнения")]
+        public long DeadlineTicks { get; set; }
 
         [DisplayName("Дата создания")]
         public long CreationTicks { get; set; }

@@ -48,6 +48,18 @@ namespace TeachMe.DataAccess
             return Collection.Find(Query<Job>.EQ(x => x.StudentUserId, studentUserId)).ToArray();
         }
 
+        public Job[] GetAllByTeacherUserId(string teacherUserId)
+        {
+            if (teacherUserId == null)
+                throw new ArgumentNullException(nameof(teacherUserId));
+            return Collection.Find(Query<Job>.EQ(x => x.TeacherUserId, teacherUserId)).ToArray();
+        }
+
+        public Job[] GetAllByStatus(JobStatus status)
+        {
+            return Collection.Find(Query<Job>.EQ(x => x.Status, status)).ToArray();
+        }
+
         public void Remove(Guid id)
         {
             Collection.Remove(Query<Job>.EQ(x => x.Id, id));
