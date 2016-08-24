@@ -8,5 +8,7 @@ namespace TeachMe.DataAccess
     {
         void Save(UploadedJobAttachment[] uploadedJobAttachments);
         void Save(UploadedJobAttachment uploadedJobAttachment);
+        void Delete(string[] fileNames);
+        void Delete(string fileName);
     }
 }

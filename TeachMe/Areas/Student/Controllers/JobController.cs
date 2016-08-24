@@ -115,7 +115,13 @@ namespace TeachMe.Areas.Student.Controllers
                     return View();
                 }
 
-                UpdateJobFromViewModel(job, jobViewModel);
+                JobAttachment[] deletedAttachments;
+                UpdateJobFromViewModel(job, jobViewModel, out deletedAttachments);
+
+                if (deletedAttachments != null && deletedAttachments.Length > 0)
+                {
+                    uploadedFileRepository.Delete(deletedAttachments.Select(x => x.FileName).ToArray());
+                }
 
                 if (uploadedFiles != null)
                 {
@@ -163,14 +169,15 @@ namespace TeachMe.Areas.Student.Controllers
             }
         }
 
-        private static void UpdateJobFromViewModel(Job job, Job jobViewModel)
+        private static void UpdateJobFromViewModel(Job job, Job jobViewModel, out JobAttachment[] deletedAttachments)
         {
             job.SubjectId = jobViewModel.SubjectId;
             job.Description = jobViewModel.Description;
             job.Title = jobViewModel.Title;
             job.Cost = jobViewModel.Cost;
 
-            var jobViewModelFileNames = jobViewModel.Attachments.Select(y => y.FileName);
+            var jobViewModelFileNames = new HashSet<string>(jobViewModel.Attachments.Select(y => y.FileName));
+            deletedAttachments = job.Attachments.Where(x => !jobViewModelFileNames.Contains(x.FileName)).ToArray();
             job.Attachments = job.Attachments.Where(x => jobViewModelFileNames.Contains(x.FileName)).ToList();
         }
 

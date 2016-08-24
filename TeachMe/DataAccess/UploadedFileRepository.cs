@@ -37,7 +37,20 @@ namespace TeachMe.DataAccess
                 throw new NotAllowedUploadedJobAttachmentException(uploadedJobAttachment);
             }
 
-            uploadedJobAttachment.UploadedFile.SaveAs(BuildFullName(uploadedJobAttachment));
+            uploadedJobAttachment.UploadedFile.SaveAs(BuildFullName(uploadedJobAttachment.FileName));
+        }
+
+        public void Delete(string[] fileNames)
+        {
+            foreach (var fileName in fileNames)
+            {
+                Delete(fileName);
+            }
+        }
+
+        public void Delete(string fileName)
+        {
+            File.Delete(BuildFullName(fileName));
         }
 
         private static bool IsUploadedJobAttachmentAllowed(UploadedJobAttachment uploadedJobAttachment)
@@ -46,9 +59,9 @@ namespace TeachMe.DataAccess
             return AllowedUploadFileExtensions.Contains(fileNameExtension);
         }
 
-        private string BuildFullName(UploadedJobAttachment uploadedJobAttachment)
+        private string BuildFullName(string fileName)
         {
-            return HttpContext.Current.Server.MapPath(VirtualPathUtility.Combine("~/Uploads/", uploadedJobAttachment.FileName));
+            return HttpContext.Current.Server.MapPath(VirtualPathUtility.Combine("~/Uploads/", fileName));
         }
     }
 }
