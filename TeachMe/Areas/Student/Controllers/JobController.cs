@@ -169,6 +169,9 @@ namespace TeachMe.Areas.Student.Controllers
             job.Description = jobViewModel.Description;
             job.Title = jobViewModel.Title;
             job.Cost = jobViewModel.Cost;
+
+            var jobViewModelFileNames = jobViewModel.Attachments.Select(y => y.FileName);
+            job.Attachments = job.Attachments.Where(x => jobViewModelFileNames.Contains(x.FileName)).ToList();
         }
 
         private static void AssertJobMayBeDeleted(Job job)
