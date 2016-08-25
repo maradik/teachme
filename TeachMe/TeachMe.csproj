@@ -222,6 +222,8 @@
     <Compile Include="DataAccess\JobRepository.cs" />
     <Compile Include="DataAccess\JobRepositoryParameters.cs" />
     <Compile Include="DataAccess\NotAllowedUploadedJobAttachmentException.cs" />
+    <Compile Include="DataAccess\RepositoryBase.cs" />
+    <Compile Include="DataAccess\RepositoryBaseParameters.cs" />
     <Compile Include="DataAccess\UploadedFileRepository.cs" />
     <Compile Include="Extensions\JobExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -230,7 +232,9 @@
     <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUserStore.cs" />
+    <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\JobAttachmentType.cs" />
+    <Compile Include="Models\JobMessage.cs" />
     <Compile Include="Models\UploadedJobAttachment.cs" />
     <Compile Include="Models\JobAttachment.cs" />
     <Compile Include="Models\JobStatus.cs" />

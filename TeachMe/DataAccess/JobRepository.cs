@@ -1,36 +1,14 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
-using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using TeachMe.Models;
 
 namespace TeachMe.DataAccess
 {
-    public class JobRepository : IJobRepository
-    {
-        public MongoCollection<Job> Collection;
-
-        public JobRepository(JobRepositoryParameters parameters)
+    public class JobRepository : RepositoryBase<Job>, IJobRepository
+    { 
+        public JobRepository(JobRepositoryParameters parameters) : base(parameters)
         {
-            var client = new MongoClient(ConfigurationManager.ConnectionStrings[parameters.ConnectionStringName].ConnectionString);
-            Collection = client.GetServer().GetDatabase(parameters.DatabaseName).GetCollection<Job>(parameters.CollectionName);
-        }
-
-        public void Write(Job job)
-        {
-            if (job.Id == Guid.Empty)
-            {
-                job.Id = Guid.NewGuid();
-                job.CreationTicks = DateTime.UtcNow.Ticks;
-            }
-
-            Collection.Save(job);
-        }
-
-        public Job Get(Guid id)
-        {
-            return Collection.FindOneById(id);
         }
 
         public Job GetByIdAndStudentUserId(Guid id, string studentUserId)
@@ -66,11 +44,6 @@ namespace TeachMe.DataAccess
         public Job[] GetAllByStatus(JobStatus status)
         {
             return Collection.Find(Query<Job>.EQ(x => x.Status, status)).ToArray();
-        }
-
-        public void Remove(Guid id)
-        {
-            Collection.Remove(Query<Job>.EQ(x => x.Id, id));
         }
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TeachMe.Models
 {
-    public class Job
+    public class Job : IEntity
     {
         private List<JobAttachment> attachments;
 

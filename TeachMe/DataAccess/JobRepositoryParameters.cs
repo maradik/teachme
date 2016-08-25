@@ -1,11 +1,7 @@
 namespace TeachMe.DataAccess
 {
-    public class JobRepositoryParameters
+    public class JobRepositoryParameters : RepositoryBaseParameters
     {
-        public string ConnectionStringName => "Mongo";
-
-        public string DatabaseName => "TeachMe";
-
-        public string CollectionName => "Jobs";
+        public override string CollectionName => "Jobs";
     }
 }
