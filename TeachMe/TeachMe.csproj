@@ -217,8 +217,11 @@
     <Compile Include="Converters\JobAttachmentConverter.cs" />
     <Compile Include="Converters\IUploadedFileConverter.cs" />
     <Compile Include="Converters\UploadedFileConverter.cs" />
+    <Compile Include="DataAccess\IJobMessageRepository.cs" />
     <Compile Include="DataAccess\IJobRepository.cs" />
     <Compile Include="DataAccess\IUploadedFileRepository.cs" />
+    <Compile Include="DataAccess\JobMessageRepository.cs" />
+    <Compile Include="DataAccess\JobMessageRepositoryParameters.cs" />
     <Compile Include="DataAccess\JobRepository.cs" />
     <Compile Include="DataAccess\JobRepositoryParameters.cs" />
     <Compile Include="DataAccess\NotAllowedUploadedJobAttachmentException.cs" />
@@ -252,6 +255,7 @@
     <Compile Include="References\SubjectReference.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\NinjectDependencyResolver.cs" />
+    <Compile Include="ViewModels\JobDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -274,6 +278,8 @@
     <Content Include="Areas\Teacher\Views\Job\Index.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\IndexAvailable.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\Details.cshtml" />
+    <Content Include="Areas\Student\Views\Job\_JobDetails.cshtml" />
+    <Content Include="Areas\Teacher\Views\Job\_JobDetails.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

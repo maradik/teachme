@@ -9,6 +9,7 @@ using TeachMe.DataAccess;
 using TeachMe.Models;
 using TeachMe.ProjectsSupport;
 using TeachMe.References;
+using TeachMe.ViewModels;
 
 namespace TeachMe.Areas.Student.Controllers
 {
@@ -48,8 +49,11 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Details(Guid id)
         {
-            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
-            return View(job);
+            var viewModel = new JobDetailsViewModel
+            {
+                Job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id)
+            };
+            return View(viewModel);
         }
 
         // GET: Job/Create

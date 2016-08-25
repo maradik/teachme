@@ -6,7 +6,7 @@ using TeachMe.Models;
 namespace TeachMe.DataAccess
 {
     public class JobRepository : RepositoryBase<Job>, IJobRepository
-    { 
+    {
         public JobRepository(JobRepositoryParameters parameters) : base(parameters)
         {
         }
