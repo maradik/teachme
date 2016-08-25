@@ -7,6 +7,7 @@ namespace TeachMe.DataAccess
     {
         Job Get(Guid id);
         Job GetByIdAndStudentUserId(Guid id, string studentUserId);
+        Job GetByIdAndTeacherUserId(Guid id, string teacherUserId);
         Job[] GetAllByStudentUserId(string studentUserId);
         Job[] GetAllByTeacherUserId(string teacherUserId);
         Job[] GetAllByStatus(JobStatus status);

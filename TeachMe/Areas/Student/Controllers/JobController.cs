@@ -62,6 +62,7 @@ namespace TeachMe.Areas.Student.Controllers
         // POST: Job/Create
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Job job, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
             try
@@ -103,6 +104,7 @@ namespace TeachMe.Areas.Student.Controllers
         // POST: Job/Edit/5
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Guid id, Job jobViewModel, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
             var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
@@ -151,6 +153,7 @@ namespace TeachMe.Areas.Student.Controllers
         // POST: Job/Delete/5
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id, FormCollection collection)
         {
             var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);

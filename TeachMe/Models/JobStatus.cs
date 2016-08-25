@@ -4,8 +4,9 @@
     {
         Draft = 0,
         Opened = 1,
-        Finished = 2,
-        Accepted = 3,
-        Cancelled = 4
+        InProgress = 2,
+        Finished = 3,
+        Accepted = 4,
+        Cancelled = 5
     }
 }

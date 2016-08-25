@@ -36,7 +36,15 @@ namespace TeachMe.DataAccess
         public Job GetByIdAndStudentUserId(Guid id, string studentUserId)
         {
             var job = Get(id);
-            return job.StudentUserId == studentUserId
+            return job.StudentUserId == studentUserId || (string.IsNullOrEmpty(job.StudentUserId) && string.IsNullOrEmpty(studentUserId))
+                       ? job
+                       : null;
+        }
+
+        public Job GetByIdAndTeacherUserId(Guid id, string teacherUserId)
+        {
+            var job = Get(id);
+            return job.TeacherUserId == teacherUserId || (string.IsNullOrEmpty(job.TeacherUserId) && string.IsNullOrEmpty(teacherUserId))
                        ? job
                        : null;
         }
