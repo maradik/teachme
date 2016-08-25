@@ -81,7 +81,7 @@ namespace TeachMe.Areas.Student.Controllers
 
                 job.StudentUserId = User.Identity.GetUserId();
                 job.TeacherUserId = string.Empty;
-                job.Status = JobStatus.Draft;
+                job.Status = JobStatus.Opened;
                 jobRepository.Write(job);
 
                 return RedirectToAction("Index");
