@@ -15,5 +15,12 @@ namespace TeachMe.DataAccess
         {
             return Collection.Find(Query<JobMessage>.EQ(x => x.JobId, jobId)).ToArray();
         }
+
+        public JobMessage[] GetAllByJobIdCreatedAfter(Guid jobId, long ticks)
+        {
+            var query = Query.And(Query<JobMessage>.EQ(x => x.JobId, jobId),
+                                  Query<JobMessage>.GT(x => x.CreationTicks, ticks));
+            return Collection.Find(query).ToArray();
+        }
     }
 }

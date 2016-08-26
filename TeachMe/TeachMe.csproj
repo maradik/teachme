@@ -212,6 +212,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\JobController.cs" />
+    <Compile Include="Controllers\JobChatController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Converters\IJobAttachmentConverter.cs" />
     <Compile Include="Converters\JobAttachmentConverter.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="DataAccess\RepositoryBaseParameters.cs" />
     <Compile Include="DataAccess\UploadedFileRepository.cs" />
     <Compile Include="Extensions\JobExtensions.cs" />
+    <Compile Include="Extensions\JobMessageExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -255,7 +257,6 @@
     <Compile Include="References\SubjectReference.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\NinjectDependencyResolver.cs" />
-    <Compile Include="ViewModels\JobDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -278,8 +279,9 @@
     <Content Include="Areas\Teacher\Views\Job\Index.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\IndexAvailable.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\Details.cshtml" />
-    <Content Include="Areas\Student\Views\Job\_JobDetails.cshtml" />
-    <Content Include="Areas\Teacher\Views\Job\_JobDetails.cshtml" />
+    <Content Include="Views\JobChat\_CreateMessage.cshtml" />
+    <None Include="Views\JobChat\_JobMessage.cshtml" />
+    <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -341,6 +343,7 @@
     <Folder Include="Areas\Teacher\Models\" />
     <Folder Include="Areas\Teacher\Views\Shared\" />
     <Folder Include="Uploads\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

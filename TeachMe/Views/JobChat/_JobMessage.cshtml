@@ -1,0 +1,29 @@
+﻿@using TeachMe.Extensions
+@using TeachMe.Models
+@model JobMessage
+
+<div style="padding: 10px 0 10px 0">
+    <div style="background-color: green;">
+        @Html.DisplayFor(model => model.GetUser().UserName)
+        @Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.Text)
+    </div>
+    <div class="row">
+        @foreach (var attachment in Model.Attachments.OrderByDescending(x => x.Type))
+        {
+            <div class="col-sm-3">
+                @switch (attachment.Type)
+                {
+                    case JobAttachmentType.Image:
+                        <img src="~/Uploads/@attachment.FileName" title="@attachment.OriginFileName" style="max-width: 100%;" />
+                        break;
+                    default:
+                        <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">@attachment.OriginFileName</a>
+                        break;
+                }
+            </div>
+        }
+    </div>
+</div>

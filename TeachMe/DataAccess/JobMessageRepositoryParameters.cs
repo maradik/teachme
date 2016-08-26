@@ -2,6 +2,6 @@
 {
     public class JobMessageRepositoryParameters : RepositoryBaseParameters
     {
-        public override string CollectionName => "JobMessage";
+        public override string CollectionName => "JobMessages";
     }
 }

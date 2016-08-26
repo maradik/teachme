@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using TeachMe.DataAccess;
 using TeachMe.Models;
 using TeachMe.ProjectsSupport;
-using TeachMe.ViewModels;
 
 namespace TeachMe.Areas.Teacher.Controllers
 {
@@ -40,7 +39,7 @@ namespace TeachMe.Areas.Teacher.Controllers
             if (!string.IsNullOrEmpty(job.TeacherUserId) && job.TeacherUserId != ApplicationUser.Id)
                 throw new HttpException((int) HttpStatusCode.Forbidden, null);
 
-            return View(new JobDetailsViewModel { Job = job });
+            return View(job);
         }
 
         [HttpPost]

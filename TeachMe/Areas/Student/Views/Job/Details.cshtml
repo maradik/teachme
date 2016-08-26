@@ -1,9 +1,108 @@
-﻿@model TeachMe.ViewModels.JobDetailsViewModel
+﻿@using TeachMe.Extensions
+@using TeachMe.Models
+@model Job
 
 @{
-    ViewBag.Title = "Задача: " + Html.Encode(Model.Job.Title);
+    ViewBag.Title = "Задача: " + Html.Encode(Model.Title);
 }
 
-<h2>Задача: @Model.Job.Title</h2>
+<h2>Задача: @Model.Title</h2>
 
-@Html.Partial("_JobDetails", Model.Job)
+<div>
+    <hr/>
+    @Html.HiddenFor(model => model.Id, new { id = "jobId" })
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubjectId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GetSubject().Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationTicks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Attachments)
+        </dt>
+
+        <dd>
+            @foreach (var attachment in Model.Attachments.OrderByDescending(x => x.Type))
+            {
+                <div style="margin: 10px 0 10px 0;">
+                    @switch (attachment.Type)
+                    {
+                        case JobAttachmentType.Image:
+                            <img src="~/Uploads/@attachment.FileName" title="@attachment.OriginFileName" style="max-width: 200px;"/>
+                            break;
+                        default:
+                            <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">@attachment.OriginFileName</a>
+                            break;
+                    }
+                </div>
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("Назад к списку", "Index")
+</p>
+
+@if (!string.IsNullOrEmpty(Model.TeacherUserId))
+{
+    <h3>Обсуждение с исполнителем</h3>
+
+    <div id="jobMessageContainer"></div>
+    <div id="newJobMessageContainer">
+        @Html.Action("_CreateMessage", "JobChat", new { JobId = Model.Id, area = "" })
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            var jobId = $("input#jobId:first").val();
+            var loadMessages = function (afterTicks) {
+                afterTicks = afterTicks || 0;
+                $.ajax(
+                    "/JobChat/_GetMessages?jobId=" + jobId + "&afterTicks=" + afterTicks,
+                    {
+                        success: function (data) {
+                            $("#jobMessageContainer").append(data);
+                        }
+                    }
+                );
+            }
+            loadMessages();
+        });
+    </script>
+}
