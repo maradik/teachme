@@ -32,8 +32,8 @@ namespace TeachMe.Controllers
 
         public PartialViewResult _CreateMessage(Guid jobId)
         {
-            AssertUserHasAccessToJobChat(jobId);
             ViewData.TemplateInfo.HtmlFieldPrefix = nameof(JobChatController);
+            AssertUserHasAccessToJobChat(jobId);
             return PartialView(new JobMessage {JobId = jobId});
         }
 
@@ -42,6 +42,7 @@ namespace TeachMe.Controllers
         public PartialViewResult _CreateMessage([Bind(Prefix = nameof(JobChatController))] JobMessage jobMessage,
                                                 [Bind(Prefix = nameof(JobChatController))] IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
+            ViewData.TemplateInfo.HtmlFieldPrefix = nameof(JobChatController);
             if (ModelState.IsValid)
             {
                 AssertUserHasAccessToJobChat(jobMessage.JobId);
@@ -49,6 +50,7 @@ namespace TeachMe.Controllers
                 jobMessage.UserId = ApplicationUser.Id;
                 jobMessageRepository.Write(jobMessage);
 
+                ModelState.Clear();
                 return PartialView(new JobMessage { JobId = jobMessage.JobId });
             }
 

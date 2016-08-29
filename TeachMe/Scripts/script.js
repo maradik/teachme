@@ -10,6 +10,38 @@ var removeAttachment = function (link) {
     attachmentBlock.find("input").val("");
 };
 
+var lastMessageCreationTick = 0;
+
+var autoLoadNewMessages = function() {
+    loadNewMessages(function () {
+        setTimeout(function() {
+            autoLoadNewMessages();
+            },
+            5000);
+    });
+};
+
+var loadNewMessages = function (successCallback) {
+    var jobId = $("input#jobId:first").val();
+    $.ajax(
+        "/JobChat/_GetMessages?jobId=" + jobId + "&afterTicks=" + lastMessageCreationTick,
+        {
+            success: function (data) {
+                data = $(data);
+                data.hide();
+                $("#jobMessageContainer").append(data);
+                data.show('slow');
+                if (data.length) {
+                    lastMessageCreationTick = $("div.job-message:last").attr("data-creationticks");
+                }
+                if (successCallback && typeof successCallback == "function") {
+                    successCallback();
+                }
+            }
+        }
+    );
+};
+
 $(function () {
     $("#addUploadedFile").click(function () {
         addUploadedFileInput();

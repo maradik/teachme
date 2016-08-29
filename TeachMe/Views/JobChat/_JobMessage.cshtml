@@ -2,7 +2,7 @@
 @using TeachMe.Models
 @model JobMessage
 
-<div style="padding: 10px 0 10px 0">
+<div style="padding: 10px 0 10px 0" class="job-message" data-creationticks="@Model.CreationTicks">
     <div style="background-color: green;">
         @Html.DisplayFor(model => model.GetUser().UserName)
         @Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")

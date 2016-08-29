@@ -279,6 +279,8 @@
     <Content Include="Areas\Teacher\Views\Job\Index.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\IndexAvailable.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\Details.cshtml" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Views\JobChat\_CreateMessage.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />

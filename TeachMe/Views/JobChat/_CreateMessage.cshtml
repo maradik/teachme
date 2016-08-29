@@ -1,7 +1,7 @@
 ﻿@model TeachMe.Models.JobMessage
 
 
-@using (Html.BeginForm("_CreateMessage", "JobChat"))
+@using (Ajax.BeginForm("_CreateMessage", "JobChat", new AjaxOptions { UpdateTargetId = "newJobMessageContainer", OnSuccess = "loadNewMessages" }))
 {
     @Html.AntiForgeryToken()
     
