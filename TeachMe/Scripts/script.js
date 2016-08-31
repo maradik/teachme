@@ -1,8 +1,26 @@
-﻿var addUploadedFileInput = function () {
-    var inputsCount = $("input[name^='uploadedFiles']").length;
-    var newInput = $('<input type="file" name="uploadedFiles[' + inputsCount + ']" class="form-control"/>');
+﻿//-------------------------------
+var jQueryExtensions = {
+    escapeMetaChars: function (input) {
+        return input.replace(
+            new RegExp(/[\!\"\#\$\%\&\'\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~]/, "g"),
+            function(match) { return "\\" + match; });
+    }
+};
+
+var addUploadedFileInput = function (namePrefix) {
+    namePrefix = namePrefix ? namePrefix + "." : "";
+    var inputsCount = $("input[name^='" + jQueryExtensions.escapeMetaChars(namePrefix + "uploadedFiles") + "']").length;
+    var newInput = $('<input type="file" name="' + namePrefix + 'uploadedFiles[' + inputsCount + ']" class="form-control"/>');
     $("#uploadedFileInputContainer").append(newInput);
 };
+
+var initUploadedFileBlock = function() {
+    $("#addUploadedFile").click(function () {
+        addUploadedFileInput($(this).attr("data-inputnameprefix"));
+        return false;
+    });
+    $("#addUploadedFile").click();
+}
 
 var removeAttachment = function (link) {
     var attachmentBlock = $(link).parents(".attachment");
@@ -43,11 +61,6 @@ var loadNewMessages = function (successCallback) {
 };
 
 $(function () {
-    $("#addUploadedFile").click(function () {
-        addUploadedFileInput();
-        return false;
-    });
-    addUploadedFileInput();
     $("[data-action=removeAttachment]").click(function () {
         removeAttachment(this);
         return false;

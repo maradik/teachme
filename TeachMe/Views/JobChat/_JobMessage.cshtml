@@ -13,7 +13,7 @@
     <div class="row">
         @foreach (var attachment in Model.Attachments.OrderByDescending(x => x.Type))
         {
-            <div class="col-sm-3">
+            <div class="col-sm-3 col-xs-4">
                 @switch (attachment.Type)
                 {
                     case JobAttachmentType.Image:

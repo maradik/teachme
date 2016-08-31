@@ -1,7 +1,7 @@
 ﻿@model TeachMe.Models.JobMessage
 
 
-@using (Ajax.BeginForm("_CreateMessage", "JobChat", new AjaxOptions { UpdateTargetId = "newJobMessageContainer", OnSuccess = "loadNewMessages" }))
+@using (Html.BeginForm("_CreateMessage", "JobChat", FormMethod.Post, new { enctype = "multipart/form-data", id = "createMessageForm" }))
 {
     @Html.AntiForgeryToken()
     
@@ -20,6 +20,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Attachments, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="uploadedFileInputContainer"></div>
+                <div><a href="#" id="addUploadedFile" data-inputnameprefix="@ViewData.TemplateInfo.HtmlFieldPrefix">Добавить</a></div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Отправить" class="btn btn-default" />
             </div>
@@ -27,6 +35,32 @@
     </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script type="text/javascript">
+    $(function() {
+        var form = $("form#createMessageForm:first");
+        var submitCreateMessageForm = function(event) {
+            event.preventDefault();
+            var formData = new FormData(form[0]);
+            $.ajax({
+                url: form.attr('action'),
+                data: formData,
+                type: "POST",
+                dataType: 'html',
+                cache: false,
+                async: true,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    loadNewMessages();
+                    $("#newJobMessageContainer").html(data);
+                },
+                error: function() {}
+            });
+        }
+        form.submit(submitCreateMessageForm);
+
+        initUploadedFileBlock();
+    });
+</script>
+@Scripts.Render("~/bundles/jqueryval")
+
