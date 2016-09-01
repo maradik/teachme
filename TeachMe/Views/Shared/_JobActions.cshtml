@@ -1,0 +1,29 @@
+﻿@model Tuple<Guid, TeachMe.Models.JobActionType[]>
+
+@{
+    var jobId = Model.Item1;
+    var actionTypes = Model.Item2;
+}
+
+<div>
+    @using (Html.BeginForm("DoJobAction", null, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("jobId", jobId)
+        @Html.Hidden("jobActionType")
+        foreach (var actionType in actionTypes)
+        {
+            <button data-jobactiontype="@((int) actionType)">@actionType</button>
+        }
+    }
+</div>
+
+<script>
+    $(function() {
+        $("button[data-jobactiontype]").click(function () {
+            var actionButton = $(this);
+            $("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
+            $(actionButton).parents("form:first").submit();
+        });
+    });
+</script>

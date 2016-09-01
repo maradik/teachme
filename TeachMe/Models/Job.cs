@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Models
 {
     public class Job : IEntity
     {
         private List<JobAttachment> attachments;
+
+        private static readonly ILookup<JobStatus, JobActionProjectTypePair> AvailableActionsForStatus = new[]
+        {
+            Tuple.Create(JobStatus.Draft, new JobActionProjectTypePair(JobActionType.Open, ProjectType.Student)),
+            Tuple.Create(JobStatus.Opened, new JobActionProjectTypePair(JobActionType.Take, ProjectType.Teacher)),
+            Tuple.Create(JobStatus.Opened, new JobActionProjectTypePair(JobActionType.Cancel, ProjectType.Student)),
+            Tuple.Create(JobStatus.InWorking, new JobActionProjectTypePair(JobActionType.Finish, ProjectType.Teacher)),
+            Tuple.Create(JobStatus.InReWorking, new JobActionProjectTypePair(JobActionType.Finish, ProjectType.Teacher)),
+            Tuple.Create(JobStatus.Finished, new JobActionProjectTypePair(JobActionType.Accept, ProjectType.Student)),
+            Tuple.Create(JobStatus.Finished, new JobActionProjectTypePair(JobActionType.Reject, ProjectType.Student))
+        }.ToLookup(x => x.Item1, x => x.Item2);
 
         public Guid Id { get; set; }
 
@@ -28,7 +41,11 @@ namespace TeachMe.Models
         public decimal Cost { get; set; }
 
         [DisplayName("Фото, документы")]
-        public List<JobAttachment> Attachments { get { return attachments ?? (attachments = new List<JobAttachment>()); } set { attachments = value; } }
+        public List<JobAttachment> Attachments
+        {
+            get { return attachments ?? (attachments = new List<JobAttachment>()); }
+            set { attachments = value; }
+        }
 
         [DisplayName("Исполнитель")]
         public string TeacherUserId { get; set; }
@@ -41,5 +58,50 @@ namespace TeachMe.Models
 
         [DisplayName("Дата создания")]
         public long CreationTicks { get; set; }
+
+        public JobActionType[] GetAvailableActions(ProjectType projectType)
+        {
+            return AvailableActionsForStatus.Contains(Status)
+                       ? AvailableActionsForStatus[Status].Where(x => x.ProjectType == projectType)
+                                                          .Select(x => x.ActionType)
+                                                          .ToArray()
+                       : new JobActionType[0];
+        }
+
+        public void DoAction(JobActionType actionType, ProjectType projectType)
+        {
+            if (!GetAvailableActions(projectType).Contains(actionType))
+                throw new InvalidOperationException($"Недопустимое действие {actionType} над задачей {Id}, {nameof(projectType)}={projectType}");
+
+            switch (actionType)
+            {
+                case JobActionType.Finish:
+                    Status = JobStatus.Finished;
+                    break;
+                case JobActionType.Accept:
+                    Status = JobStatus.Accepted;
+                    break;
+                case JobActionType.Cancel:
+                    Status = JobStatus.Cancelled;
+                    break;
+                case JobActionType.Reject:
+                    Status = JobStatus.InReWorking;
+                    break;
+                default:
+                    throw new NotImplementedException($"Неизвестное действие {actionType}");
+            }
+        }
+
+        private class JobActionProjectTypePair
+        {
+            public JobActionProjectTypePair(JobActionType actionType, ProjectType projectType)
+            {
+                ActionType = actionType;
+                ProjectType = projectType;
+            }
+
+            public JobActionType ActionType { get; }
+            public ProjectType ProjectType { get; }
+        }
     }
 }

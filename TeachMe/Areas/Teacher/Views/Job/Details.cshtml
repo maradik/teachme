@@ -1,5 +1,6 @@
 ﻿@using TeachMe.Extensions
 @using TeachMe.Models
+@using TeachMe.ProjectsSupport
 @model Job
 
 @{
@@ -7,6 +8,10 @@
 }
 
 <h2>Задача: @Model.Title</h2>
+
+<div>
+    @Html.Partial("_JobActions", Tuple.Create(Model.Id, Model.GetAvailableActions((ProjectType)ViewBag.ApplicationUser.ProjectType)))
+</div>
 
 <div>
     <hr/>

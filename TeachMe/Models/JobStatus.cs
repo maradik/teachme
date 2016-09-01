@@ -4,9 +4,10 @@
     {
         Draft = 0,
         Opened = 1,
-        InProgress = 2,
+        InWorking = 2,
         Finished = 3,
         Accepted = 4,
-        Cancelled = 5
+        Cancelled = 5,
+        InReWorking = 6
     }
 }

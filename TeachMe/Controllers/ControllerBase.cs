@@ -15,7 +15,9 @@ namespace TeachMe.Controllers
 
         public ControllerBase(IProjectTypeProvider projectTypeProvider)
         {
-            lazyApplicationUser = new Lazy<ApplicationUser>(() => HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()));
+            lazyApplicationUser =
+                new Lazy<ApplicationUser>(
+                    () => !string.IsNullOrEmpty(User.Identity.GetUserId()) ? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()) : null);
             lazyProjectType = new Lazy<ProjectType>(() => projectTypeProvider.Get(HttpContext));
         }
 
@@ -26,6 +28,7 @@ namespace TeachMe.Controllers
         {
             base.OnActionExecuting(filterContext);
             ViewBag.ProjectType = ProjectType;
+            ViewBag.ApplicationUser = ApplicationUser;
         }
     }
 }

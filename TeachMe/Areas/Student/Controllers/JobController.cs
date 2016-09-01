@@ -195,5 +195,15 @@ namespace TeachMe.Areas.Student.Controllers
             if (!string.IsNullOrEmpty(job.TeacherUserId))
                 throw new InvalidOperationException($"Невозможно изменить Job, за которым закреплен исполнитель (JobId = {job.Id})");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
+        {
+            var job = jobRepository.GetByIdAndStudentUserId(jobId, ApplicationUser.Id);
+            job.DoAction(jobActionType, ApplicationUser.ProjectType);
+            jobRepository.Write(job);
+            return RedirectToAction(nameof(Details), new { id = jobId });
+        }
     }
 }

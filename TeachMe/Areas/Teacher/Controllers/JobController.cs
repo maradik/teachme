@@ -52,11 +52,21 @@ namespace TeachMe.Areas.Teacher.Controllers
                 throw new InvalidOperationException($"Невозможно закрепить за исполнителем {ApplicationUser.UserName} задачу {job.Id}, т.к. у нее статус {job.Status}");
 
             job.TeacherUserId = ApplicationUser.Id;
-            job.Status = JobStatus.InProgress;
+            job.Status = JobStatus.InWorking;
 
             jobRepository.Write(job);
 
             return RedirectToAction("Details", new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
+        {
+            var job = jobRepository.GetByIdAndTeacherUserId(jobId, ApplicationUser.Id);
+            job.DoAction(jobActionType, ApplicationUser.ProjectType);
+            jobRepository.Write(job);
+            return RedirectToAction(nameof(Details), new { id = jobId });
         }
     }
 }

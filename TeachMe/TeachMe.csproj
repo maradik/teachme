@@ -238,6 +238,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUserStore.cs" />
     <Compile Include="Models\IEntity.cs" />
+    <Compile Include="Models\JobActionType.cs" />
     <Compile Include="Models\JobAttachmentType.cs" />
     <Compile Include="Models\JobMessage.cs" />
     <Compile Include="Models\UploadedJobAttachment.cs" />
@@ -337,6 +338,7 @@
     <Content Include="Views\Shared\_Login.cshtml" />
     <None Include="Areas\Student\Views\Job\Create.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeUtcTicks.cshtml" />
+    <Content Include="Views\Shared\_JobActions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
