@@ -4,7 +4,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeachMe.DataAccess;
-using TeachMe.Models;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.Jobs;
@@ -50,28 +49,9 @@ namespace TeachMe.Areas.Teacher.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Take(Guid id)
-        {
-            var job = jobRepository.GetByIdAndTeacherUserId(id, null);
-
-            if (job.Status != JobStatus.Opened)
-                throw new InvalidOperationException($"Невозможно закрепить за исполнителем {ApplicationUser.UserName} задачу {job.Id}, т.к. у нее статус {job.Status}");
-
-            job.TeacherUserId = ApplicationUser.Id;
-            job.Status = JobStatus.InWorking;
-
-            jobRepository.Write(job);
-
-            return RedirectToAction("Details", new {id});
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
         {
-            var job = jobRepository.GetByIdAndTeacherUserId(jobId, ApplicationUser.Id);
-            jobActionService.DoAction(job, jobActionType, ApplicationUser);
-            jobRepository.Write(job);
+            jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
             return RedirectToAction(nameof(Details), new {id = jobId});
         }
     }

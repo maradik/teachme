@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using TeachMe.DataAccess;
 using TeachMe.Models.Jobs;
 using TeachMe.Models.Users;
 
@@ -7,6 +8,13 @@ namespace TeachMe.Services.Jobs
 {
     public class JobActionService : IJobActionService
     {
+        private readonly IJobRepository jobRepository;
+
+        public JobActionService(IJobRepository jobRepository)
+        {
+            this.jobRepository = jobRepository;
+        }
+
         private static readonly ILookup<JobStatus, JobActionByUserRole> AvailableActionsForStatus = new[]
         {
             Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Open, UserRole.Student, (j, u) => j.StudentCost <= u.Cash.AvailableAmount)),
@@ -23,15 +31,17 @@ namespace TeachMe.Services.Jobs
         {
             return AvailableActionsForStatus.Contains(job.Status)
                        ? AvailableActionsForStatus[job.Status].Where(x => user.Roles.Contains(x.UserRole.Name))
-                                                              .Where(x => user.Id == job.StudentUserId || user.Id == job.TeacherUserId)
+                                                              .Where(x => x.UserRole == UserRole.Teacher ? IsTeacherHasAccess(job, user) : IsStudentHasAccess(job, user))
                                                               .Where(x => x.CheckForAvailability(job, user))
                                                               .Select(x => x.ActionType)
                                                               .ToArray()
                        : new JobActionType[0];
         }
 
-        public void DoAction(Job job, JobActionType actionType, ApplicationUser user)
+        public Job DoAction(Guid jobId, JobActionType actionType, ApplicationUser user)
         {
+            var job = jobRepository.Get(jobId);
+
             if (!GetAvailableActions(job, user).Contains(actionType))
                 throw new InvalidOperationException($"Недопустимое действие {actionType} над задачей {job.Id}, {nameof(user)}={user.Id}");
 
@@ -42,6 +52,10 @@ namespace TeachMe.Services.Jobs
                     break;
                 case JobActionType.Open:
                     job.Status = JobStatus.Opened;
+                    break;
+                case JobActionType.Take:
+                    job.Status = JobStatus.InWorking;
+                    job.TeacherUserId = user.Id;
                     break;
                 case JobActionType.Finish:
                     job.Status = JobStatus.Finished;
@@ -58,6 +72,20 @@ namespace TeachMe.Services.Jobs
                 default:
                     throw new NotImplementedException($"Неизвестное действие {actionType}");
             }
+
+            jobRepository.Write(job);
+
+            return job;
+        }
+
+        public bool IsStudentHasAccess(Job job, ApplicationUser user)
+        {
+            return job.StudentUserId == user.Id;
+        }
+
+        public bool IsTeacherHasAccess(Job job, ApplicationUser user)
+        {
+            return (string.IsNullOrEmpty(job.TeacherUserId) || job.TeacherUserId == user.Id) && job.StudentUserId != user.Id;
         }
 
         private class JobActionByUserRole

@@ -16,20 +16,8 @@
 </div>
 
 <div>
-    @using (Html.BeginForm("Take", "Job"))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            @Html.Hidden("Id", Model.Job.Id)
-            @if (string.IsNullOrEmpty(Model.Job.TeacherUserId))
-            {
-                <input type="submit" value="Взять в работу" class="btn btn-default"/>
-            }
-            @Html.ActionLink("Список моих задач", "Index") |
-            @Html.ActionLink("Список доступных задач", "IndexAvailable")
-        </div>
-    }
+    @Html.ActionLink("Список моих задач", "Index") |
+    @Html.ActionLink("Список доступных задач", "IndexAvailable")
 </div>
 
 @if (!string.IsNullOrEmpty(Model.Job.TeacherUserId))

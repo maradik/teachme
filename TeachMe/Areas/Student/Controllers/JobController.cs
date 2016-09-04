@@ -211,9 +211,7 @@ namespace TeachMe.Areas.Student.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
         {
-            var job = jobRepository.GetByIdAndStudentUserId(jobId, ApplicationUser.Id);
-            jobActionService.DoAction(job, jobActionType, ApplicationUser);
-            jobRepository.Write(job);
+            jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
             return RedirectToAction(nameof(Details), new {id = jobId});
         }
     }
