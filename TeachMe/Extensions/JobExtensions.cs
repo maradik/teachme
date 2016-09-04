@@ -2,7 +2,6 @@
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using TeachMe.Models;
 using TeachMe.Models.Jobs;
 using TeachMe.Models.Users;
 using TeachMe.References;
@@ -27,6 +26,15 @@ namespace TeachMe.Extensions
                 HttpContext.Current.GetOwinContext()
                            .GetUserManager<ApplicationUserManager>()
                            .FindById(job.StudentUserId);
+        }
+
+        public static ApplicationUser GetTeacherUser(this Job job)
+        {
+            return string.IsNullOrEmpty(job.TeacherUserId)
+                       ? null
+                       : HttpContext.Current.GetOwinContext()
+                                    .GetUserManager<ApplicationUserManager>()
+                                    .FindById(job.TeacherUserId);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 using Ninject.Extensions.Conventions;
 using Ninject.Web.Common;
@@ -29,6 +31,7 @@ namespace TeachMe.Utils
 
         private void AddBindings()
         {
+            kernel.Bind<ApplicationUserManager>().ToMethod(context => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>());
             kernel.Bind(x => x.FromThisAssembly()
                               .SelectAllClasses()
                               .BindDefaultInterface()
