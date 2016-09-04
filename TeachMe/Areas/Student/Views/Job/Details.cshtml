@@ -1,15 +1,15 @@
 ﻿@using TeachMe.Extensions
-@using TeachMe.Models
 @using TeachMe.Models.Jobs
 @using TeachMe.Models.Users
-@using TeachMe.ProjectsSupport
-@model TeachMe.Models.Jobs.Job
+@model Job
 
 @{
     ViewBag.Title = "Задача: " + Html.Encode(Model.Title);
 }
 
 <h2>Задача: @Model.Title</h2>
+
+@Html.Partial("_JobStatusInfo", Model)
 
 <div>
     @Html.Partial("_JobActions", Tuple.Create(Model.Id, Model.GetAvailableActions((ApplicationUser)ViewBag.ApplicationUser)))

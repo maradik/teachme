@@ -38,7 +38,7 @@ namespace TeachMe.Areas.Student.Controllers
         }
 
         // GET: Job
-        
+
         public ActionResult Index()
         {
             var currentUserJobs = jobRepository.GetAllByStudentUserId(ApplicationUser.Id).OrderByDescending(x => x.CreationTicks).ToArray();
@@ -82,10 +82,10 @@ namespace TeachMe.Areas.Student.Controllers
 
                 job.StudentUserId = User.Identity.GetUserId();
                 job.TeacherUserId = string.Empty;
-                job.Status = JobStatus.Opened;
+                job.Status = job.StudentCost <= ApplicationUser.Cash.AvailableAmount ? JobStatus.Opened : JobStatus.Draft;
                 jobRepository.Write(job);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new {job.Id});
             }
             catch
             {
@@ -132,10 +132,15 @@ namespace TeachMe.Areas.Student.Controllers
                     uploadedFileRepository.Save(uploadedJobAttachments);
                     job.Attachments.AddRange(uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment));
                 }
-                
+
+                if (job.StudentCost > ApplicationUser.Cash.AvailableAmount)
+                {
+                    job.Status = JobStatus.Draft;
+                }
+
                 jobRepository.Write(job);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { job.Id });
             }
             catch
             {
@@ -204,7 +209,7 @@ namespace TeachMe.Areas.Student.Controllers
             var job = jobRepository.GetByIdAndStudentUserId(jobId, ApplicationUser.Id);
             job.DoAction(jobActionType, ApplicationUser);
             jobRepository.Write(job);
-            return RedirectToAction(nameof(Details), new { id = jobId });
+            return RedirectToAction(nameof(Details), new {id = jobId});
         }
     }
 }

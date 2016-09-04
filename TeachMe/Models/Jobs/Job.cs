@@ -17,7 +17,8 @@ namespace TeachMe.Models.Jobs
 
         private static readonly ILookup<JobStatus, JobActionByUserRole> AvailableActionsForStatus = new[]
         {
-            Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Open, UserRole.Student)),
+            Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Open, UserRole.Student, (j, u) => j.StudentCost <= u.Cash.AvailableAmount)),
+            Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Hide, UserRole.Student)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Take, UserRole.Teacher)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Cancel, UserRole.Student)),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
@@ -74,6 +75,7 @@ namespace TeachMe.Models.Jobs
         {
             return AvailableActionsForStatus.Contains(Status)
                        ? AvailableActionsForStatus[Status].Where(x => user.Roles.Contains(x.UserRole.Name))
+                                                          .Where(x => x.CheckForAvailability(this, user))
                                                           .Select(x => x.ActionType)
                                                           .ToArray()
                        : new JobActionType[0];
@@ -86,6 +88,12 @@ namespace TeachMe.Models.Jobs
 
             switch (actionType)
             {
+                case JobActionType.Hide:
+                    Status = JobStatus.Draft;
+                    break;
+                case JobActionType.Open:
+                    Status = JobStatus.Opened;
+                    break;
                 case JobActionType.Finish:
                     Status = JobStatus.Finished;
                     break;
@@ -105,14 +113,16 @@ namespace TeachMe.Models.Jobs
 
         private class JobActionByUserRole
         {
-            public JobActionByUserRole(JobActionType actionType, UserRole userRole)
+            public JobActionByUserRole(JobActionType actionType, UserRole userRole, Func<Job, ApplicationUser, bool> checkForAvailability = null)
             {
                 ActionType = actionType;
                 UserRole = userRole;
+                CheckForAvailability = checkForAvailability ?? ((job, user) => true);
             }
 
             public JobActionType ActionType { get; }
             public UserRole UserRole { get; }
+            public Func<Job, ApplicationUser, bool> CheckForAvailability { get; }
         }
     }
 }

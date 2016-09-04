@@ -145,7 +145,8 @@ namespace TeachMe.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Cash = GetInitialUserCash()};
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                user.Cash.PhysicalAmount = GetInitialUserCashAmount();
                 user.Roles.AddRange(GetRolesForNewUser().Select(x => x.Name));
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -167,7 +168,7 @@ namespace TeachMe.Controllers
             return View(model);
         }
 
-        private double GetInitialUserCash()
+        private double GetInitialUserCashAmount()
         {
             return ProjectType == ProjectType.Student ? ApplicationSettings.StudentInitialCash : ApplicationSettings.TeacherInitialCash;
         }

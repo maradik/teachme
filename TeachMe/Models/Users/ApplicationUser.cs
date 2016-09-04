@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using MongoDB.AspNet.Identity;
-using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Models.Users
 {
@@ -11,6 +10,7 @@ namespace TeachMe.Models.Users
     {
         private UserAccess access;
         private string userName;
+        private UserCash cash;
 
         public override string UserName { get { return userName; } set { userName = value.ToLowerInvariant(); } }
         public string Email { get; set; }
@@ -18,8 +18,8 @@ namespace TeachMe.Models.Users
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public bool TwoFactorEnabled { get; set; }
-        public double Cash { get; set; }
         public UserAccess Access { get { return access ?? (access = new UserAccess()); } set { access = value; } }
+        public UserCash Cash { get { return cash ?? (cash = new UserCash()); } set { cash = value; } }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

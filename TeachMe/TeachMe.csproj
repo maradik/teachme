@@ -247,6 +247,7 @@
     <Compile Include="Models\Jobs\JobStatus.cs" />
     <Compile Include="Models\Jobs\Job.cs" />
     <Compile Include="Models\Users\UserAccess.cs" />
+    <Compile Include="Models\Users\UserCash.cs" />
     <Compile Include="Models\Users\UserRole.cs" />
     <Compile Include="Models\Users\UserStore.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
@@ -285,6 +286,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Views\JobChat\_CreateMessage.cshtml" />
+    <Content Include="Areas\Student\Views\Job\_JobStatusInfo.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

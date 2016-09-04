@@ -2,7 +2,7 @@
 {
     public enum JobActionType
     {
-        Create = 0,
+        Hide = 0,
         Open = 1,
         Take = 2,
         Finish = 3,
