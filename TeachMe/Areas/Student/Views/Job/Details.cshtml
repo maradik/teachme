@@ -1,102 +1,39 @@
-﻿@using TeachMe.Extensions
-@using TeachMe.Models.Jobs
-@using TeachMe.Models.Users
-@model Job
+﻿@using TeachMe.Models.Users
+@model TeachMe.ViewModels.Jobs.JobDetailsViewModel
 
 @{
-    ViewBag.Title = "Задача: " + Html.Encode(Model.Title);
+    ViewBag.Title = "Задача: " + Html.Encode(Model.Job.Title);
 }
 
-<h2>Задача: @Model.Title</h2>
+<h2>Задача: @Model.Job.Title</h2>
 
-@Html.Partial("_JobStatusInfo", Model)
+@Html.Partial("_JobStatusInfo", Model.Job)
 
 <div>
-    @Html.Partial("_JobActions", Tuple.Create(Model.Id, Model.GetAvailableActions((ApplicationUser)ViewBag.ApplicationUser)))
+    @Html.Partial("_JobActions", Tuple.Create(Model.Job.Id, Model.JobAvailableActions))
 </div>
 
 <div>
     <hr/>
-    @Html.HiddenFor(model => model.Id, new { id = "jobId" })
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SubjectId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GetSubject().Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StudentCost)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StudentCost)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationTicks)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Attachments)
-        </dt>
-
-        <dd>
-            @foreach (var attachment in Model.Attachments.OrderByDescending(x => x.Type))
-            {
-                <div style="margin: 10px 0 10px 0;">
-                    @switch (attachment.Type)
-                    {
-                        case JobAttachmentType.Image:
-                            <img src="~/Uploads/@attachment.FileName" title="@attachment.OriginFileName" style="max-width: 200px;"/>
-                            break;
-                        default:
-                            <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">@attachment.OriginFileName</a>
-                            break;
-                    }
-                </div>
-            }
-        </dd>
-    </dl>
+    @Html.Partial("_JobInfo", Model.Job)
 </div>
+
 <p>
-    @Html.ActionLink("Изменить", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("Изменить", "Edit", new {id = Model.Job.Id}) |
     @Html.ActionLink("Назад к списку", "Index")
 </p>
 
-@if (!string.IsNullOrEmpty(Model.TeacherUserId))
+@if (!string.IsNullOrEmpty(Model.Job.TeacherUserId))
 {
     <h3>Обсуждение с исполнителем</h3>
 
     <div id="jobMessageContainer"></div>
     <div id="newJobMessageContainer">
-        @Html.Action("_CreateMessage", "JobChat", new { JobId = Model.Id, area = "" })
+        @Html.Action("_CreateMessage", "JobChat", new {JobId = Model.Job.Id, area = ""})
     </div>
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             autoLoadNewMessages();
         });
     </script>

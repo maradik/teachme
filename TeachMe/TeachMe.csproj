@@ -259,8 +259,11 @@
     <Compile Include="References\ISubjectReference.cs" />
     <Compile Include="References\Subject.cs" />
     <Compile Include="References\SubjectReference.cs" />
+    <Compile Include="Services\Jobs\IJobActionService.cs" />
+    <Compile Include="Services\Jobs\JobActionService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\NinjectDependencyResolver.cs" />
+    <Compile Include="ViewModels\Jobs\JobDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -287,6 +290,8 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Views\JobChat\_CreateMessage.cshtml" />
     <Content Include="Areas\Student\Views\Job\_JobStatusInfo.cshtml" />
+    <Content Include="Areas\Teacher\Views\Job\_JobInfo.cshtml" />
+    <Content Include="Areas\Student\Views\Job\_JobInfo.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -351,7 +356,6 @@
     <Folder Include="Areas\Teacher\Models\" />
     <Folder Include="Areas\Teacher\Views\Shared\" />
     <Folder Include="Uploads\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

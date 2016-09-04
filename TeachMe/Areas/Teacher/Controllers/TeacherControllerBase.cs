@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
 using ControllerBase = TeachMe.Controllers.ControllerBase;

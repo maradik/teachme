@@ -7,17 +7,22 @@ using TeachMe.DataAccess;
 using TeachMe.Models;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.Jobs;
+using TeachMe.ViewModels.Jobs;
 
 namespace TeachMe.Areas.Teacher.Controllers
 {
     public class JobController : TeacherControllerBase
     {
+        private readonly IJobActionService jobActionService;
         private readonly IJobRepository jobRepository;
 
         public JobController(IProjectTypeProvider projectTypeProvider,
+                             IJobActionService jobActionService,
                              IJobRepository jobRepository)
             : base(projectTypeProvider)
         {
+            this.jobActionService = jobActionService;
             this.jobRepository = jobRepository;
         }
 
@@ -40,7 +45,7 @@ namespace TeachMe.Areas.Teacher.Controllers
             if (!string.IsNullOrEmpty(job.TeacherUserId) && job.TeacherUserId != ApplicationUser.Id)
                 throw new HttpException((int) HttpStatusCode.Forbidden, null);
 
-            return View(job);
+            return View(new JobDetailsViewModel {Job = job, JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser)});
         }
 
         [HttpPost]
@@ -57,7 +62,7 @@ namespace TeachMe.Areas.Teacher.Controllers
 
             jobRepository.Write(job);
 
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction("Details", new {id});
         }
 
         [HttpPost]
@@ -65,9 +70,9 @@ namespace TeachMe.Areas.Teacher.Controllers
         public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
         {
             var job = jobRepository.GetByIdAndTeacherUserId(jobId, ApplicationUser.Id);
-            job.DoAction(jobActionType, ApplicationUser);
+            jobActionService.DoAction(job, jobActionType, ApplicationUser);
             jobRepository.Write(job);
-            return RedirectToAction(nameof(Details), new { id = jobId });
+            return RedirectToAction(nameof(Details), new {id = jobId});
         }
     }
 }

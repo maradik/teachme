@@ -10,6 +10,8 @@ using TeachMe.Models;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 using TeachMe.References;
+using TeachMe.Services.Jobs;
+using TeachMe.ViewModels.Jobs;
 
 namespace TeachMe.Areas.Student.Controllers
 {
@@ -20,12 +22,14 @@ namespace TeachMe.Areas.Student.Controllers
         private readonly IUploadedFileRepository uploadedFileRepository;
         private readonly IUploadedFileConverter uploadFileConverter;
         private readonly IJobAttachmentConverter attachmentConverter;
+        private readonly IJobActionService jobActionService;
 
         public JobController(IJobRepository jobRepository,
                              IUploadedFileRepository uploadedFileRepository,
                              IUploadedFileConverter uploadFileConverter,
                              IJobAttachmentConverter attachmentConverter,
                              ISubjectReference subjectReference,
+                             IJobActionService jobActionService,
                              IProjectTypeProvider projectTypeProvider)
             : base(projectTypeProvider)
         {
@@ -33,6 +37,7 @@ namespace TeachMe.Areas.Student.Controllers
             this.uploadedFileRepository = uploadedFileRepository;
             this.uploadFileConverter = uploadFileConverter;
             this.attachmentConverter = attachmentConverter;
+            this.jobActionService = jobActionService;
 
             ViewBag.Subjects = subjectReference.GetAll();
         }
@@ -50,7 +55,7 @@ namespace TeachMe.Areas.Student.Controllers
         public ActionResult Details(Guid id)
         {
             var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
-            return View(job);
+            return View(new JobDetailsViewModel {Job = job, JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser)});
         }
 
         // GET: Job/Create
@@ -140,7 +145,7 @@ namespace TeachMe.Areas.Student.Controllers
 
                 jobRepository.Write(job);
 
-                return RedirectToAction("Details", new { job.Id });
+                return RedirectToAction("Details", new {job.Id});
             }
             catch
             {
@@ -207,7 +212,7 @@ namespace TeachMe.Areas.Student.Controllers
         public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
         {
             var job = jobRepository.GetByIdAndStudentUserId(jobId, ApplicationUser.Id);
-            job.DoAction(jobActionType, ApplicationUser);
+            jobActionService.DoAction(job, jobActionType, ApplicationUser);
             jobRepository.Write(job);
             return RedirectToAction(nameof(Details), new {id = jobId});
         }
