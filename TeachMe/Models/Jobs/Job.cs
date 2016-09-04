@@ -9,9 +9,9 @@ namespace TeachMe.Models.Jobs
 {
     public class Job : IEntity
     {
-        private const decimal MinCost = 50m;
-        private const decimal MaxCost = 1000m;
-        private const decimal CommissionRate = 0.25m;
+        private const double MinCost = 50;
+        private const double MaxCost = 1000;
+        private const double CommissionRate = 0.25;
 
         private List<JobAttachment> attachments;
 
@@ -42,14 +42,14 @@ namespace TeachMe.Models.Jobs
         public JobStatus Status { get; set; }
 
         [Display(Name = "Стоимость")]
-        [Range((double)MinCost, (double)MaxCost)]
-        public decimal StudentCost { get; set; }
+        [Range(MinCost, MaxCost)]
+        public double StudentCost { get; set; }
 
         [Display(Name = "Стоимость")]
-        public decimal TeacherCost => StudentCost - Commission;
+        public double TeacherCost => StudentCost - Commission;
 
         [Display(Name = "Комиссия")]
-        public decimal Commission => Math.Round(StudentCost*CommissionRate);
+        public double Commission => Math.Round(StudentCost*CommissionRate);
 
         [DisplayName("Фото, документы")]
         public List<JobAttachment> Attachments

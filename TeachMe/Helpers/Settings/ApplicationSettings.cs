@@ -6,13 +6,13 @@ namespace TeachMe.Helpers.Settings
     public static class ApplicationSettings
     {
         public static string[] AllowedUploadFileExtensions => ConfigurationManager.AppSettings["AllowedUploadFileExtensions"]?.Split(',') ?? new string[0];
-        public static decimal TeacherInitialCash => SafeGetDecimal("TeacherInitialCash") ?? 0.0m;
-        public static decimal StudentInitialCash => SafeGetDecimal("StudentInitialCash") ?? 0.0m;
+        public static double TeacherInitialCash => SafeGetDouble("TeacherInitialCash") ?? 0.0;
+        public static double StudentInitialCash => SafeGetDouble("StudentInitialCash") ?? 0.0;
 
-        private static decimal? SafeGetDecimal(string settingName)
+        private static double? SafeGetDouble(string settingName)
         {
-            decimal initialCash;
-            if (decimal.TryParse(ConfigurationManager.AppSettings[settingName], out initialCash))
+            double initialCash;
+            if (double.TryParse(ConfigurationManager.AppSettings[settingName], out initialCash))
             {
                 return initialCash;
             }

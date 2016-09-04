@@ -167,7 +167,7 @@ namespace TeachMe.Controllers
             return View(model);
         }
 
-        private decimal GetInitialUserCash()
+        private double GetInitialUserCash()
         {
             return ProjectType == ProjectType.Student ? ApplicationSettings.StudentInitialCash : ApplicationSettings.TeacherInitialCash;
         }
