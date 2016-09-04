@@ -178,7 +178,7 @@ namespace TeachMe.Areas.Student.Controllers
             job.SubjectId = jobViewModel.SubjectId;
             job.Description = jobViewModel.Description;
             job.Title = jobViewModel.Title;
-            job.Cost = jobViewModel.Cost;
+            job.StudentCost = jobViewModel.StudentCost;
 
             var jobViewModelFileNames = new HashSet<string>(jobViewModel.Attachments.Select(y => y.FileName));
             deletedAttachments = job.Attachments.Where(x => !jobViewModelFileNames.Contains(x.FileName)).ToArray();

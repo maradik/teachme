@@ -9,6 +9,10 @@ namespace TeachMe.Models.Jobs
 {
     public class Job : IEntity
     {
+        private const decimal MinCost = 50m;
+        private const decimal MaxCost = 1000m;
+        private const decimal CommissionRate = 0.25m;
+
         private List<JobAttachment> attachments;
 
         private static readonly ILookup<JobStatus, JobActionByUserRole> AvailableActionsForStatus = new[]
@@ -38,7 +42,14 @@ namespace TeachMe.Models.Jobs
         public JobStatus Status { get; set; }
 
         [Display(Name = "Стоимость")]
-        public decimal Cost { get; set; }
+        [Range((double)MinCost, (double)MaxCost)]
+        public decimal StudentCost { get; set; }
+
+        [Display(Name = "Стоимость")]
+        public decimal TeacherCost => StudentCost - Commission;
+
+        [Display(Name = "Комиссия")]
+        public decimal Commission => Math.Round(StudentCost*CommissionRate);
 
         [DisplayName("Фото, документы")]
         public List<JobAttachment> Attachments
