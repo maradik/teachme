@@ -65,7 +65,7 @@ namespace TeachMe.Areas.Teacher.Controllers
         public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
         {
             var job = jobRepository.GetByIdAndTeacherUserId(jobId, ApplicationUser.Id);
-            job.DoAction(jobActionType, ApplicationUser.ProjectType);
+            job.DoAction(jobActionType, ApplicationUser);
             jobRepository.Write(job);
             return RedirectToAction(nameof(Details), new { id = jobId });
         }

@@ -202,7 +202,7 @@ namespace TeachMe.Areas.Student.Controllers
         public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
         {
             var job = jobRepository.GetByIdAndStudentUserId(jobId, ApplicationUser.Id);
-            job.DoAction(jobActionType, ApplicationUser.ProjectType);
+            job.DoAction(jobActionType, ApplicationUser);
             jobRepository.Write(job);
             return RedirectToAction(nameof(Details), new { id = jobId });
         }

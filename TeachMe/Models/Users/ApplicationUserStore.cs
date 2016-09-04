@@ -1,11 +1,13 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using MongoDB.Driver.Builders;
+using MongoDB.Driver.Linq;
 
 namespace TeachMe.Models.Users
 {
-    public class ApplicationUserStore : UserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>, IUserTwoFactorStore<ApplicationUser, string>, IUserLockoutStore<ApplicationUser, string>
+    public class ApplicationUserStore : UserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>, IUserTwoFactorStore<ApplicationUser, string>, IUserLockoutStore<ApplicationUser, string>, IQueryableUserStore<ApplicationUser, string>
     {
         public ApplicationUserStore() : base()
         {
@@ -174,5 +176,7 @@ namespace TeachMe.Models.Users
             user.Access.LockoutEndDate = lockoutEnd;
             return Task.FromResult(0);
         }
+
+        public IQueryable<ApplicationUser> Users => db.GetCollection<ApplicationUser>("AspNetUsers").AsQueryable();
     }
 }

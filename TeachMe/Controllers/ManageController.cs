@@ -23,10 +23,9 @@ namespace TeachMe.Controllers
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider) 
+        public ManageController(ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider) 
             : base(projectTypeProvider)
         {
-            UserManager = userManager;
             SignInManager = signInManager;
         }
 
@@ -39,18 +38,6 @@ namespace TeachMe.Controllers
             private set 
             { 
                 _signInManager = value; 
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
             }
         }
 

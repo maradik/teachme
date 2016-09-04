@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -25,10 +26,9 @@ namespace TeachMe.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider)
+        public AccountController(ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider)
             : base(projectTypeProvider)
         {
-            UserManager = userManager;
             SignInManager = signInManager;
         }
 
@@ -36,12 +36,6 @@ namespace TeachMe.Controllers
         {
             get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
             private set { _signInManager = value; }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
         }
 
         //
@@ -149,7 +143,8 @@ namespace TeachMe.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, ProjectType = ProjectType};
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                user.Roles.AddRange(GetRolesForNewUser().Select(x => x.Name));
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -371,7 +366,8 @@ namespace TeachMe.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, ProjectType = ProjectType};
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                user.Roles.AddRange(GetRolesForNewUser().Select(x => x.Name));
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -425,6 +421,16 @@ namespace TeachMe.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        private UserRole[] GetRolesForNewUser()
+        {
+            if (!UserManager.Users.Any())
+            {
+                return new [] { UserRole.Admin, UserRole.Student, UserRole.Teacher };
+            }
+
+            return new[] {ProjectType == ProjectType.Student ? UserRole.Student : UserRole.Teacher};
         }
 
         #region Вспомогательные приложения
