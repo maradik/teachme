@@ -235,6 +235,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\Settings\ApplicationSettings.cs" />
     <Compile Include="Models\Users\AccountViewModels.cs" />
     <Compile Include="Models\Users\ApplicationUserStore.cs" />
     <Compile Include="Models\Users\IEntity.cs" />

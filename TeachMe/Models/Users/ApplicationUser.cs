@@ -18,6 +18,7 @@ namespace TeachMe.Models.Users
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public bool TwoFactorEnabled { get; set; }
+        public decimal Cash { get; set; }
         public UserAccess Access { get { return access ?? (access = new UserAccess()); } set { access = value; } }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

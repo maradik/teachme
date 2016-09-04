@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using TeachMe.Helpers.Settings;
 using TeachMe.Models;
 using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
@@ -143,7 +145,7 @@ namespace TeachMe.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Cash = GetInitialUserCash()};
                 user.Roles.AddRange(GetRolesForNewUser().Select(x => x.Name));
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -163,6 +165,11 @@ namespace TeachMe.Controllers
 
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             return View(model);
+        }
+
+        private decimal GetInitialUserCash()
+        {
+            return ProjectType == ProjectType.Student ? ApplicationSettings.StudentInitialCash : ApplicationSettings.TeacherInitialCash;
         }
 
         //

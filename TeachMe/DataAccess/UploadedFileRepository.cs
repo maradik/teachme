@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
+using TeachMe.Helpers.Settings;
 using TeachMe.Models;
 using TeachMe.Models.Jobs;
 
@@ -15,8 +16,7 @@ namespace TeachMe.DataAccess
 
         static UploadedFileRepository()
         {
-            var allowedUploadFileExtensionsFromSettings = ConfigurationManager.AppSettings["AllowedUploadFileExtensions"]?.Split(',');
-            AllowedUploadFileExtensions = new HashSet<string>(allowedUploadFileExtensionsFromSettings ?? new string[0], StringComparer.InvariantCultureIgnoreCase);
+            AllowedUploadFileExtensions = new HashSet<string>(ApplicationSettings.AllowedUploadFileExtensions, StringComparer.InvariantCultureIgnoreCase);
         }
 
         public void Save(UploadedJobAttachment[] uploadedJobAttachments)
