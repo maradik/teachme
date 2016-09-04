@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TeachMe.Models;
+using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Controllers

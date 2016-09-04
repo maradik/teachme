@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using TeachMe.Models;
+using TeachMe.Models.Jobs;
 
 namespace TeachMe.DataAccess
 {

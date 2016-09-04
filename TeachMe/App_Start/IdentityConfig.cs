@@ -10,6 +10,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using MongoDB.AspNet.Identity;
 using TeachMe.Models;
+using TeachMe.Models.Users;
 
 namespace TeachMe
 {

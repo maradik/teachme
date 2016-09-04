@@ -235,20 +235,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationUserStore.cs" />
-    <Compile Include="Models\IEntity.cs" />
-    <Compile Include="Models\JobActionType.cs" />
-    <Compile Include="Models\JobAttachmentType.cs" />
-    <Compile Include="Models\JobMessage.cs" />
-    <Compile Include="Models\UploadedJobAttachment.cs" />
-    <Compile Include="Models\JobAttachment.cs" />
-    <Compile Include="Models\JobStatus.cs" />
-    <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\UserAccess.cs" />
-    <Compile Include="Models\UserStore.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Users\AccountViewModels.cs" />
+    <Compile Include="Models\Users\ApplicationUserStore.cs" />
+    <Compile Include="Models\Users\IEntity.cs" />
+    <Compile Include="Models\Jobs\JobActionType.cs" />
+    <Compile Include="Models\Jobs\JobAttachmentType.cs" />
+    <Compile Include="Models\Jobs\JobMessage.cs" />
+    <Compile Include="Models\Jobs\UploadedJobAttachment.cs" />
+    <Compile Include="Models\Jobs\JobAttachment.cs" />
+    <Compile Include="Models\Jobs\JobStatus.cs" />
+    <Compile Include="Models\Jobs\Job.cs" />
+    <Compile Include="Models\Users\UserAccess.cs" />
+    <Compile Include="Models\Users\UserStore.cs" />
+    <Compile Include="Models\Users\ApplicationUser.cs" />
+    <Compile Include="Models\Users\ManageViewModels.cs" />
     <Compile Include="ProjectsSupport\IProjectTypeProvider.cs" />
     <Compile Include="ProjectsSupport\ProjectType.cs" />
     <Compile Include="ProjectsSupport\ProjectTypeProvider.cs" />

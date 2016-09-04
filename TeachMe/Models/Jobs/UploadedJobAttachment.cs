@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace TeachMe.Models
+namespace TeachMe.Models.Jobs
 {
     public class UploadedJobAttachment : JobAttachment
     {

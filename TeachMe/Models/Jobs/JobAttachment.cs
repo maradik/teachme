@@ -1,5 +1,5 @@
 ﻿
-namespace TeachMe.Models
+namespace TeachMe.Models.Jobs
 {
     public class JobAttachment
     {

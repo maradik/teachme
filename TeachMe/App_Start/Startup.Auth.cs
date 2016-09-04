@@ -5,6 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using TeachMe.Models;
+using TeachMe.Models.Users;
 
 namespace TeachMe
 {

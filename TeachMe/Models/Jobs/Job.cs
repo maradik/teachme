@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
 
-namespace TeachMe.Models
+namespace TeachMe.Models.Jobs
 {
     public class Job : IEntity
     {

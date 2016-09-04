@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using TeachMe.Models;
+using TeachMe.Models.Jobs;
 
 namespace TeachMe.Converters
 {

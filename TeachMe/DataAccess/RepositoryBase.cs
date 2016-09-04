@@ -3,6 +3,7 @@ using System.Configuration;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using TeachMe.Models;
+using TeachMe.Models.Users;
 
 namespace TeachMe.DataAccess
 {

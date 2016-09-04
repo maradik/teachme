@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using TeachMe.Models;
+using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Controllers

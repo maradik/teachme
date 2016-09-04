@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using MongoDB.Driver.Builders;
 
-namespace TeachMe.Models
+namespace TeachMe.Models.Users
 {
     public class ApplicationUserStore : UserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>, IUserTwoFactorStore<ApplicationUser, string>, IUserLockoutStore<ApplicationUser, string>
     {

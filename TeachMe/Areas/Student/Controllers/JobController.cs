@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using TeachMe.Converters;
 using TeachMe.DataAccess;
 using TeachMe.Models;
+using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 using TeachMe.References;
 

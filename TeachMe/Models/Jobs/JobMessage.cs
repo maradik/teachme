@@ -1,6 +1,7 @@
 ﻿using System;
+using TeachMe.Models.Users;
 
-namespace TeachMe.Models
+namespace TeachMe.Models.Jobs
 {
     public class JobMessage : IEntity
     {

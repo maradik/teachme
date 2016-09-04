@@ -1,4 +1,4 @@
-﻿namespace TeachMe.Models
+﻿namespace TeachMe.Models.Jobs
 {
     public enum JobActionType
     {

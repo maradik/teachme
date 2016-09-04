@@ -1,6 +1,6 @@
 using System;
 
-namespace TeachMe.Models
+namespace TeachMe.Models.Users
 {
     public class UserAccess
     {

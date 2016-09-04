@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using TeachMe.Converters;
 using TeachMe.DataAccess;
 using TeachMe.Models;
+using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Controllers

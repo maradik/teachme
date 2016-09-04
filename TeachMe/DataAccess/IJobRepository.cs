@@ -1,5 +1,6 @@
 ﻿using System;
 using TeachMe.Models;
+using TeachMe.Models.Jobs;
 
 namespace TeachMe.DataAccess
 {
