@@ -23,6 +23,7 @@ namespace TeachMe.Areas.Student.Controllers
         private readonly IUploadedFileConverter uploadFileConverter;
         private readonly IJobAttachmentConverter attachmentConverter;
         private readonly IJobActionService jobActionService;
+        private readonly IJobOpeningSpecification jobOpeningSpecification;
 
         public JobController(IJobRepository jobRepository,
                              IUploadedFileRepository uploadedFileRepository,
@@ -30,7 +31,8 @@ namespace TeachMe.Areas.Student.Controllers
                              IJobAttachmentConverter attachmentConverter,
                              ISubjectReference subjectReference,
                              IJobActionService jobActionService,
-                             IProjectTypeProvider projectTypeProvider)
+                             IProjectTypeProvider projectTypeProvider,
+                             IJobOpeningSpecification jobOpeningSpecification)
             : base(projectTypeProvider)
         {
             this.jobRepository = jobRepository;
@@ -38,6 +40,7 @@ namespace TeachMe.Areas.Student.Controllers
             this.uploadFileConverter = uploadFileConverter;
             this.attachmentConverter = attachmentConverter;
             this.jobActionService = jobActionService;
+            this.jobOpeningSpecification = jobOpeningSpecification;
 
             ViewBag.Subjects = subjectReference.GetAll();
         }
@@ -87,7 +90,7 @@ namespace TeachMe.Areas.Student.Controllers
 
                 job.StudentUserId = User.Identity.GetUserId();
                 job.TeacherUserId = string.Empty;
-                job.Status = job.StudentCost <= ApplicationUser.Cash.AvailableAmount ? JobStatus.Opened : JobStatus.Draft;
+                job.Status = jobOpeningSpecification.IsSatisfiedBy(job) ? JobStatus.Opened : JobStatus.Draft;
                 jobRepository.Write(job);
 
                 return RedirectToAction("Details", new {job.Id});
@@ -138,7 +141,7 @@ namespace TeachMe.Areas.Student.Controllers
                     job.Attachments.AddRange(uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment));
                 }
 
-                if (job.StudentCost > ApplicationUser.Cash.AvailableAmount)
+                if (!jobOpeningSpecification.IsSatisfiedBy(job))
                 {
                     job.Status = JobStatus.Draft;
                 }

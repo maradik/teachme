@@ -22,10 +22,11 @@ namespace TeachMe.Extensions
 
         public static ApplicationUser GetStudentUser(this Job job)
         {
-            return
-                HttpContext.Current.GetOwinContext()
-                           .GetUserManager<ApplicationUserManager>()
-                           .FindById(job.StudentUserId);
+            return string.IsNullOrEmpty(job.StudentUserId)
+                       ? null
+                       : HttpContext.Current.GetOwinContext()
+                                    .GetUserManager<ApplicationUserManager>()
+                                    .FindById(job.StudentUserId);
         }
 
         public static ApplicationUser GetTeacherUser(this Job job)

@@ -1,14 +1,11 @@
 ﻿@using TeachMe.Models.Jobs
+@using TeachMe.Services.Jobs
 @model Job
 
-@{
-    var userCashDeficit = Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount;
-}
-
-@if (Model.Status == JobStatus.Draft && userCashDeficit > 0)
+@if (Model.Status == JobStatus.Draft && !JobOpeningSpecification.Instance.IsSatisfiedBy(Model))
 {
     <div class="alert alert-warning">
         Задача в статусе <span style="font-weight: bold;">@Model.Status</span> и недоступна для выполнения. <br />
-        Пополните баланс на @userCashDeficit руб. и сможете опубликовать задачу.
+        Пополните баланс на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
     </div>
 }

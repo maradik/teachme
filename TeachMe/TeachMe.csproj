@@ -236,6 +236,9 @@
     </Compile>
     <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Settings\ApplicationSettings.cs" />
+    <Compile Include="Services\ISpecification.cs" />
+    <Compile Include="Services\Jobs\IJobOpeningSpecification.cs" />
+    <Compile Include="Services\Jobs\JobOpeningSpecification.cs" />
     <Compile Include="Models\Users\AccountViewModels.cs" />
     <Compile Include="Models\Users\ApplicationUserStore.cs" />
     <Compile Include="Models\Users\IEntity.cs" />

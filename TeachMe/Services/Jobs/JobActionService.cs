@@ -22,7 +22,7 @@ namespace TeachMe.Services.Jobs
 
         private static readonly ILookup<JobStatus, JobActionByUserRole> AvailableActionsForStatus = new[]
         {
-            Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Open, UserRole.Student, (j, u) => j.StudentCost <= u.Cash.AvailableAmount)),
+            Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Open, UserRole.Student, new ISpecification<Job>[] {JobOpeningSpecification.Instance})),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Hide, UserRole.Student)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Take, UserRole.Teacher)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Cancel, UserRole.Student)),
@@ -41,7 +41,7 @@ namespace TeachMe.Services.Jobs
             return AvailableActionsForStatus.Contains(job.Status)
                        ? AvailableActionsForStatus[job.Status].Where(x => user.Roles.Contains(x.UserRole.Name))
                                                               .Where(x => x.UserRole == UserRole.Teacher ? IsTeacherHasAccess(job, user) : IsStudentHasAccess(job, user))
-                                                              .Where(x => x.CheckForAvailability(job, user))
+                                                              .Where(x => x.Specifications.Length == 0 || x.Specifications.All(y => y.IsSatisfiedBy(job)))
                                                               .Select(x => x.ActionType)
                                                               .ToArray()
                        : new JobActionType[0];
@@ -117,16 +117,16 @@ namespace TeachMe.Services.Jobs
 
         private class JobActionByUserRole
         {
-            public JobActionByUserRole(JobActionType actionType, UserRole userRole, Func<Job, ApplicationUser, bool> checkForAvailability = null)
+            public JobActionByUserRole(JobActionType actionType, UserRole userRole, ISpecification<Job>[] specifications = null)
             {
                 ActionType = actionType;
                 UserRole = userRole;
-                CheckForAvailability = checkForAvailability ?? ((job, user) => true);
+                Specifications = specifications ?? new ISpecification<Job>[0];
             }
 
             public JobActionType ActionType { get; }
             public UserRole UserRole { get; }
-            public Func<Job, ApplicationUser, bool> CheckForAvailability { get; }
+            public ISpecification<Job>[] Specifications { get; }
         }
     }
 }
