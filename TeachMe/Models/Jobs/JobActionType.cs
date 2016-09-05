@@ -8,6 +8,8 @@
         Finish = 3,
         Accept = 4,
         Cancel = 5,
-        Reject = 6
+        Reject = 6,
+        OfferAbort = 7,
+        ConfirmAbort = 8
     }
 }

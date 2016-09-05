@@ -8,6 +8,8 @@
         Finished = 3,
         Accepted = 4,
         Cancelled = 5,
-        InReWorking = 6
+        InReWorking = 6,
+        AbortOffered = 7,
+        Aborted = 8
     }
 }

@@ -27,7 +27,11 @@ namespace TeachMe.Services.Jobs
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Take, UserRole.Teacher)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Cancel, UserRole.Student)),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
+            Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
+            Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Teacher)),
             Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
+            Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
+            Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Teacher)),
             Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Accept, UserRole.Student)),
             Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Reject, UserRole.Student))
         }.ToLookup(x => x.Item1, x => x.Item2);
@@ -83,6 +87,14 @@ namespace TeachMe.Services.Jobs
                     break;
                 case JobActionType.Reject:
                     job.Status = JobStatus.InReWorking;
+                    break;
+                case JobActionType.OfferAbort:
+                    job.Status = JobStatus.AbortOffered;
+                    break;
+                case JobActionType.ConfirmAbort:
+                    job.Status = JobStatus.Aborted;
+                    studentUser.Cash.FrozenAmount -= job.StudentCost;
+                    applicationUserManager.Update(studentUser);
                     break;
                 default:
                     throw new NotImplementedException($"Неизвестное действие {actionType}");
