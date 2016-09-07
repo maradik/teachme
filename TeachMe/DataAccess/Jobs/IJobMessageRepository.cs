@@ -1,8 +1,7 @@
 using System;
-using TeachMe.Models;
 using TeachMe.Models.Jobs;
 
-namespace TeachMe.DataAccess
+namespace TeachMe.DataAccess.Jobs
 {
     public interface IJobMessageRepository
     {

@@ -1,8 +1,7 @@
 using System;
-using TeachMe.Models;
 using TeachMe.Models.Jobs;
 
-namespace TeachMe.DataAccess
+namespace TeachMe.DataAccess.FileUploading
 {
     public class NotAllowedUploadedJobAttachmentException : Exception
     {

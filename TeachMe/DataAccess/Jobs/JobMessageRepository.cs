@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using MongoDB.Driver.Builders;
-using TeachMe.Models;
 using TeachMe.Models.Jobs;
 
-namespace TeachMe.DataAccess
+namespace TeachMe.DataAccess.Jobs
 {
     public class JobMessageRepository : RepositoryBase<JobMessage>, IJobMessageRepository
     {

@@ -4,6 +4,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeachMe.DataAccess;
+using TeachMe.DataAccess.Jobs;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.Jobs;

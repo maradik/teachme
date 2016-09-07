@@ -1,4 +1,4 @@
-﻿namespace TeachMe.DataAccess
+﻿namespace TeachMe.DataAccess.Jobs
 {
     public class JobMessageRepositoryParameters : RepositoryBaseParameters
     {

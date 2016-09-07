@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
 using TeachMe.Helpers.Settings;
-using TeachMe.Models;
 using TeachMe.Models.Jobs;
 
-namespace TeachMe.DataAccess
+namespace TeachMe.DataAccess.FileUploading
 {
     public class UploadedFileRepository : IUploadedFileRepository
     {

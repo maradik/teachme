@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using TeachMe.Converters;
 using TeachMe.DataAccess;
+using TeachMe.DataAccess.FileUploading;
+using TeachMe.DataAccess.Jobs;
 using TeachMe.Models;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;

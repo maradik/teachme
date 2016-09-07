@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.AspNet.Identity;
-using TeachMe.DataAccess;
-using TeachMe.Extensions;
+using TeachMe.DataAccess.Jobs;
 using TeachMe.Models.Jobs;
 using TeachMe.Models.Users;
+using TeachMe.Services.UserCash;
 
 namespace TeachMe.Services.Jobs
 {
     public class JobActionService : IJobActionService
     {
         private readonly IJobRepository jobRepository;
-        private readonly ApplicationUserManager applicationUserManager;
+        private readonly IUserCashOperationService cashOperationService;
 
         public JobActionService(IJobRepository jobRepository,
-                                ApplicationUserManager applicationUserManager)
+                                IUserCashOperationService cashOperationService)
         {
             this.jobRepository = jobRepository;
-            this.applicationUserManager = applicationUserManager;
+            this.cashOperationService = cashOperationService;
         }
 
         private static readonly ILookup<JobStatus, JobActionByUserRole> AvailableActionsForStatus = new[]
@@ -54,9 +53,6 @@ namespace TeachMe.Services.Jobs
             if (!GetAvailableActions(job, user).Contains(actionType))
                 throw new InvalidOperationException($"Недопустимое действие {actionType} над задачей {job.Id}, {nameof(user)}={user.Id}");
 
-            var studentUser = job.GetStudentUser();
-            var teacherUser = job.GetTeacherUser();
-
             switch (actionType)
             {
                 case JobActionType.Hide:
@@ -68,19 +64,14 @@ namespace TeachMe.Services.Jobs
                 case JobActionType.Take:
                     job.Status = JobStatus.InWorking;
                     job.TeacherUserId = user.Id;
-                    studentUser.Cash.FrozenAmount += job.StudentCost;
-                    applicationUserManager.Update(studentUser);
+                    cashOperationService.FreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.Finish:
                     job.Status = JobStatus.Finished;
                     break;
                 case JobActionType.Accept:
                     job.Status = JobStatus.Accepted;
-                    studentUser.Cash.FrozenAmount -= job.StudentCost;
-                    studentUser.Cash.PhysicalAmount -= job.StudentCost;
-                    applicationUserManager.Update(studentUser);
-                    teacherUser.Cash.PhysicalAmount += job.TeacherCost;
-                    applicationUserManager.Update(teacherUser);
+                    cashOperationService.TransferMoneyFromUserToUser(job.StudentUserId, job.TeacherUserId, job.StudentCost, job.TeacherCost, UserCashTransferType.FromFrozenToPhysical);
                     break;
                 case JobActionType.Cancel:
                     job.Status = JobStatus.Cancelled;
@@ -93,8 +84,7 @@ namespace TeachMe.Services.Jobs
                     break;
                 case JobActionType.ConfirmAbort:
                     job.Status = JobStatus.Aborted;
-                    studentUser.Cash.FrozenAmount -= job.StudentCost;
-                    applicationUserManager.Update(studentUser);
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 default:
                     throw new NotImplementedException($"Неизвестное действие {actionType}");
