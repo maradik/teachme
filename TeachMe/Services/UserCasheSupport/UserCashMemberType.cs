@@ -1,4 +1,4 @@
-﻿namespace TeachMe.Services.UserCash
+﻿namespace TeachMe.Services.UserCasheSupport
 {
     public enum UserCashMemberType
     {

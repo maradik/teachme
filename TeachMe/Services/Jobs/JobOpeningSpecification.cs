@@ -6,9 +6,7 @@ namespace TeachMe.Services.Jobs
 {
     public class JobOpeningSpecification : IJobOpeningSpecification
     {
-        private static readonly Lazy<JobOpeningSpecification> lazyInstance = new Lazy<JobOpeningSpecification>(() => new JobOpeningSpecification(), true);
-
-        public static IJobOpeningSpecification Instance => lazyInstance.Value;
+        public static IJobOpeningSpecification Instance = new JobOpeningSpecification();
 
         public bool IsSatisfiedBy(Job job)
         {

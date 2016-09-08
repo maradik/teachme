@@ -229,6 +229,7 @@
     <Compile Include="DataAccess\RepositoryBase.cs" />
     <Compile Include="DataAccess\RepositoryBaseParameters.cs" />
     <Compile Include="DataAccess\FileUploading\UploadedFileRepository.cs" />
+    <Compile Include="DataAccess\Transactions\ITransactionRepository.cs" />
     <Compile Include="DataAccess\Transactions\TransactionRepository.cs" />
     <Compile Include="DataAccess\Transactions\TransactionRepositoryParameters.cs" />
     <Compile Include="Extensions\JobExtensions.cs" />
@@ -238,13 +239,15 @@
     </Compile>
     <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Settings\ApplicationSettings.cs" />
+    <Compile Include="Models\Transactions\TransactionType.cs" />
     <Compile Include="Models\Transactions\Transaction.cs" />
     <Compile Include="Models\Transactions\TransactionAccount.cs" />
+    <Compile Include="Models\Transactions\TransactionBuilder.cs" />
     <Compile Include="Models\Transactions\TransactionPart.cs" />
     <Compile Include="Models\Transactions\TransactionPartType.cs" />
-    <Compile Include="Services\UserCash\IUserCashOperationService.cs" />
-    <Compile Include="Services\UserCash\UserCashMemberType.cs" />
-    <Compile Include="Services\UserCash\UserCashOperationService.cs" />
+    <Compile Include="Services\UserCasheSupport\IUserCashOperationService.cs" />
+    <Compile Include="Services\UserCasheSupport\UserCashMemberType.cs" />
+    <Compile Include="Services\UserCasheSupport\UserCashOperationService.cs" />
     <Compile Include="Services\ISpecification.cs" />
     <Compile Include="Services\Jobs\IJobOpeningSpecification.cs" />
     <Compile Include="Services\Jobs\JobOpeningSpecification.cs" />
@@ -273,7 +276,6 @@
     <Compile Include="References\SubjectReference.cs" />
     <Compile Include="Services\Jobs\IJobActionService.cs" />
     <Compile Include="Services\Jobs\JobActionService.cs" />
-    <Compile Include="Services\UserCash\UserCashTransferType.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\NinjectDependencyResolver.cs" />
     <Compile Include="ViewModels\Jobs\JobDetailsViewModel.cs" />

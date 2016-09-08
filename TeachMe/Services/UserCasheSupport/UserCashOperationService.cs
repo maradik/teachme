@@ -1,27 +1,41 @@
 ﻿using System;
 using Microsoft.AspNet.Identity;
+using TeachMe.DataAccess.Transactions;
+using TeachMe.Models.Transactions;
 
-namespace TeachMe.Services.UserCash
+namespace TeachMe.Services.UserCasheSupport
 {
     public class UserCashOperationService : IUserCashOperationService
     {
         private readonly ApplicationUserManager applicationUserManager;
+        private readonly ITransactionRepository transactionRepository;
 
-        public UserCashOperationService(ApplicationUserManager applicationUserManager)
+        public UserCashOperationService(ApplicationUserManager applicationUserManager,
+                                        ITransactionRepository transactionRepository)
         {
             this.applicationUserManager = applicationUserManager;
+            this.transactionRepository = transactionRepository;
         }
 
-        public void TransferMoneyFromUserToUser(string sourceUserId, string recipientUserId, double sourceAmount, double recipientAmount, UserCashTransferType transferType)
+        public void TransferMoneyFromUserToUser(string sourceUserId, string recipientUserId, double amount, double commissionAmount, TransactionType transactionType, string transactionDescription)
         {
-            if (0 >= sourceAmount)
-                throw new ArgumentOutOfRangeException(nameof(sourceAmount), sourceAmount, "Значение должно быть больше 0");
+            if (0 >= amount)
+                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Значение должно быть больше 0");
 
-            if (0 >= recipientAmount)
-                throw new ArgumentOutOfRangeException(nameof(recipientAmount), recipientAmount, "Значение должно быть больше 0");
+            if (0 >= commissionAmount || commissionAmount >= amount)
+                throw new ArgumentOutOfRangeException(nameof(commissionAmount), commissionAmount, $"Значение должно быть больше 0 и меньше {nameof(amount)}={amount}");
 
-            AddAmountToUserCash(sourceUserId, -sourceAmount, transferType.Source, (cash, newAmount) => newAmount >= 0);
-            AddAmountToUserCash(recipientUserId, recipientAmount, transferType.Recipient);
+            var transaction = TransactionBuilder.With(transactionType)
+                                                .SetText(transactionDescription)
+                                                .AddPart(TransactionPartType.Credit, amount, new TransactionAccount {UserId = sourceUserId})
+                                                .AddPart(TransactionPartType.Commission, commissionAmount)
+                                                .AddPart(TransactionPartType.Debit, amount - commissionAmount, new TransactionAccount {UserId = recipientUserId})
+                                                .Build();
+
+            AddAmountToUserCash(sourceUserId, -amount, UserCashMemberType.Physical, (cash, newAmount) => newAmount >= 0);
+            AddAmountToUserCash(recipientUserId, amount - commissionAmount, UserCashMemberType.Physical);
+
+            transactionRepository.Write(transaction);
         }
 
         public void FreezeUserMoney(string userId, double amount)
@@ -67,7 +81,7 @@ namespace TeachMe.Services.UserCash
                     return cash.PhysicalAmount;
                 case UserCashMemberType.Frozen:
                     return cash.FrozenAmount;
-                default: 
+                default:
                     throw new NotImplementedException($"Способ получения значения для {memberType} {nameof(Models.Users.UserCash)} не реализован");
             }
         }

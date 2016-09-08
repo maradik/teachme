@@ -22,6 +22,10 @@ namespace TeachMe.DataAccess
             if (model.Id == Guid.Empty)
             {
                 model.Id = Guid.NewGuid();
+            }
+
+            if (model.CreationTicks == 0)
+            {
                 model.CreationTicks = DateTime.UtcNow.Ticks;
             }
 

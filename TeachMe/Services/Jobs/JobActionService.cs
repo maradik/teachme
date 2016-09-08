@@ -2,8 +2,9 @@
 using System.Linq;
 using TeachMe.DataAccess.Jobs;
 using TeachMe.Models.Jobs;
+using TeachMe.Models.Transactions;
 using TeachMe.Models.Users;
-using TeachMe.Services.UserCash;
+using TeachMe.Services.UserCasheSupport;
 
 namespace TeachMe.Services.Jobs
 {
@@ -71,7 +72,9 @@ namespace TeachMe.Services.Jobs
                     break;
                 case JobActionType.Accept:
                     job.Status = JobStatus.Accepted;
-                    cashOperationService.TransferMoneyFromUserToUser(job.StudentUserId, job.TeacherUserId, job.StudentCost, job.TeacherCost, UserCashTransferType.FromFrozenToPhysical);
+                    var transactionDescription = $"Оплата выполненной работы {job.Title}";
+                    cashOperationService.TransferMoneyFromUserToUser(job.StudentUserId, job.TeacherUserId, job.StudentCost, job.Commission, TransactionType.CompleteJobPayment, transactionDescription);
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.Cancel:
                     job.Status = JobStatus.Cancelled;
