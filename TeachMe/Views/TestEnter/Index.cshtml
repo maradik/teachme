@@ -1,0 +1,12 @@
+﻿@using TeachMe.ProjectsSupport
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Тестовый вход</h2>
+<p>
+    @Html.ActionLink($"Войти в проект {ProjectType.Student}", "GoToStudentProject")
+</p>
+<p>
+    @Html.ActionLink($"Войти в проект {ProjectType.Teacher}", "GoToTeacherProject")
+</p>

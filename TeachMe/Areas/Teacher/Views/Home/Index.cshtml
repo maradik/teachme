@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    @{
+        Html.RenderPartial("_IndexJumbotron");
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        @{
+            Html.RenderPartial("_IndexRecall");
+        }
+    </div>
+    <div class="col-md-4">
+        @{
+            Html.RenderPartial("_IndexTasks");
+        }
+    </div>
+    <div class="col-md-4">
+        @{
+            <h2>Вход</h2>
+            Html.RenderPartial("_Login");
+        }
+    </div>
+</div>
