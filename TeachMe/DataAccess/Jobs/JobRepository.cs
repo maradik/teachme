@@ -5,7 +5,7 @@ using TeachMe.Models.Jobs;
 
 namespace TeachMe.DataAccess.Jobs
 {
-    public class JobRepository : RepositoryBase<Job>, IJobRepository
+    public class JobRepository : RepositoryBase<Job, Guid>, IJobRepository
     {
         public JobRepository(JobRepositoryParameters parameters) : base(parameters)
         {
@@ -44,6 +44,11 @@ namespace TeachMe.DataAccess.Jobs
         public Job[] GetAllByStatus(JobStatus status)
         {
             return Collection.Find(Query<Job>.EQ(x => x.Status, status)).ToArray();
+        }
+
+        protected override Guid CreateNewId()
+        {
+            return Guid.NewGuid();
         }
     }
 }

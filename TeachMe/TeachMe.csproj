@@ -17,7 +17,7 @@
     <AssemblyName>TeachMe</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -211,6 +211,7 @@
     <Compile Include="Areas\Teacher\Controllers\TeacherControllerBase.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\TestEnterController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -229,6 +230,9 @@
     <Compile Include="DataAccess\Jobs\JobRepository.cs" />
     <Compile Include="DataAccess\Jobs\JobRepositoryParameters.cs" />
     <Compile Include="DataAccess\FileUploading\NotAllowedUploadedJobAttachmentException.cs" />
+    <Compile Include="DataAccess\Payments\IInvoiceRepository.cs" />
+    <Compile Include="DataAccess\Payments\InvoiceRepository.cs" />
+    <Compile Include="DataAccess\Payments\JobRepositoryParameters.cs" />
     <Compile Include="DataAccess\RepositoryBase.cs" />
     <Compile Include="DataAccess\RepositoryBaseParameters.cs" />
     <Compile Include="DataAccess\FileUploading\UploadedFileRepository.cs" />
@@ -237,17 +241,23 @@
     <Compile Include="DataAccess\Transactions\TransactionRepositoryParameters.cs" />
     <Compile Include="Extensions\JobExtensions.cs" />
     <Compile Include="Extensions\JobMessageExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Cryptography\HashHelper.cs" />
     <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Settings\ApplicationSettings.cs" />
+    <Compile Include="Models\Payments\Invoice.cs" />
+    <Compile Include="Models\Payments\InvoiceStatus.cs" />
     <Compile Include="Models\Transactions\TransactionType.cs" />
     <Compile Include="Models\Transactions\Transaction.cs" />
     <Compile Include="Models\Transactions\TransactionAccount.cs" />
     <Compile Include="Models\Transactions\TransactionBuilder.cs" />
     <Compile Include="Models\Transactions\TransactionPart.cs" />
     <Compile Include="Models\Transactions\TransactionPartType.cs" />
+    <Compile Include="Services\Payments\IInvoiceActionService.cs" />
+    <Compile Include="Services\Payments\InvoiceActionService.cs" />
     <Compile Include="Services\UserCasheSupport\IUserCashOperationService.cs" />
     <Compile Include="Services\UserCasheSupport\UserCashMemberType.cs" />
     <Compile Include="Services\UserCasheSupport\UserCashOperationService.cs" />
@@ -256,7 +266,7 @@
     <Compile Include="Services\Jobs\JobOpeningSpecification.cs" />
     <Compile Include="Models\Users\AccountViewModels.cs" />
     <Compile Include="Models\Users\ApplicationUserStore.cs" />
-    <Compile Include="Models\Users\IEntity.cs" />
+    <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\Jobs\JobActionType.cs" />
     <Compile Include="Models\Jobs\JobAttachmentType.cs" />
     <Compile Include="Models\Jobs\JobMessage.cs" />
@@ -333,7 +343,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -403,16 +415,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50050</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50050/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

@@ -1,9 +1,8 @@
 ﻿using System;
-using TeachMe.Models.Users;
 
 namespace TeachMe.Models.Transactions
 {
-    public class Transaction : IEntity
+    public class Transaction : IEntity<Guid>
     {
         private TransactionPart[] parts;
 

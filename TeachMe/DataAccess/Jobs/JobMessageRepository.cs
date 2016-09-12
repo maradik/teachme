@@ -5,7 +5,7 @@ using TeachMe.Models.Jobs;
 
 namespace TeachMe.DataAccess.Jobs
 {
-    public class JobMessageRepository : RepositoryBase<JobMessage>, IJobMessageRepository
+    public class JobMessageRepository : RepositoryBase<JobMessage, Guid>, IJobMessageRepository
     {
         public JobMessageRepository(JobMessageRepositoryParameters parameters) : base(parameters)
         {
@@ -21,6 +21,11 @@ namespace TeachMe.DataAccess.Jobs
             var query = Query.And(Query<JobMessage>.EQ(x => x.JobId, jobId),
                                   Query<JobMessage>.GT(x => x.CreationTicks, ticks));
             return Collection.Find(query).ToArray();
+        }
+
+        protected override Guid CreateNewId()
+        {
+            return Guid.NewGuid();
         }
     }
 }

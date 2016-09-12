@@ -3,6 +3,7 @@
     public enum TransactionType
     {
         Undefined = 0,
-        CompleteJobPayment = 1
+        CompleteJobPayment = 1,
+        InvoicePayment = 2
     }
 }

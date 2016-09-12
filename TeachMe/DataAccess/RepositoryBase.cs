@@ -3,15 +3,16 @@ using System.Configuration;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using TeachMe.Models;
-using TeachMe.Models.Users;
 
 namespace TeachMe.DataAccess
 {
-    public class RepositoryBase<TModel> where TModel : IEntity
+    public abstract class RepositoryBase<TModel, TModelId> 
+        where TModel : IEntity<TModelId> 
+        where TModelId : struct, IComparable
     {
         protected readonly MongoCollection<TModel> Collection;
 
-        public RepositoryBase(RepositoryBaseParameters parameters)
+        protected RepositoryBase(RepositoryBaseParameters parameters)
         {
             var client = new MongoClient(ConfigurationManager.ConnectionStrings[parameters.ConnectionStringName].ConnectionString);
             Collection = client.GetServer().GetDatabase(parameters.DatabaseName).GetCollection<TModel>(parameters.CollectionName);
@@ -19,9 +20,9 @@ namespace TeachMe.DataAccess
 
         public virtual void Write(TModel model)
         {
-            if (model.Id == Guid.Empty)
+            if (model.Id.CompareTo(default(TModelId)) == 0)
             {
-                model.Id = Guid.NewGuid();
+                model.Id = CreateNewId();
             }
 
             if (model.CreationTicks == 0)
@@ -32,14 +33,16 @@ namespace TeachMe.DataAccess
             Collection.Save(model);
         }
 
-        public virtual TModel Get(Guid id)
+        public virtual TModel Get(TModelId id)
         {
-            return Collection.FindOneById(id);
+            return Collection.FindOne(Query<TModel>.EQ(x => x.Id, id));
         }
 
-        public virtual void Remove(Guid id)
+        public virtual void Remove(TModelId id)
         {
             Collection.Remove(Query<TModel>.EQ(x => x.Id, id));
         }
+
+        protected abstract TModelId CreateNewId();
     }
 }

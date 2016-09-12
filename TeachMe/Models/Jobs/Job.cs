@@ -7,7 +7,7 @@ using TeachMe.Models.Users;
 
 namespace TeachMe.Models.Jobs
 {
-    public class Job : IEntity
+    public class Job : IEntity<Guid>
     {
         private const double MinCost = 50;
         private const double MaxCost = 1000;
