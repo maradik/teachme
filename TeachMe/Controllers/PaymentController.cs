@@ -35,19 +35,36 @@ namespace TeachMe.Controllers
                 ApplicationSettings.RobokassaIsInTest));
         }
 
-        public ActionResult Result()
+        [HttpPost]
+        public ActionResult SetResult(double outSum, int invId, string signatureValue)
         {
-            throw new NotImplementedException();
+            AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword2);
+
+            invoiceActionService.PayInvoice(invId);
+
+            return Content($"OK{invId}");
         }
 
-        public ActionResult Success()
+        public ActionResult ShowSuccess(double outSum, int invId, string signatureValue)
         {
-            throw new NotImplementedException();
+            AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword1);
+
+            return View();
         }
 
-        public ActionResult Fail()
+        public ActionResult ShowFail(double outSum, int invId, string signatureValue)
         {
-            throw new NotImplementedException();
+            return View();
+        }
+
+        private static void AssertSignatureIsValid(double amount, int invoiceId, string signatureValue, string robokassaPassword)
+        {
+            string reconstructedSignatureValue = $"{amount.ToString("0.00", CultureInfo.InvariantCulture)}:{invoiceId}:{robokassaPassword}";
+
+            if (!string.Equals(reconstructedSignatureValue.GetMd5Hash(), signatureValue, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new Exception($"Bad sign {signatureValue} for {nameof(amount)}={amount}, {nameof(invoiceId)}={invoiceId}");
+            }
         }
 
         private string BuildRobokassaPaymentUrl(string robokassaLogin, string robokassaPassword1, double amount, int invoiceId, string description, bool testPayment)

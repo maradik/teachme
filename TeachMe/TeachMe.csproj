@@ -382,6 +382,8 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTimeUtcTicks.cshtml" />
     <Content Include="Views\Shared\_JobActions.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Payment\ShowFail.cshtml" />
+    <None Include="Views\Payment\ShowSuccess.cshtml" />
     <None Include="Views\TestEnter\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
