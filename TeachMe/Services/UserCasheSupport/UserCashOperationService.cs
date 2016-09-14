@@ -38,6 +38,17 @@ namespace TeachMe.Services.UserCasheSupport
             transactionRepository.Write(transaction);
         }
 
+        public void AddMoneyToUser(string userId, double amount)
+        {
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentException("Value cannot be null or empty.", nameof(userId));
+
+            if (amount <= 0)
+                throw new ArgumentOutOfRangeException(nameof(amount));
+
+            AddAmountToUserCash(userId, amount, UserCashMemberType.Physical);
+        }
+
         public void FreezeUserMoney(string userId, double amount)
         {
             if (0 >= amount)

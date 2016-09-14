@@ -35,12 +35,16 @@ namespace TeachMe.Controllers
                 ApplicationSettings.RobokassaIsInTest));
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult SetResult(double outSum, int invId, string signatureValue)
+        public ActionResult SetResult(string outSum, string invId, string signatureValue)
         {
-            AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword2);
+            var amount = double.Parse(outSum, CultureInfo.InvariantCulture);
+            var invoiceId = int.Parse(invId, CultureInfo.InvariantCulture);
 
-            invoiceActionService.PayInvoice(invId);
+            AssertSignatureIsValid(amount, invoiceId, signatureValue, ApplicationSettings.RobokassaPassword2);
+
+            invoiceActionService.PayInvoice(invoiceId);
 
             return Content($"OK{invId}");
         }
