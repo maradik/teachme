@@ -142,6 +142,7 @@ namespace TeachMe.Controllers
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
                 user.Cash.PhysicalAmount = GetInitialUserCashAmount();
                 user.Roles.AddRange(GetRolesForNewUser().Select(x => x.Name));
+                user.PhoneNumber = model.PhoneNumber;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

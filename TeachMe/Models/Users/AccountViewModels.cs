@@ -79,6 +79,10 @@ namespace TeachMe.Models.Users
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Номер телефона")]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel
