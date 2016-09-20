@@ -13,6 +13,12 @@ namespace TeachMe.Helpers.Settings
         public static string RobokassaPassword2 => ConfigurationManager.AppSettings["RobokassaPassword2"] ?? string.Empty;
         public static bool RobokassaIsInTest => SafeGetBool("RobokassaIsInTest") ?? false;
 
+        public static string SmsAeroLogin => ConfigurationManager.AppSettings["SmsAeroLogin"] ?? string.Empty;
+        public static string SmsAeroApiKey => ConfigurationManager.AppSettings["SmsAeroApiKey"] ?? string.Empty;
+        public static string SmsAeroSenderName => ConfigurationManager.AppSettings["SmsAeroSenderName"] ?? string.Empty;
+        public static int SmsAeroType => SafeGetInt("SmsAeroType") ?? 0;
+        public static int SmsAeroDigital => SafeGetInt("SmsAeroDigital") ?? 0;
+
         private static double? SafeGetDouble(string settingName)
         {
             double value;
@@ -27,6 +33,16 @@ namespace TeachMe.Helpers.Settings
         {
             bool value;
             if (bool.TryParse(ConfigurationManager.AppSettings[settingName], out value))
+            {
+                return value;
+            }
+            return null;
+        }
+
+        private static int? SafeGetInt(string settingName)
+        {
+            int value;
+            if (int.TryParse(ConfigurationManager.AppSettings[settingName], out value))
             {
                 return value;
             }
