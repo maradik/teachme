@@ -13,11 +13,19 @@ namespace TeachMe.Helpers.Settings
         public static string RobokassaPassword2 => ConfigurationManager.AppSettings["RobokassaPassword2"] ?? string.Empty;
         public static bool RobokassaIsInTest => SafeGetBool("RobokassaIsInTest") ?? false;
 
+        public static int SmsAeroServicePriority => SafeGetInt("SmsAeroServicePriority") ?? 0;
         public static string SmsAeroLogin => ConfigurationManager.AppSettings["SmsAeroLogin"] ?? string.Empty;
         public static string SmsAeroApiKey => ConfigurationManager.AppSettings["SmsAeroApiKey"] ?? string.Empty;
         public static string SmsAeroSenderName => ConfigurationManager.AppSettings["SmsAeroSenderName"] ?? string.Empty;
         public static int SmsAeroType => SafeGetInt("SmsAeroType") ?? 0;
         public static int SmsAeroDigital => SafeGetInt("SmsAeroDigital") ?? 0;
+
+        public static int SmsIntelServicePriority => SafeGetInt("SmsIntelServicePriority") ?? 0;
+        public static string SmsIntelLogin => ConfigurationManager.AppSettings["SmsIntelLogin"] ?? string.Empty;
+        public static string SmsIntelPassword => ConfigurationManager.AppSettings["SmsIntelPassword"] ?? string.Empty;
+        public static string SmsIntelSenderName => ConfigurationManager.AppSettings["SmsIntelSenderName"] ?? string.Empty;
+        public static int SmsIntelUseAlfaSource => SafeGetInt("SmsIntelUseAlfaSource") ?? 0;
+        public static int SmsIntelChannel => SafeGetInt("SmsIntelChannel") ?? 0;
 
         private static double? SafeGetDouble(string settingName)
         {

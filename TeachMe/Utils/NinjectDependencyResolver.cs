@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 using Ninject.Extensions.Conventions;
 using Ninject.Web.Common;
+using TeachMe.Services.Notifications;
 
 namespace TeachMe.Utils
 {
@@ -35,6 +36,11 @@ namespace TeachMe.Utils
             kernel.Bind(x => x.FromThisAssembly()
                               .SelectAllClasses()
                               .BindDefaultInterface()
+                              .Configure(y => y.InRequestScope()));
+            kernel.Bind(x => x.FromThisAssembly()
+                              .SelectAllClasses()
+                              .InheritedFrom(typeof(ICustomSmsService))
+                              .BindAllInterfaces()
                               .Configure(y => y.InRequestScope()));
         }
     }
