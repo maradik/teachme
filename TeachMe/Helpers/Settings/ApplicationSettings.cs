@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Globalization;
 
 namespace TeachMe.Helpers.Settings
 {
@@ -7,6 +8,7 @@ namespace TeachMe.Helpers.Settings
         public static string[] AllowedUploadFileExtensions => ConfigurationManager.AppSettings["AllowedUploadFileExtensions"]?.Split(',') ?? new string[0];
         public static double TeacherInitialCash => SafeGetDouble("TeacherInitialCash") ?? 0.0;
         public static double StudentInitialCash => SafeGetDouble("StudentInitialCash") ?? 0.0;
+        public static double JobCommissionRate => SafeGetDouble("JobCommissionRate") ?? 0.25;
 
         public static string RobokassaLogin => ConfigurationManager.AppSettings["RobokassaLogin"] ?? string.Empty;
         public static string RobokassaPassword1 => ConfigurationManager.AppSettings["RobokassaPassword1"] ?? string.Empty;
@@ -30,7 +32,7 @@ namespace TeachMe.Helpers.Settings
         private static double? SafeGetDouble(string settingName)
         {
             double value;
-            if (double.TryParse(ConfigurationManager.AppSettings[settingName], out value))
+            if (double.TryParse(ConfigurationManager.AppSettings[settingName], NumberStyles.Number, CultureInfo.InvariantCulture, out value))
             {
                 return value;
             }

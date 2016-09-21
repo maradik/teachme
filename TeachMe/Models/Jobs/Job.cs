@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using TeachMe.Models.Users;
 
 namespace TeachMe.Models.Jobs
 {
@@ -11,7 +9,6 @@ namespace TeachMe.Models.Jobs
     {
         private const double MinCost = 50;
         private const double MaxCost = 1000;
-        private const double CommissionRate = 0.25;
 
         private List<JobAttachment> attachments;
 
@@ -36,6 +33,9 @@ namespace TeachMe.Models.Jobs
 
         [Display(Name = "Стоимость")]
         public double TeacherCost => StudentCost - Commission;
+
+        [Display(Name = "Ставка комиссии")]
+        public double CommissionRate { get; set; }
 
         [Display(Name = "Комиссия")]
         public double Commission => Math.Round(StudentCost*CommissionRate);

@@ -14,6 +14,7 @@ using TeachMe.ProjectsSupport;
 using TeachMe.References;
 using TeachMe.Services.Jobs;
 using TeachMe.ViewModels.Jobs;
+using TeachMe.Helpers.Settings;
 
 namespace TeachMe.Areas.Student.Controllers
 {
@@ -93,6 +94,7 @@ namespace TeachMe.Areas.Student.Controllers
                 job.StudentUserId = User.Identity.GetUserId();
                 job.TeacherUserId = string.Empty;
                 job.Status = jobOpeningSpecification.IsSatisfiedBy(job) ? JobStatus.Opened : JobStatus.Draft;
+                job.CommissionRate = ApplicationSettings.JobCommissionRate;
                 jobRepository.Write(job);
 
                 return RedirectToAction("Details", new {job.Id});
