@@ -64,6 +64,8 @@ namespace TeachMe.Models.Users
 
     public class RegisterViewModel
     {
+        private List<int> subjectIds;
+
         [Required]
         [EmailAddress]
         [Display(Name = "Адрес электронной почты")]
@@ -83,6 +85,9 @@ namespace TeachMe.Models.Users
         [Display(Name = "Номер телефона")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+
+        [Display(Name = "Категории задач")]
+        public List<int> SubjectIds { get { return subjectIds ?? (subjectIds = new List<int>()); } set { subjectIds = value; } }
     }
 
     public class ResetPasswordViewModel

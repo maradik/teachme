@@ -1,4 +1,7 @@
-﻿@model TeachMe.Models.Users.RegisterViewModel
+﻿@using TeachMe.ProjectsSupport
+@using TeachMe.References
+
+@model TeachMe.Models.Users.RegisterViewModel
 @{
     ViewBag.Title = "Регистрация";
 }
@@ -35,6 +38,26 @@
             @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
         </div>
     </div>
+    if (ViewBag.ProjectType == ProjectType.Teacher)
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.SubjectIds, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div id="subjectListContainer">
+                    @for (int i = 0; i < Model.SubjectIds.Count; i++)
+                    {
+                        @Html.DropDownListFor(x => x.SubjectIds[i], ((Subject[])ViewBag.Subjects).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Title, Selected = x.Id == Model.SubjectIds[i] }), new { @class = "form-control" })
+                    }
+                </div>
+                <div><a href="#" id="addSubjectSelector" data-controlname="@Html.IdFor(m => m.SubjectIds)">Добавить</a></div>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                initSubjectSelectorBlock(@Html.Raw(Json.Encode(ViewBag.Subjects)));
+            });
+        </script>
+    }
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Регистрация" />

@@ -22,6 +22,25 @@ var initUploadedFileBlock = function() {
     $("#addUploadedFile").click();
 }
 
+var addSubjectSelector = function (name, jobSubjectsOptions) {
+    var selectorsCount = $("select[name^='" + jQueryExtensions.escapeMetaChars(name) + "']").length;
+    var newSelector = $('<select name="' + name + '[' + selectorsCount + ']" class="form-control">' + jobSubjectsOptions + '</select>');
+    $("#subjectListContainer").append(newSelector);
+};
+
+var initSubjectSelectorBlock = function (jobSubjects) {
+    jobSubjectsOptions = "";
+    jobSubjects.forEach(function (item) {
+        jobSubjectsOptions += "<option value='" + item.Id + "'>" + item.Title + "</option>";
+    });
+    $("#addSubjectSelector").click(function () {
+        addSubjectSelector($(this).attr("data-controlname"), jobSubjectsOptions);
+        return false;
+    });
+    $("#addSubjectSelector").click();
+}
+
+
 var removeAttachment = function (link) {
     var attachmentBlock = $(link).parents(".attachment");
     attachmentBlock.hide("slow");

@@ -8,6 +8,8 @@ using Microsoft.Owin.Security;
 using TeachMe.Helpers.Settings;
 using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
+using TeachMe.References;
+using System.Collections.Generic;
 
 namespace TeachMe.Controllers
 {
@@ -16,10 +18,13 @@ namespace TeachMe.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ISubjectReference subjectReference;
 
-        public AccountController(IProjectTypeProvider projectTypeProvider) 
+        public AccountController(IProjectTypeProvider projectTypeProvider,
+                                 ISubjectReference subjectReference) 
             : base(projectTypeProvider)
         {
+            this.subjectReference = subjectReference;
         }
 
         public AccountController(ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider)
@@ -127,7 +132,8 @@ namespace TeachMe.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            ViewBag.Subjects = subjectReference.GetAll();
+            return View(new RegisterViewModel());
         }
 
         //
@@ -137,12 +143,14 @@ namespace TeachMe.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            ViewBag.Subjects = subjectReference.GetAll();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
                 user.Cash.PhysicalAmount = GetInitialUserCashAmount();
                 user.Roles.AddRange(GetRolesForNewUser().Select(x => x.Name));
                 user.PhoneNumber = model.PhoneNumber;
+                user.SubjectIds = model.SubjectIds;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
