@@ -16,5 +16,19 @@ namespace TeachMe.Controllers
                        ? RedirectToAction("Index", "Home", new {area = "Student"})
                        : RedirectToAction("Index", "Home", new {area = "Teacher"});
         }
+
+        public ActionResult About()
+        {
+            return ProjectType == ProjectType.Student
+                       ? RedirectToAction("About", "Home", new { area = "Student" })
+                       : RedirectToAction("About", "Home", new { area = "Teacher" });
+        }
+
+        public ActionResult Contact()
+        {
+            return ProjectType == ProjectType.Student
+                       ? RedirectToAction("Contact", "Home", new { area = "Student" })
+                       : RedirectToAction("Contact", "Home", new { area = "Teacher" });
+        }
     }
 }
