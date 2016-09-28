@@ -209,6 +209,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\StudentControllerBase.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexJobsViewModelProvider.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexJobViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexRecallViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexRecallViewModelProvider.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexViewModel.cs" />
@@ -243,6 +245,7 @@
     <Compile Include="DataAccess\RepositoryBase.cs" />
     <Compile Include="DataAccess\RepositoryBaseParameters.cs" />
     <Compile Include="DataAccess\FileUploading\UploadedFileRepository.cs" />
+    <Compile Include="DataAccess\SortOrder.cs" />
     <Compile Include="DataAccess\Transactions\ITransactionRepository.cs" />
     <Compile Include="DataAccess\Transactions\TransactionRepository.cs" />
     <Compile Include="DataAccess\Transactions\TransactionRepositoryParameters.cs" />

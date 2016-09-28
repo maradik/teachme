@@ -2,6 +2,7 @@
 using System.Linq;
 using MongoDB.Driver.Builders;
 using TeachMe.Models.Jobs;
+using System.Linq.Expressions;
 
 namespace TeachMe.DataAccess.Jobs
 {

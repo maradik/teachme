@@ -3,6 +3,8 @@ using System.Configuration;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using TeachMe.Models;
+using System.Linq.Expressions;
+using System.Linq;
 
 namespace TeachMe.DataAccess
 {
@@ -41,6 +43,25 @@ namespace TeachMe.DataAccess
         public virtual void Remove(TModelId id)
         {
             Collection.Remove(Query<TModel>.EQ(x => x.Id, id));
+        }
+
+        public TModel[] Get(Expression<Func<TModel, bool>> whereExpression = null, Expression<Func<TModel, object>> orderByExpression = null, SortOrder sortOrder = SortOrder.Ascending, int? limit = null)
+        {
+            var query = whereExpression != null ? Query<TModel>.Where(whereExpression) : Query.Null;
+            var result = Collection.Find(query);
+
+            if (orderByExpression != null)
+            {
+                var sortBy = sortOrder == SortOrder.Ascending ? SortBy<TModel>.Ascending(orderByExpression) : SortBy<TModel>.Descending(orderByExpression);
+                result = result.SetSortOrder(sortBy);
+            }
+
+            if (limit != null)
+            {
+                result = result.SetLimit(limit.Value);
+            }
+
+            return result.ToArray();
         }
 
         protected abstract TModelId CreateNewId();

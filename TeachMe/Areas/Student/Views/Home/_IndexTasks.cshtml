@@ -1,21 +1,16 @@
-﻿<h2>Последние задачи</h2>
-<div>
-    <div class="label label-primary">Математика</div>
-    <div class="label label-danger">100 руб.</div>
-    <div class="label label-warning">В работе</div>
-</div>
-<div>
-    <div class="label label-primary">Физика</div>
-    <div class="label label-danger">130 руб.</div>
-    <div class="label label-warning">В работе</div>
-</div>
-<div>
-    <div class="label label-primary">Русский язык</div>
-    <div class="label label-danger">200 руб.</div>
-    <div class="label label-success">Готово</div>
-</div>
-<div>
-    <div class="label label-primary">Математика</div>
-    <div class="label label-danger">250 руб.</div>
-    <div class="label label-success">Готово</div>
-</div>
+﻿@model TeachMe.Areas.Student.Models.Home.IndexJobViewModel[]
+@using TeachMe.Models.Jobs
+
+<h2><span class="glyphicon glyphicon-search text-info"></span> Последние задачи</h2>
+@foreach (var job in Model)
+{
+    var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+    <div style="margin-top: 20px;">
+        <div style="font-size: 1.2em;">@job.Title</div>
+        <div>
+            <span class="label label-primary">@job.SubjectTitle</span>
+            <span class="label label-danger">@job.Cost руб.</span>
+            <span class="label @(successJobStatuses.Contains(job.Status) ? "label-success" : "label-warning")">@job.Status</span>
+        </div>
+    </div>
+}

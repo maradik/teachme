@@ -7,20 +7,24 @@ namespace TeachMe.Areas.Student.Controllers
     [AllowAnonymous]
     public class HomeController : StudentControllerBase
     {
-        IndexRecallViewModelProvider indexRecallViewModelProvider;
+        private IndexRecallViewModelProvider indexRecallViewModelProvider;
+        private IndexJobsViewModelProvider indexJobsViewModelProvider;
 
         public HomeController(IProjectTypeProvider projectTypeProvider,
-                              IndexRecallViewModelProvider indexRecallViewModelProvider) 
+                              IndexRecallViewModelProvider indexRecallViewModelProvider,
+                              IndexJobsViewModelProvider indexJobsViewModelProvider) 
             : base(projectTypeProvider)
         {
             this.indexRecallViewModelProvider = indexRecallViewModelProvider;
+            this.indexJobsViewModelProvider = indexJobsViewModelProvider;
         }
 
         public ActionResult Index()
         {
             var viewModel = new IndexViewModel
             {
-                Recalls = indexRecallViewModelProvider.Get()
+                Recalls = indexRecallViewModelProvider.Get(),
+                Jobs = indexJobsViewModelProvider.Get()
             };
             return View(viewModel);
         }
