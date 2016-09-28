@@ -209,6 +209,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\StudentControllerBase.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexRecallViewModel.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexRecallViewModelProvider.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexViewModel.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeController.cs" />
     <Compile Include="Areas\Teacher\Controllers\JobController.cs" />
@@ -305,6 +308,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\tanushka.jpg" />
+    <Content Include="Content\Images\vika.jpg" />
+    <Content Include="Content\Images\mikle.jpg" />
+    <Content Include="Content\Images\vano.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -397,7 +404,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Student\Models\" />
     <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Models\" />
     <Folder Include="Areas\Teacher\Views\Shared\" />

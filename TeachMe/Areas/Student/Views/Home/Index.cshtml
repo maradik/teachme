@@ -1,4 +1,6 @@
-﻿@{
+﻿@model TeachMe.Areas.Student.Models.Home.IndexViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -11,7 +13,7 @@
 <div class="row">
     <div class="col-md-4">
         @{
-            Html.RenderPartial("_IndexRecall");
+            Html.RenderPartial("_IndexRecall", Model.Recalls);
         }
     </div>
     <div class="col-md-4">
@@ -22,7 +24,7 @@
     <div class="col-md-4">
         @{
             <h2>Вход</h2>
-            Html.RenderPartial("_Login");
+            Html.RenderPartial("_Login", Model.LoginViewModel);
         }
     </div>
 </div>

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using TeachMe.Areas.Student.Models.Home;
 using TeachMe.ProjectsSupport;
 
 namespace TeachMe.Areas.Student.Controllers
@@ -6,13 +7,22 @@ namespace TeachMe.Areas.Student.Controllers
     [AllowAnonymous]
     public class HomeController : StudentControllerBase
     {
-        public HomeController(IProjectTypeProvider projectTypeProvider) : base(projectTypeProvider)
+        IndexRecallViewModelProvider indexRecallViewModelProvider;
+
+        public HomeController(IProjectTypeProvider projectTypeProvider,
+                              IndexRecallViewModelProvider indexRecallViewModelProvider) 
+            : base(projectTypeProvider)
         {
+            this.indexRecallViewModelProvider = indexRecallViewModelProvider;
         }
 
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new IndexViewModel
+            {
+                Recalls = indexRecallViewModelProvider.Get()
+            };
+            return View(viewModel);
         }
 
         public ActionResult About()
