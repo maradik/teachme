@@ -9,23 +9,33 @@ namespace TeachMe.Areas.Student.Controllers
     {
         private IndexRecallViewModelProvider indexRecallViewModelProvider;
         private IndexJobsViewModelProvider indexJobsViewModelProvider;
+        private IndexUserJobsViewModelProvider indexUserJobsViewModelProvider;
 
         public HomeController(IProjectTypeProvider projectTypeProvider,
                               IndexRecallViewModelProvider indexRecallViewModelProvider,
-                              IndexJobsViewModelProvider indexJobsViewModelProvider) 
+                              IndexJobsViewModelProvider indexJobsViewModelProvider,
+                              IndexUserJobsViewModelProvider indexUserJobsViewModelProvider) 
             : base(projectTypeProvider)
         {
             this.indexRecallViewModelProvider = indexRecallViewModelProvider;
             this.indexJobsViewModelProvider = indexJobsViewModelProvider;
+            this.indexUserJobsViewModelProvider = indexUserJobsViewModelProvider;
         }
 
         public ActionResult Index()
         {
+            ViewBag.ReturnUrl = Url.Action("Index", "Home", new { area = "" });
             var viewModel = new IndexViewModel
             {
                 Recalls = indexRecallViewModelProvider.Get(),
                 Jobs = indexJobsViewModelProvider.Get()
             };
+
+            if (ApplicationUser != null)
+            {
+                viewModel.UserInfo.Jobs = indexUserJobsViewModelProvider.Get(ApplicationUser);
+            }
+
             return View(viewModel);
         }
 

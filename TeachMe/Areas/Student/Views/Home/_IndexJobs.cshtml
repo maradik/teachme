@@ -2,6 +2,7 @@
 @using TeachMe.Models.Jobs
 
 <h2><span class="glyphicon glyphicon-search text-info"></span> Последние задачи</h2>
+<hr />
 @foreach (var job in Model)
 {
     var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };

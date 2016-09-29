@@ -1,6 +1,7 @@
 ﻿@using TeachMe.Models
 @model TeachMe.Models.Users.LoginViewModel
 
+<h2><span class="glyphicon glyphicon-log-in text-danger"></span> Вход</h2>
 <section id="loginForm">
     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl, area = "" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {

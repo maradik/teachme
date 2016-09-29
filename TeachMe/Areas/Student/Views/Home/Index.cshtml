@@ -18,13 +18,19 @@
     </div>
     <div class="col-md-4">
         @{
-            Html.RenderPartial("_IndexTasks", Model.Jobs);
+            Html.RenderPartial("_IndexJobs", Model.Jobs);
         }
     </div>
     <div class="col-md-4">
         @{
-            <h2>Вход</h2>
-            Html.RenderPartial("_Login", Model.LoginViewModel);
+            if (Request.IsAuthenticated)
+            {
+                Html.RenderPartial("_IndexUserInfo", Model.UserInfo);
+            }
+            else
+            {
+                Html.RenderPartial("_Login", Model.LoginViewModel);
+            }
         }
     </div>
 </div>
