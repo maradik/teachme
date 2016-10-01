@@ -7,11 +7,15 @@ namespace TeachMe.Models.Users
 {
     public class IndexViewModel
     {
+        private UserCash cash;
+
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public UserCash Cash { get { return cash ?? (cash = new UserCash()); } set { cash = value; } }
+        public string UserName { get; set; }
     }
 
     public class ManageLoginsViewModel
