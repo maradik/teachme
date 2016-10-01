@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 using ControllerBase = TeachMe.Controllers.ControllerBase;
 
 namespace TeachMe.Areas.Student.Controllers
@@ -10,7 +11,8 @@ namespace TeachMe.Areas.Student.Controllers
     [Authorize(Roles = UserRole.Names.Student)]
     public class StudentControllerBase : ControllerBase
     {
-        public StudentControllerBase(IProjectTypeProvider projectTypeProvider) : base(projectTypeProvider)
+        public StudentControllerBase(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider) : 
+            base(projectTypeProvider, projectInfoProvider)
         {
         }
 

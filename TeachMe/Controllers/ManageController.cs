@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using TeachMe.Models;
 using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 
 namespace TeachMe.Controllers
 {
@@ -18,13 +19,13 @@ namespace TeachMe.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController(IProjectTypeProvider projectTypeProvider) 
-            : base(projectTypeProvider)
+        public ManageController(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider) 
+            : base(projectTypeProvider, projectInfoProvider)
         {
         }
 
-        public ManageController(ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider) 
-            : base(projectTypeProvider)
+        public ManageController(ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider) 
+            : base(projectTypeProvider, projectInfoProvider)
         {
             SignInManager = signInManager;
         }

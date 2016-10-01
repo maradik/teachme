@@ -1,12 +1,13 @@
 ﻿using System.Web.Mvc;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 
 namespace TeachMe.Controllers
 {
     public class HomeController : ControllerBase
     {
-        public HomeController(IProjectTypeProvider projectTypeProvider)
-            : base(projectTypeProvider)
+        public HomeController(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
         }
 

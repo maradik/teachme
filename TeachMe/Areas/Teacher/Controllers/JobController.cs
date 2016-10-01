@@ -7,6 +7,7 @@ using TeachMe.DataAccess;
 using TeachMe.DataAccess.Jobs;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 using TeachMe.Services.Jobs;
 using TeachMe.ViewModels.Jobs;
 
@@ -18,9 +19,10 @@ namespace TeachMe.Areas.Teacher.Controllers
         private readonly IJobRepository jobRepository;
 
         public JobController(IProjectTypeProvider projectTypeProvider,
+                             IProjectInfoProvider projectInfoProvider,
                              IJobActionService jobActionService,
                              IJobRepository jobRepository)
-            : base(projectTypeProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
             this.jobActionService = jobActionService;
             this.jobRepository = jobRepository;

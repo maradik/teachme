@@ -10,6 +10,7 @@ using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
 using TeachMe.References;
 using System.Collections.Generic;
+using TeachMe.Services.General;
 
 namespace TeachMe.Controllers
 {
@@ -21,14 +22,15 @@ namespace TeachMe.Controllers
         private ISubjectReference subjectReference;
 
         public AccountController(IProjectTypeProvider projectTypeProvider,
+                                 IProjectInfoProvider projectInfoProvider,
                                  ISubjectReference subjectReference) 
-            : base(projectTypeProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
             this.subjectReference = subjectReference;
         }
 
-        public AccountController(ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider)
-            : base(projectTypeProvider)
+        public AccountController(ApplicationSignInManager signInManager, IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
             SignInManager = signInManager;
         }

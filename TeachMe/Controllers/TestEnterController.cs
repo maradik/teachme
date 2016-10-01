@@ -1,12 +1,14 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 
 namespace TeachMe.Controllers
 {
     public class TestEnterController : ControllerBase
     {
-        public TestEnterController(IProjectTypeProvider projectTypeProvider) : base(projectTypeProvider)
+        public TestEnterController(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider) 
+            : base(projectTypeProvider, projectInfoProvider)
         {
         }
 

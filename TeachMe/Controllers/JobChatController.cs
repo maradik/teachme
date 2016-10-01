@@ -11,6 +11,7 @@ using TeachMe.DataAccess.Jobs;
 using TeachMe.Models;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 
 namespace TeachMe.Controllers
 {
@@ -25,12 +26,13 @@ namespace TeachMe.Controllers
         private readonly IUploadedFileRepository uploadedFileRepository;
 
         public JobChatController(IProjectTypeProvider projectTypeProvider,
+                                 IProjectInfoProvider projectInfoProvider,
                                  IJobRepository jobRepository,
                                  IJobMessageRepository jobMessageRepository,
                                  IUploadedFileConverter uploadedFileConverter,
                                  IJobAttachmentConverter attachmentConverter,
                                  IUploadedFileRepository uploadedFileRepository)
-            : base(projectTypeProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
             this.jobRepository = jobRepository;
             this.jobMessageRepository = jobMessageRepository;

@@ -269,6 +269,8 @@
     <Compile Include="Models\Transactions\TransactionBuilder.cs" />
     <Compile Include="Models\Transactions\TransactionPart.cs" />
     <Compile Include="Models\Transactions\TransactionPartType.cs" />
+    <Compile Include="Services\General\IProjectInfoProvider.cs" />
+    <Compile Include="Services\General\ProjectInfoProvider.cs" />
     <Compile Include="Services\Notifications\ICustomSmsService.cs" />
     <Compile Include="Services\Notifications\ISmsService.cs" />
     <Compile Include="Services\Notifications\SmsAero\SmsAeroService.cs" />

@@ -9,6 +9,10 @@ namespace TeachMe.Helpers.Settings
         public static double TeacherInitialCash => SafeGetDouble("TeacherInitialCash") ?? 0.0;
         public static double StudentInitialCash => SafeGetDouble("StudentInitialCash") ?? 0.0;
         public static double JobCommissionRate => SafeGetDouble("JobCommissionRate") ?? 0.25;
+        public static string StudentProjectName => SafeGetString("StudentProjectName") ?? "";
+        public static string StudentProjectTitle => SafeGetString("StudentProjectTitle") ?? "";
+        public static string TeacherProjectName => SafeGetString("TeacherProjectName") ?? "";
+        public static string TeacherProjectTitle => SafeGetString("TeacherProjectTitle") ?? "";
 
         public static string RobokassaLogin => ConfigurationManager.AppSettings["RobokassaLogin"] ?? string.Empty;
         public static string RobokassaPassword1 => ConfigurationManager.AppSettings["RobokassaPassword1"] ?? string.Empty;
@@ -28,6 +32,11 @@ namespace TeachMe.Helpers.Settings
         public static string SmsIntelSenderName => ConfigurationManager.AppSettings["SmsIntelSenderName"] ?? string.Empty;
         public static int SmsIntelUseAlfaSource => SafeGetInt("SmsIntelUseAlfaSource") ?? 0;
         public static int SmsIntelChannel => SafeGetInt("SmsIntelChannel") ?? 0;
+
+        private static string SafeGetString(string settingName)
+        {
+            return ConfigurationManager.AppSettings[settingName];
+        }
 
         private static double? SafeGetDouble(string settingName)
         {

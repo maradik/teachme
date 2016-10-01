@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using TeachMe.Extensions;
 using TeachMe.Helpers.Settings;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 using TeachMe.Services.Payments;
 
 namespace TeachMe.Controllers
@@ -16,8 +17,9 @@ namespace TeachMe.Controllers
         private readonly IInvoiceActionService invoiceActionService;
 
         public PaymentController(IProjectTypeProvider projectTypeProvider,
+                                 IProjectInfoProvider projectInfoProvider,
                                  IInvoiceActionService invoiceActionService)
-            : base(projectTypeProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
             this.invoiceActionService = invoiceActionService;
         }

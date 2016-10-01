@@ -15,6 +15,7 @@ using TeachMe.References;
 using TeachMe.Services.Jobs;
 using TeachMe.ViewModels.Jobs;
 using TeachMe.Helpers.Settings;
+using TeachMe.Services.General;
 
 namespace TeachMe.Areas.Student.Controllers
 {
@@ -35,8 +36,9 @@ namespace TeachMe.Areas.Student.Controllers
                              ISubjectReference subjectReference,
                              IJobActionService jobActionService,
                              IProjectTypeProvider projectTypeProvider,
+                             IProjectInfoProvider projectInfoProvider,
                              IJobOpeningSpecification jobOpeningSpecification)
-            : base(projectTypeProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
             this.jobRepository = jobRepository;
             this.uploadedFileRepository = uploadedFileRepository;

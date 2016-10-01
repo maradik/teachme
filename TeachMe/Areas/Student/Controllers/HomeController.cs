@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using TeachMe.Areas.Student.Models.Home;
 using TeachMe.ProjectsSupport;
+using TeachMe.Services.General;
 
 namespace TeachMe.Areas.Student.Controllers
 {
@@ -12,10 +13,11 @@ namespace TeachMe.Areas.Student.Controllers
         private IndexUserJobsViewModelProvider indexUserJobsViewModelProvider;
 
         public HomeController(IProjectTypeProvider projectTypeProvider,
+                              IProjectInfoProvider projectInfoProvider,
                               IndexRecallViewModelProvider indexRecallViewModelProvider,
                               IndexJobsViewModelProvider indexJobsViewModelProvider,
                               IndexUserJobsViewModelProvider indexUserJobsViewModelProvider) 
-            : base(projectTypeProvider)
+            : base(projectTypeProvider, projectInfoProvider)
         {
             this.indexRecallViewModelProvider = indexRecallViewModelProvider;
             this.indexJobsViewModelProvider = indexJobsViewModelProvider;
