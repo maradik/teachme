@@ -2,12 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.ComponentModel;
 
 namespace TeachMe.Models.Users
 {
     public class IndexViewModel
     {
         private UserCash cash;
+        private PaymentViewModel payment;
 
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
@@ -16,6 +18,14 @@ namespace TeachMe.Models.Users
         public bool BrowserRemembered { get; set; }
         public UserCash Cash { get { return cash ?? (cash = new UserCash()); } set { cash = value; } }
         public string UserName { get; set; }
+        public PaymentViewModel Payment { get { return payment ?? (payment = new PaymentViewModel()); } set { payment = value; } }
+
+        public class PaymentViewModel
+        {
+            [DisplayName("Сумма")]
+            [Range(50, 10000)]
+            public double Amount { get; set; }
+        }
     }
 
     public class ManageLoginsViewModel

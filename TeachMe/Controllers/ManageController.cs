@@ -66,6 +66,7 @@ namespace TeachMe.Controllers
                 Cash = ApplicationUser.Cash,
                 UserName = ApplicationUser.UserName
             };
+            model.Payment.Amount = 100;
             return View(model);
         }
 
