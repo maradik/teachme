@@ -26,6 +26,7 @@
                     <li>@Html.ActionLink("Главная", "Index", "Home")</li>
                     @if (Request.IsAuthenticated && ((ApplicationUser)ViewBag.ApplicationUser).Roles.Contains(UserRole.Student.Name))
                     {
+                        <li>@Html.ActionLink("Новая задача", "Create", "Job", new { area = "Student" }, null)</li>
                         <li>@Html.ActionLink("Мои задачи", "Index", "Job", new { area = "Student" }, null)</li>
                     }
                     <li>@Html.ActionLink("О проекте", "About", "Home")</li>
