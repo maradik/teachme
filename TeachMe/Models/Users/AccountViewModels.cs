@@ -49,7 +49,7 @@ namespace TeachMe.Models.Users
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Адрес электронной почты")]
+        [Display(Name = "Почта")]
         [EmailAddress]
         public string Email { get; set; }
 

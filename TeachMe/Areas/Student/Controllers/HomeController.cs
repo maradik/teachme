@@ -30,7 +30,8 @@ namespace TeachMe.Areas.Student.Controllers
             var viewModel = new IndexViewModel
             {
                 Recalls = indexRecallViewModelProvider.Get(),
-                Jobs = indexJobsViewModelProvider.Get()
+                Jobs = indexJobsViewModelProvider.Get(),
+                LoginViewModel = new TeachMe.Models.Users.LoginViewModel { RememberMe = true }
             };
 
             if (ApplicationUser != null)
