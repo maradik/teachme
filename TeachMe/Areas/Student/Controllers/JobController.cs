@@ -111,9 +111,7 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
-            AssertJobMayBeEdited(job);
-            return View(job);
+            return View(jobActionService.DoAction(id, JobActionType.Edit, ApplicationUser));
         }
 
         // POST: Job/Edit/5
@@ -122,8 +120,7 @@ namespace TeachMe.Areas.Student.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Guid id, Job jobViewModel, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
-            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
-            AssertJobMayBeEdited(job);
+            var job = jobActionService.DoAction(id, JobActionType.Edit, ApplicationUser);
 
             try
             {
@@ -162,36 +159,6 @@ namespace TeachMe.Areas.Student.Controllers
             }
         }
 
-        // GET: Job/Delete/5
-
-        public ActionResult Delete(Guid id)
-        {
-            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
-            return View(job);
-        }
-
-        // POST: Job/Delete/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, FormCollection collection)
-        {
-            var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
-
-            try
-            {
-                AssertJobMayBeDeleted(job);
-
-                jobRepository.Remove(job.Id);
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View(job);
-            }
-        }
-
         private static void UpdateJobFromViewModel(Job job, Job jobViewModel, out JobAttachment[] deletedAttachments)
         {
             job.SubjectId = jobViewModel.SubjectId;
@@ -204,24 +171,17 @@ namespace TeachMe.Areas.Student.Controllers
             job.Attachments = job.Attachments.Where(x => jobViewModelFileNames.Contains(x.FileName)).ToList();
         }
 
-        private static void AssertJobMayBeDeleted(Job job)
-        {
-            if (!string.IsNullOrEmpty(job.TeacherUserId))
-                throw new InvalidOperationException($"Невозможно удалить Job, за которым закреплен исполнитель (JobId = {job.Id})");
-        }
-
-        private static void AssertJobMayBeEdited(Job job)
-        {
-            if (!string.IsNullOrEmpty(job.TeacherUserId))
-                throw new InvalidOperationException($"Невозможно изменить Job, за которым закреплен исполнитель (JobId = {job.Id})");
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
         {
-            jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
-            return RedirectToAction(nameof(Details), new {id = jobId});
+            if (jobActionType == JobActionType.Edit)
+                return RedirectToAction(nameof(Edit), new { id = jobId });
+
+            var updatedJob = jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
+            return updatedJob != null 
+                ? RedirectToAction(nameof(Details), new {id = jobId})
+                : RedirectToAction(nameof(Index));
         }
     }
 }

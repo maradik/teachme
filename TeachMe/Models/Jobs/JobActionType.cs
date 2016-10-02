@@ -27,6 +27,12 @@
         OfferAbort = 7,
 
         [HumanAnnotation("Подтвердить отмену")]
-        ConfirmAbort = 8
+        ConfirmAbort = 8,
+
+        [HumanAnnotation("Изменить")]
+        Edit = 9,
+
+        [HumanAnnotation("Удалить")]
+        Delete = 10
     }
 }

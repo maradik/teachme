@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using TeachMe.DataAccess.FileUploading;
 using TeachMe.DataAccess.Jobs;
 using TeachMe.Models.Jobs;
 using TeachMe.Models.Transactions;
@@ -11,21 +12,28 @@ namespace TeachMe.Services.Jobs
     public class JobActionService : IJobActionService
     {
         private readonly IJobRepository jobRepository;
+        private readonly IUploadedFileRepository uploadedFileRepository;
         private readonly IUserCashOperationService cashOperationService;
 
         public JobActionService(IJobRepository jobRepository,
+                                IUploadedFileRepository uploadedFileRepository,
                                 IUserCashOperationService cashOperationService)
         {
             this.jobRepository = jobRepository;
+            this.uploadedFileRepository = uploadedFileRepository;
             this.cashOperationService = cashOperationService;
         }
 
         private static readonly ILookup<JobStatus, JobActionByUserRole> AvailableActionsForStatus = new[]
         {
             Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Open, UserRole.Student, new ISpecification<Job>[] {JobOpeningSpecification.Instance})),
+            Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Edit, UserRole.Student, new ISpecification<Job>[] {JobEditingSpecification.Instance})),
+            Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Delete, UserRole.Student, new ISpecification<Job>[] {JobDeletionSpecification.Instance})),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Hide, UserRole.Student)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Take, UserRole.Teacher)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Cancel, UserRole.Student)),
+            Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Edit, UserRole.Student, new ISpecification<Job>[] {JobEditingSpecification.Instance})),
+            Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Delete, UserRole.Student, new ISpecification<Job>[] {JobDeletionSpecification.Instance})),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Teacher)),
@@ -89,6 +97,15 @@ namespace TeachMe.Services.Jobs
                     job.Status = JobStatus.Aborted;
                     cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
+                case JobActionType.Edit:
+                    return job;
+                case JobActionType.Delete:
+                    foreach (var attachment in job.Attachments)
+                    {
+                        uploadedFileRepository.Delete(attachment.FileName);
+                    }
+                    jobRepository.Remove(job.Id);
+                    return null;
                 default:
                     throw new NotImplementedException($"Неизвестное действие {actionType}");
             }

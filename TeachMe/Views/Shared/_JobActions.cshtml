@@ -1,4 +1,5 @@
 ﻿@model Tuple<Guid, TeachMe.Models.Jobs.JobActionType[]>
+@using TeachMe.Models.Jobs
 
 @{
     var jobId = Model.Item1;
@@ -13,7 +14,7 @@
         @Html.Hidden("jobActionType")
         foreach (var actionType in actionTypes)
         {
-            <button data-jobactiontype="@((int) actionType)">@actionType</button>
+            <button data-jobactiontype="@((int) actionType)" @Html.Raw( actionType == JobActionType.Delete ? "data-jobactionconfirmation='Удалить задачу?'" : "")>@actionType</button>
         }
     }
 </div>
@@ -22,8 +23,13 @@
     $(function() {
         $("button[data-jobactiontype]").click(function () {
             var actionButton = $(this);
-            $("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
-            $(actionButton).parents("form:first").submit();
+            var actionConfirmationText = actionButton.attr("data-jobactionconfirmation");
+            if (!actionConfirmationText || confirm(actionConfirmationText)) {
+                $("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
+                $(actionButton).parents("form:first").submit();
+            } else {
+                return false;
+            }
         });
     });
 </script>

@@ -79,9 +79,18 @@ var loadNewMessages = function (successCallback) {
     );
 };
 
+var showConfirmation = function (text) {
+    return !!confirm(text);
+}
+
 $(function () {
     $("[data-action=removeAttachment]").click(function () {
         removeAttachment(this);
         return false;
     });
+
+    $("[data-deletionconfirmation]").click(function () {
+        return showConfirmation($(this).attr("data-deletionconfirmation"));
+    });
 });
+

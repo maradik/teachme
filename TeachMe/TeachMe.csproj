@@ -273,6 +273,10 @@
     <Compile Include="Models\Transactions\TransactionPartType.cs" />
     <Compile Include="Services\General\IProjectInfoProvider.cs" />
     <Compile Include="Services\General\ProjectInfoProvider.cs" />
+    <Compile Include="Services\Jobs\IJobDeletionSpecification.cs" />
+    <Compile Include="Services\Jobs\IJobEditingSpecification.cs" />
+    <Compile Include="Services\Jobs\JobDeletionSpecification.cs" />
+    <Compile Include="Services\Jobs\JobEditingSpecification.cs" />
     <Compile Include="Services\Notifications\ICustomSmsService.cs" />
     <Compile Include="Services\Notifications\ISmsService.cs" />
     <Compile Include="Services\Notifications\SmsAero\SmsAeroService.cs" />
@@ -331,7 +335,6 @@
     <Content Include="Areas\Student\Views\web.config" />
     <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Student\Views\Job\Index.cshtml" />
-    <Content Include="Areas\Student\Views\Job\Delete.cshtml" />
     <Content Include="Areas\Student\Views\Job\Details.cshtml" />
     <Content Include="Areas\Student\Views\Job\Edit.cshtml" />
     <Content Include="Areas\Student\Views\Job\EditorTemplates\JobAttachment.cshtml" />
