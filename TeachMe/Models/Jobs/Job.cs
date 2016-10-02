@@ -8,7 +8,7 @@ namespace TeachMe.Models.Jobs
     public class Job : IEntity<Guid>
     {
         private const double MinCost = 50;
-        private const double MaxCost = 1000;
+        private const double MaxCost = double.MaxValue;
 
         private List<JobAttachment> attachments;
 
@@ -28,7 +28,7 @@ namespace TeachMe.Models.Jobs
         public JobStatus Status { get; set; }
 
         [Display(Name = "Стоимость")]
-        [Range(MinCost, MaxCost)]
+        [Range(MinCost, MaxCost, ErrorMessage = "Значение поля {0} должно быть не менее {1}")]
         public double StudentCost { get; set; }
 
         [Display(Name = "Стоимость")]

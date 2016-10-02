@@ -70,7 +70,7 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Create()
         {
-            return View(new Job());
+            return View(new Job { StudentCost = 100 });
         }
 
         // POST: Job/Create
