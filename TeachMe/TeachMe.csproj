@@ -252,6 +252,7 @@
     <Compile Include="DataAccess\Transactions\ITransactionRepository.cs" />
     <Compile Include="DataAccess\Transactions\TransactionRepository.cs" />
     <Compile Include="DataAccess\Transactions\TransactionRepositoryParameters.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\JobExtensions.cs" />
     <Compile Include="Extensions\JobMessageExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Helpers\Cryptography\HashHelper.cs" />
     <Compile Include="Helpers\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Settings\ApplicationSettings.cs" />
+    <Compile Include="Models\HumanAnnotationAttribute.cs" />
     <Compile Include="Models\Payments\Invoice.cs" />
     <Compile Include="Models\Payments\InvoiceStatus.cs" />
     <Compile Include="Models\Transactions\TransactionType.cs" />
