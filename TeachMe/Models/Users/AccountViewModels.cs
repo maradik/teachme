@@ -68,7 +68,7 @@ namespace TeachMe.Models.Users
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Адрес электронной почты")]
+        [Display(Name = "Почта")]
         public string Email { get; set; }
 
         [Required]
