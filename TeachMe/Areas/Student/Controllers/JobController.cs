@@ -16,6 +16,7 @@ using TeachMe.Services.Jobs;
 using TeachMe.ViewModels.Jobs;
 using TeachMe.Helpers.Settings;
 using TeachMe.Services.General;
+using TeachMe.Extensions;
 
 namespace TeachMe.Areas.Student.Controllers
 {
@@ -173,15 +174,22 @@ namespace TeachMe.Areas.Student.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
+        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType, string redirectActionName = nameof(Details))
         {
             if (jobActionType == JobActionType.Edit)
                 return RedirectToAction(nameof(Edit), new { id = jobId });
 
             var updatedJob = jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
             return updatedJob != null 
-                ? RedirectToAction(nameof(Details), new {id = jobId})
+                ? RedirectToAction(redirectActionName, new {id = jobId})
                 : RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult _GetAvailableActions(Guid jobId)
+        {
+            var job = jobRepository.Get(jobId);
+            var availableActions = jobActionService.GetAvailableActions(job, ApplicationUser);
+            return Json(availableActions.Select(x => new { Value = (int)x, Text = x.GetHumanAnnotation() }), JsonRequestBehavior.AllowGet);
         }
     }
 }

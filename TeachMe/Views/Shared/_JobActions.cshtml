@@ -22,14 +22,7 @@
 <script>
     $(function() {
         $("button[data-jobactiontype]").click(function () {
-            var actionButton = $(this);
-            var actionConfirmationText = actionButton.attr("data-jobactionconfirmation");
-            if (!actionConfirmationText || confirm(actionConfirmationText)) {
-                $("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
-                $(actionButton).parents("form:first").submit();
-            } else {
-                return false;
-            }
+            doJobAction(this);
         });
     });
 </script>

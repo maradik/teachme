@@ -79,6 +79,25 @@ var loadNewMessages = function (successCallback) {
     );
 };
 
+var doJobAction = function (actionButton) {
+    var actionButton = $(actionButton);
+    var actionConfirmationText = actionButton.attr("data-jobactionconfirmation");
+    if (!actionConfirmationText || confirm(actionConfirmationText)) {
+        $("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
+        var jobId = actionButton.attr("data-jobId");
+        if (jobId) {
+            $("input[name=jobId]:first").val(jobId);
+        }
+        var redirectActionName = actionButton.attr("data-redirectactionname");
+        if (redirectActionName) {
+            $("input[name=redirectActionName]:first").val(redirectActionName);
+        }
+        $(actionButton).parents("form:first").submit();
+    } else {
+        return false;
+    }
+};
+
 var showConfirmation = function (text) {
     return !!confirm(text);
 }

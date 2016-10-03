@@ -3,9 +3,11 @@
 
 <h2><span class="glyphicon glyphicon-search text-info"></span> Последние задачи</h2>
 <hr />
+@{ 
+    var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+}
 @foreach (var job in Model)
 {
-    var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
     <div style="margin-top: 20px;">
         <div style="font-size: 1.2em;">@job.Title</div>
         <div>
