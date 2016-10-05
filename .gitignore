@@ -246,3 +246,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+TeachMe/imagecache/**/*.jpg
+TeachMe/imagecache/**/*.png
+TeachMe/imagecache/**/*.gif
