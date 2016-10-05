@@ -338,6 +338,10 @@
     <Content Include="Content\Images\vika.jpg" />
     <Content Include="Content\Images\mikle.jpg" />
     <Content Include="Content\Images\vano.jpg" />
+    <Content Include="Content\TouchTouch\arrows.png" />
+    <Content Include="Content\TouchTouch\preloader.gif" />
+    <Content Include="Content\TouchTouch\touchTouch.css" />
+    <Content Include="Content\TouchTouch\touchTouch.jquery.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
