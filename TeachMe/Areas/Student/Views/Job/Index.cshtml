@@ -19,22 +19,6 @@
     @Html.Hidden("jobActionType")
     @Html.Hidden("redirectActionName")
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SubjectId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
-
     @{
         var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
     }
@@ -42,20 +26,20 @@
     {
         <tr>
             <td>
-                <span class="label label-primary">@Html.DisplayFor(modelItem => item.GetSubject().Title)</span>
+                <div>@Html.ActionLink(item.Title, "Details", new { id = item.Id })</div>
+                <div style="margin-top: 5px;">
+                    <span class="label label-primary">@Html.DisplayFor(modelItem => item.GetSubject().Title)</span>
+                    <span class="label label-danger">@Html.DisplayFor(modelItem => item.StudentCost) руб.</span>
+                    <span class="label @(successJobStatuses.Contains(item.Status) ? "label-success" : "label-warning")">@item.Status.GetHumanAnnotation()</span>
+                    @if (!string.IsNullOrEmpty(item.TeacherUserId))
+                    {
+                        <span class="label label-info">@item.GetTeacherUser().UserName</span>
+                    }
+                </div>
             </td>
             <td>
-                @Html.ActionLink(item.Title, "Details", new { id = item.Id })
-            </td>
-            <td>
-                <span class="label label-danger">@Html.DisplayFor(modelItem => item.StudentCost) руб.</span>
-            </td>
-            <td>
-                <span class="label @(successJobStatuses.Contains(item.Status) ? "label-success" : "label-warning")">@item.Status.GetHumanAnnotation()</span>
-            </td>
-            <td>
-                <div class="dropdown">
-                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="@("actionDropdownMenu" + item.Id)" data-jobid="@item.Id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <div class="dropdown" style="float: right; margin-right: 40px;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="@("actionDropdownMenu" + item.Id)" data-jobid="@item.Id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Действие
                         <span class="caret"></span>
                     </button>
