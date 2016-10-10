@@ -112,7 +112,9 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            return View(jobActionService.DoAction(id, JobActionType.Edit, ApplicationUser));
+            var job = jobActionService.DoAction(id, JobActionType.Edit, ApplicationUser);
+            job.Attachments = job.Attachments.OrderByDescending(x => x.Type).ToList();
+            return View(job);
         }
 
         // POST: Job/Edit/5
@@ -127,7 +129,8 @@ namespace TeachMe.Areas.Student.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return View();
+                    job.Attachments = job.Attachments.OrderByDescending(x => x.Type).ToList();
+                    return View(job);
                 }
 
                 JobAttachment[] deletedAttachments;
@@ -156,7 +159,8 @@ namespace TeachMe.Areas.Student.Controllers
             }
             catch
             {
-                return View();
+                job.Attachments = job.Attachments.OrderByDescending(x => x.Type).ToList();
+                return View(job);
             }
         }
 

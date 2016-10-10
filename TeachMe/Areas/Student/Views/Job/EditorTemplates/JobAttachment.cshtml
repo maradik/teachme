@@ -2,21 +2,27 @@
 @using TeachMe.Models.Jobs
 @model TeachMe.Models.Jobs.JobAttachment
 
-<div style="margin: 10px 0 10px 0;" class="attachment">
+<div style="margin: 10px 0 10px 0;" class="col-xs-4 col-sm-3 attachment">
     <div>
         @Html.HiddenFor(model => Model.FileName)
         @switch (Model.Type)
         {
             case JobAttachmentType.Image:
-                <img src="~/Uploads/@Model.FileName" title="@Model.OriginFileName" style="max-width: 200px;" />
+                <div>
+                    <a href="~/Uploads/@Model.FileName?width=1280" class="gallery-item">
+                        <img src="~/Uploads/@Model.FileName?width=200" title="@Model.OriginFileName" style="max-width: 100%;" />
+                    </a>
+                </div>
                 break;
             default:
-                <a href="~/Uploads/@Model.FileName" title="Скачать @Model.OriginFileName">@Model.OriginFileName</a>
+                <div>
+                    <a href="~/Uploads/@Model.FileName" title="Скачать @Model.OriginFileName">@Model.OriginFileName</a>
+                </div>
                 break;
         }
     </div>
-    <div>
-        <a href="#" data-action="removeAttachment">Удалить</a>
+    <div class="text-center">
+        <a href="#" data-action="removeAttachment">[Удалить]</a>
     </div>
 </div>
 

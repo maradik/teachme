@@ -19,9 +19,12 @@ namespace TeachMe.Models.Jobs
         public int SubjectId { get; set; }
 
         [Display(Name = "Заголовок")]
+        [Required]
+        [StringLength(100, MinimumLength = 10)]
         public string Title { get; set; }
 
         [Display(Name = "Описание")]
+        [StringLength(1000)]
         public string Description { get; set; }
 
         [Display(Name = "Статус")]
