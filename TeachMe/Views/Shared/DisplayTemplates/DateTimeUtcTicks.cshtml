@@ -1,5 +1,5 @@
 ﻿@model long
 @{
-    var utcDate = new DateTime(Model, DateTimeKind.Utc);
+    var utcDate = new DateTime(Model, DateTimeKind.Utc).AddHours(3);
 }
-@utcDate.ToString("dd.MM.yyyy")
+@utcDate.ToString("dd.MM.yyyy HH:mm")

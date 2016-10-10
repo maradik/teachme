@@ -54,33 +54,41 @@ var autoLoadNewMessages = function() {
         setTimeout(function() {
             autoLoadNewMessages();
             },
-            5000);
+            10000);
     });
 };
 
+var loadingNewMessages = false;
 var loadNewMessages = function (successCallback) {
-    var jobId = $("input#jobId:first").val();
-    $.ajax(
-        "/JobChat/_GetMessages?jobId=" + jobId + "&afterTicks=" + lastMessageCreationTick,
-        {
-            success: function (data) {
-                data = $(data);
-                data.hide();
-                $("#jobMessageContainer").append(data);
-                data.show('slow');
-                if (data.length) {
-                    lastMessageCreationTick = $("div.job-message:last").attr("data-creationticks");
-                }
-                if (successCallback && typeof successCallback == "function") {
-                    successCallback();
+    if (!loadingNewMessages) {
+        loadingNewMessages = true;
+        var jobId = $("input#jobId:first").val();
+        $.ajax(
+            "/JobChat/_GetMessages?jobId=" + jobId + "&afterTicks=" + lastMessageCreationTick,
+            {
+                success: function (data) {
+                    data = $(data);
+                    data.hide();
+                    $("#jobMessageContainer").append(data);
+                    data.show('slow');
+                    touchImages(data);
+                    if (data.length) {
+                        lastMessageCreationTick = $("div.job-message:last").attr("data-creationticks");
+                    }
+                    if (successCallback && typeof successCallback == "function") {
+                        successCallback();
+                    }
+                },
+                complete: function () {
+                    loadingNewMessages = false;
                 }
             }
-        }
-    );
+        );
+    }
 };
 
 var doJobAction = function (actionButton) {
-    var actionButton = $(actionButton);
+    actionButton = $(actionButton);
     var actionConfirmationText = actionButton.attr("data-jobactionconfirmation");
     if (!actionConfirmationText || confirm(actionConfirmationText)) {
         $("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
@@ -98,6 +106,17 @@ var doJobAction = function (actionButton) {
     }
 };
 
+var touchImages = function (imageElements) {
+    imageElements = imageElements || $(document);
+    imageElements.find(".gallery-container").photobox("a.gallery-item",{
+        time: 0,
+        autoplay: false,
+        loop: false,
+        thumbs: false,
+        zoomable: true
+    });
+}
+
 var showConfirmation = function (text) {
     return !!confirm(text);
 }
@@ -111,5 +130,7 @@ $(function () {
     $("[data-deletionconfirmation]").click(function () {
         return showConfirmation($(this).attr("data-deletionconfirmation"));
     });
+
+    touchImages();
 });
 

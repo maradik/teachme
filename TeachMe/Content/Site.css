@@ -22,3 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.dl-horizontal dd,
+.dl-horizontal dt {
+    margin-bottom: 2px;
+}

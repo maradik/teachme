@@ -1,30 +1,43 @@
 ﻿@using TeachMe.Extensions
-@using TeachMe.Models
 @using TeachMe.Models.Jobs
-@model TeachMe.Models.Jobs.JobMessage
+@model JobMessage
 
+@{
+    var isCurrentUserAuthor = Model.UserId == (string)ViewBag.ApplicationUser?.Id;
+}
 <div style="padding: 10px 0 10px 0" class="job-message" data-creationticks="@Model.CreationTicks">
-    <div style="background-color: green;">
-        @Html.DisplayFor(model => model.GetUser().UserName)
-        @Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")
-    </div>
-    <div>
-        @Html.DisplayFor(model => model.Text)
-    </div>
-    <div class="row">
-        @foreach (var attachment in Model.Attachments.OrderByDescending(x => x.Type))
-        {
-            <div class="col-sm-3 col-xs-4">
-                @switch (attachment.Type)
+    <div class="panel @(isCurrentUserAuthor ? "panel-default" : "panel-success")">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <span class="glyphicon glyphicon-comment"></span>
+                @(isCurrentUserAuthor ? "Вы" : Model.GetUser().UserName)
+                <span style="font-style: italic;">@Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")</span>
+            </h4>
+        </div>
+        <div class="panel-body">
+            <div>
+                @Html.DisplayFor(model => model.Text)
+            </div>
+            <div class="row gallery-container">
+                @foreach (var attachment in Model.Attachments.Where(x => x.Type == JobAttachmentType.Image))
                 {
-                    case JobAttachmentType.Image:
-                        <img src="~/Uploads/@attachment.FileName" title="@attachment.OriginFileName" style="max-width: 100%;" />
-                        break;
-                    default:
-                        <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">@attachment.OriginFileName</a>
-                        break;
+                    <div class="col-xs-4 col-sm-3">
+                        <div style="margin: 10px 0 10px 0;">
+                            <a href="~/Uploads/@attachment.FileName?width=1280" class="gallery-item" data-gallery="@("jobcomment" + Model.Id)">
+                                <img src="~/Uploads/@attachment.FileName?width=200" title="@attachment.OriginFileName" style="max-width: 100%;" />
+                            </a>
+                        </div>
+                    </div>
                 }
             </div>
-        }
+            <div class="row">
+                @foreach (var attachment in Model.Attachments.Where(x => x.Type != JobAttachmentType.Image))
+                {
+                    <div style="margin: 10px 0 10px 0;">
+                        <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">Скачать @attachment.OriginFileName</a>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
