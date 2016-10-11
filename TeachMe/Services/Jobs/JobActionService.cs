@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Linq;
 using TeachMe.DataAccess.FileUploading;
 using TeachMe.DataAccess.Jobs;
@@ -11,17 +12,22 @@ namespace TeachMe.Services.Jobs
 {
     public class JobActionService : IJobActionService
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(JobActionService));
+
         private readonly IJobRepository jobRepository;
         private readonly IUploadedFileRepository uploadedFileRepository;
         private readonly IUserCashOperationService cashOperationService;
+        private readonly IJobActionCustomHandler[] customHandlers;
 
         public JobActionService(IJobRepository jobRepository,
                                 IUploadedFileRepository uploadedFileRepository,
-                                IUserCashOperationService cashOperationService)
+                                IUserCashOperationService cashOperationService,
+                                IJobActionCustomHandler[] customHandlers)
         {
             this.jobRepository = jobRepository;
             this.uploadedFileRepository = uploadedFileRepository;
             this.cashOperationService = cashOperationService;
+            this.customHandlers = customHandlers;
         }
 
         private static readonly ILookup<JobStatus, JobActionByUserRole> AvailableActionsForStatus = new[]
@@ -61,6 +67,18 @@ namespace TeachMe.Services.Jobs
 
             if (!GetAvailableActions(job, user).Contains(actionType))
                 throw new InvalidOperationException($"Недопустимое действие {actionType} над задачей {job.Id}, {nameof(user)}={user.Id}");
+
+            foreach (var customHandler in customHandlers)
+            {
+                try
+                {
+                    customHandler.Handle(job, actionType, user);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Обработчик {customHandler.GetType()} рассыпался с ошибкой", e);
+                }
+            }
 
             switch (actionType)
             {

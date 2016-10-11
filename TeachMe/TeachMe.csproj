@@ -285,8 +285,10 @@
     <Compile Include="Models\Transactions\TransactionPartType.cs" />
     <Compile Include="Services\General\IProjectInfoProvider.cs" />
     <Compile Include="Services\General\ProjectInfoProvider.cs" />
+    <Compile Include="Services\Jobs\IJobActionCustomHandler.cs" />
     <Compile Include="Services\Jobs\IJobDeletionSpecification.cs" />
     <Compile Include="Services\Jobs\IJobEditingSpecification.cs" />
+    <Compile Include="Services\Jobs\JobActionHandlers\StudentNotificationJobActionHandler.cs" />
     <Compile Include="Services\Jobs\JobDeletionSpecification.cs" />
     <Compile Include="Services\Jobs\JobEditingSpecification.cs" />
     <Compile Include="Services\Notifications\ICustomSmsService.cs" />

@@ -7,6 +7,7 @@ using Ninject;
 using Ninject.Extensions.Conventions;
 using Ninject.Web.Common;
 using TeachMe.Services.Notifications;
+using TeachMe.Services.Jobs;
 
 namespace TeachMe.Utils
 {
@@ -41,7 +42,12 @@ namespace TeachMe.Utils
                               .SelectAllClasses()
                               .InheritedFrom(typeof(ICustomSmsService))
                               .BindAllInterfaces()
-                              .Configure(y => y.InRequestScope()));
+                              .Configure(y => y.InSingletonScope()));
+            kernel.Bind(x => x.FromThisAssembly()
+                              .SelectAllClasses()
+                              .InheritedFrom(typeof(IJobActionCustomHandler))
+                              .BindAllInterfaces()
+                              .Configure(y => y.InSingletonScope()));
         }
     }
 }
