@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -11,6 +12,8 @@ namespace TeachMe.Services.Notifications.SmsAero
 {
     public class SmsIntelService : ICustomSmsService
     {
+        private static ILog Logger = LogManager.GetLogger(typeof(SmsIntelService));
+
         public int Priority => ApplicationSettings.SmsIntelServicePriority;
 
         // http://www.smsintel.ru/integration/
@@ -21,24 +24,32 @@ namespace TeachMe.Services.Notifications.SmsAero
 
         private void SendInternal(string recipientPhone, string text)
         {
-            var url = BuildUrl(recipientPhone,
-                               text,
-                               ApplicationSettings.SmsIntelLogin,
-                               ApplicationSettings.SmsIntelPassword,
-                               ApplicationSettings.SmsIntelSenderName,
-                               ApplicationSettings.SmsIntelUseAlfaSource,
-                               ApplicationSettings.SmsIntelChannel);
-            var request = WebRequest.CreateHttp(url);
-            request.Method = "POST";
-            using (var response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                var responseString = Regex.Unescape(new StreamReader(response.GetResponseStream(), Encoding.UTF8).ReadToEnd());
-
-                if (response.StatusCode != HttpStatusCode.OK ||
-                    responseString.IndexOf("\"code\":1", StringComparison.InvariantCultureIgnoreCase) < 0)
+                var url = BuildUrl(recipientPhone,
+                                   text,
+                                   ApplicationSettings.SmsIntelLogin,
+                                   ApplicationSettings.SmsIntelPassword,
+                                   ApplicationSettings.SmsIntelSenderName,
+                                   ApplicationSettings.SmsIntelUseAlfaSource,
+                                   ApplicationSettings.SmsIntelChannel);
+                var request = WebRequest.CreateHttp(url);
+                request.Method = "POST";
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    throw new Exception($"Не удалось отправить смс на номер {recipientPhone} с текстом: {text}. Код ответа {response.StatusCode}, тело: `{responseString}`. Url запроса: {url}");
+                    var responseString = Regex.Unescape(new StreamReader(response.GetResponseStream(), Encoding.UTF8).ReadToEnd());
+
+                    if (response.StatusCode != HttpStatusCode.OK ||
+                        responseString.IndexOf("\"code\":1", StringComparison.InvariantCultureIgnoreCase) < 0)
+                    {
+                        throw new Exception($"Не удалось отправить смс на номер {recipientPhone} с текстом: {text}. Код ответа {response.StatusCode}, тело: `{responseString}`. Url запроса: {url}");
+                    }
                 }
+                Logger.Info($"Отправлено СМС на номер {recipientPhone} с текстом {text}");
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Ошибка при отправке СМС на номер {recipientPhone}", e);
             }
         }
 
