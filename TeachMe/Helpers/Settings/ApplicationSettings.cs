@@ -19,6 +19,8 @@ namespace TeachMe.Helpers.Settings
         public static string RobokassaPassword2 => ConfigurationManager.AppSettings["RobokassaPassword2"] ?? string.Empty;
         public static bool RobokassaIsInTest => SafeGetBool("RobokassaIsInTest") ?? false;
 
+        public static bool SmsNotificationEnabled => SafeGetBool("SmsNotificationEnabled") ?? false;
+
         public static int SmsAeroServicePriority => SafeGetInt("SmsAeroServicePriority") ?? 0;
         public static string SmsAeroLogin => ConfigurationManager.AppSettings["SmsAeroLogin"] ?? string.Empty;
         public static string SmsAeroApiKey => ConfigurationManager.AppSettings["SmsAeroApiKey"] ?? string.Empty;

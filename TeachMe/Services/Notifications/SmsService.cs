@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using TeachMe.Helpers.Settings;
 
 namespace TeachMe.Services.Notifications
 {
@@ -13,7 +14,10 @@ namespace TeachMe.Services.Notifications
 
         public void Send(string recipientPhone, string text)
         {
-            customSmsServices.OrderByDescending(x => x.Priority).First().Send(recipientPhone, text);
+            if (ApplicationSettings.SmsNotificationEnabled)
+            {
+                customSmsServices.OrderByDescending(x => x.Priority).First().Send(recipientPhone, text);
+            }
         }
     }
 }
