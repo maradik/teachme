@@ -233,6 +233,9 @@
     <Compile Include="Areas\Teacher\Controllers\HomeController.cs" />
     <Compile Include="Areas\Teacher\Controllers\JobController.cs" />
     <Compile Include="Areas\Teacher\Controllers\TeacherControllerBase.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexRecallViewModel.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexRecallViewModelProvider.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexViewModel.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -336,7 +339,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\irina.jpg" />
+    <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\mariya-andreevna.jpg" />
+    <Content Include="Content\Images\natalya.jpg" />
     <Content Include="Content\Images\tanushka.jpg" />
+    <Content Include="Content\Images\valentina-petrovna.jpg" />
     <Content Include="Content\Images\vika.jpg" />
     <Content Include="Content\Images\mikle.jpg" />
     <Content Include="Content\Images\vano.jpg" />
@@ -435,7 +443,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Student\Views\Shared\" />
-    <Folder Include="Areas\Teacher\Models\" />
     <Folder Include="Areas\Teacher\Views\Shared\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\Home\" />
