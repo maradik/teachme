@@ -11,13 +11,16 @@ namespace TeachMe.Areas.Teacher.Controllers
     public class HomeController : TeacherControllerBase
     {
         private readonly IndexRecallViewModelProvider indexRecallViewModelProvider;
+        private readonly IndexJobsViewModelProvider indexJobsViewModelProvider;
 
         public HomeController(IProjectTypeProvider projectTypeProvider, 
                               IProjectInfoProvider projectInfoProvider,
-                              IndexRecallViewModelProvider indexRecallViewModelProvider) 
+                              IndexRecallViewModelProvider indexRecallViewModelProvider,
+                              IndexJobsViewModelProvider indexJobsViewModelProvider) 
             : base(projectTypeProvider, projectInfoProvider)
         {
             this.indexRecallViewModelProvider = indexRecallViewModelProvider;
+            this.indexJobsViewModelProvider = indexJobsViewModelProvider;
         }
 
         public ActionResult Index()
@@ -25,7 +28,8 @@ namespace TeachMe.Areas.Teacher.Controllers
             var viewModel = new IndexViewModel
             {
                 Recalls = indexRecallViewModelProvider.Get(),
-                LoginViewModel = new LoginViewModel { RememberMe = true }
+                LoginViewModel = new LoginViewModel { RememberMe = true },
+                Jobs = indexJobsViewModelProvider.Get()
             };
             return View(viewModel);
         }

@@ -233,6 +233,8 @@
     <Compile Include="Areas\Teacher\Controllers\HomeController.cs" />
     <Compile Include="Areas\Teacher\Controllers\JobController.cs" />
     <Compile Include="Areas\Teacher\Controllers\TeacherControllerBase.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexJobsViewModelProvider.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexJobViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexRecallViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexRecallViewModelProvider.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexViewModel.cs" />
@@ -379,7 +381,7 @@
     <Content Include="Areas\Student\Views\Home\Index.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexJumbotron.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexRecall.cshtml" />
-    <Content Include="Areas\Teacher\Views\Home\_IndexTasks.cshtml" />
+    <Content Include="Areas\Teacher\Views\Home\_IndexJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\Index.cshtml" />
     <Content Include="Areas\Student\Views\Home\_IndexUserInfo.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
