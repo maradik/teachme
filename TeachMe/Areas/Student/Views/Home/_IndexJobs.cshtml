@@ -1,4 +1,5 @@
 ﻿@model TeachMe.Areas.Student.Models.Home.IndexJobViewModel[]
+@using TeachMe.Extensions
 @using TeachMe.Models.Jobs
 
 <h2><span class="glyphicon glyphicon-search text-info"></span> Последние задачи</h2>
@@ -9,11 +10,11 @@
 @foreach (var job in Model)
 {
     <div style="margin-top: 20px;">
-        <div style="font-size: 1.2em;">@job.Title</div>
+        <div>@job.Title</div>
         <div>
             <span class="label label-primary">@job.SubjectTitle</span>
             <span class="label label-danger">@job.Cost руб.</span>
-            <span class="label @(successJobStatuses.Contains(job.Status) ? "label-success" : "label-warning")">@job.Status</span>
+            <span class="label @(successJobStatuses.Contains(job.Status) ? "label-success" : "label-warning")">@job.Status.GetHumanAnnotation()</span>
         </div>
     </div>
 }
