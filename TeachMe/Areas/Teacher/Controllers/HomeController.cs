@@ -42,6 +42,7 @@ namespace TeachMe.Areas.Teacher.Controllers
             {
                 viewModel.UserInfo.Jobs = indexUserJobsViewModelProvider.Get(ApplicationUser);
                 viewModel.UserInfo.SuitableJobs = indexUserSuitableJobsViewModelProvider.Get(ApplicationUser);
+                viewModel.UserInfo.Profile = new IndexUserProfileViewModel {UserName = ApplicationUser.UserName, CashMoney = ApplicationUser.Cash.AvailableAmount};
             }
 
             return View(viewModel);
