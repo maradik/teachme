@@ -237,6 +237,9 @@
     <Compile Include="Areas\Teacher\Models\Home\IndexJobViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexRecallViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexRecallViewModelProvider.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexUserInfoViewModel.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexUserJobsViewModelProvider.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\IndexUserJobViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexViewModel.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -384,6 +387,7 @@
     <Content Include="Areas\Teacher\Views\Home\_IndexJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\Index.cshtml" />
     <Content Include="Areas\Student\Views\Home\_IndexUserInfo.cshtml" />
+    <Content Include="Areas\Teacher\Views\Home\_IndexUserInfo.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

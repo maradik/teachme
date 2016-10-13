@@ -1,0 +1,27 @@
+﻿@model TeachMe.Areas.Teacher.Models.Home.IndexUserInfoViewModel
+@using TeachMe.Extensions
+@using TeachMe.Models.Jobs
+
+<h2><span class="glyphicon glyphicon-user text-warning"></span> Мои задачи в работе</h2>
+<hr/>
+@{
+    var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+}
+@if (Model.Jobs.Length == 0)
+{
+    <div style="font-style: italic;">Нет задач</div>
+}
+@foreach (var job in Model.Jobs)
+{
+    <div style="margin-top: 20px;">
+        <div>@Html.ActionLink(job.Title,"Details", "Job", new { job.Id }, new object())</div>
+        <div>
+            <span class="label label-primary">@job.SubjectTitle</span>
+            <span class="label label-danger">@job.Cost руб.</span>
+            <span class="label @(successJobStatuses.Contains(job.Status) ? "label-success" : "label-warning")">@job.Status.GetHumanAnnotation()</span>
+        </div>
+    </div>
+}
+<div style="margin-top: 20px;">
+    @Html.ActionLink("Взять новую задачу", "IndexAvailable", "Job") | @Html.ActionLink("Все мои задачи", "Index", "Job")
+</div>
