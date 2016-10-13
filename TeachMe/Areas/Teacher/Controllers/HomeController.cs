@@ -31,21 +31,26 @@ namespace TeachMe.Areas.Teacher.Controllers
 
         public ActionResult Index()
         {
-            var viewModel = new IndexViewModel
-            {
-                Recalls = indexRecallViewModelProvider.Get(),
-                LoginViewModel = new LoginViewModel {RememberMe = true},
-                Jobs = indexJobsViewModelProvider.Get()
-            };
-
             if (ApplicationUser != null)
             {
-                viewModel.UserInfo.Jobs = indexUserJobsViewModelProvider.Get(ApplicationUser);
-                viewModel.UserInfo.SuitableJobs = indexUserSuitableJobsViewModelProvider.Get(ApplicationUser);
-                viewModel.UserInfo.Profile = new IndexUserProfileViewModel {UserName = ApplicationUser.UserName, CashMoney = ApplicationUser.Cash.AvailableAmount};
+                var viewModel = new IndexUserInfoViewModel
+                {
+                    Jobs = indexUserJobsViewModelProvider.Get(ApplicationUser),
+                    SuitableJobs = indexUserSuitableJobsViewModelProvider.Get(ApplicationUser),
+                    Profile = new IndexUserProfileViewModel {UserName = ApplicationUser.UserName, CashMoney = ApplicationUser.Cash.AvailableAmount}
+                };
+                return View("UserIndex", viewModel);
             }
-
-            return View(viewModel);
+            else
+            {
+                var viewModel = new IndexViewModel
+                {
+                    Recalls = indexRecallViewModelProvider.Get(),
+                    LoginViewModel = new LoginViewModel {RememberMe = true},
+                    Jobs = indexJobsViewModelProvider.Get()
+                };
+                return View("Index", viewModel);
+            }
         }
 
         public ActionResult About()

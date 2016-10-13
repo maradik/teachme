@@ -393,6 +393,7 @@
     <Content Include="Areas\Teacher\Views\Home\_IndexUserJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexSuitableUserJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexUserProfile.cshtml" />
+    <Content Include="Areas\Teacher\Views\Home\UserIndex.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
