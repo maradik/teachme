@@ -1,0 +1,23 @@
+﻿@model TeachMe.Areas.Teacher.Models.Home.IndexUserSuitableJobViewModel[]
+@using TeachMe.Extensions
+
+<h2><span class="glyphicon glyphicon-search text-info"></span> Подходящие задачи</h2>
+<hr/>
+@if (Model.Length == 0)
+{
+    <div style="font-style: italic;">Нет задач</div>
+}
+@foreach (var job in Model)
+{
+    <div style="margin-top: 20px;">
+        <div>@Html.ActionLink(job.Title,"Details", "Job", new { job.Id }, new object())</div>
+        <div>
+            <span class="label label-primary">@job.SubjectTitle</span>
+            <span class="label label-danger">@job.Cost руб.</span>
+            <span class="label label-warning">@job.Status.GetHumanAnnotation()</span>
+        </div>
+    </div>
+}
+<div style="margin-top: 20px;">
+    @Html.ActionLink("Расширенный поиск", "IndexAvailable", "Job")
+</div>

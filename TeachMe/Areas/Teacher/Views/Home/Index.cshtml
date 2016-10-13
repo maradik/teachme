@@ -11,26 +11,40 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        @{
-            Html.RenderPartial("_IndexRecall", Model.Recalls);
-        }
-    </div>
-    <div class="col-md-4">
-        @{
-            Html.RenderPartial("_IndexJobs", Model.Jobs);
-        }
-    </div>
-    <div class="col-md-4">
-        @{
-            if (Request.IsAuthenticated)
-            {
-                Html.RenderPartial("_IndexUserInfo", Model.UserInfo);
+    @if (Request.IsAuthenticated)
+    {
+        <div class="col-md-4">
+            @{
+                Html.RenderPartial("_IndexUserJobs", Model.UserInfo.Jobs);
             }
-            else
-            {
+        </div>
+        <div class="col-md-4">
+            @{
+                Html.RenderPartial("_IndexSuitableUserJobs", Model.UserInfo.SuitableJobs);
+            }
+        </div>
+        <div class="col-md-4">
+            @{
+                Html.RenderPartial("_IndexJobs", Model.Jobs);
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-md-4">
+            @{
+                Html.RenderPartial("_IndexRecall", Model.Recalls);
+            }
+        </div>
+        <div class="col-md-4">
+            @{
+                Html.RenderPartial("_IndexJobs", Model.Jobs);
+            }
+        </div>
+        <div class="col-md-4">
+            @{
                 Html.RenderPartial("_Login", Model.LoginViewModel);
             }
-        }
-    </div>
+        </div>
+    }
 </div>

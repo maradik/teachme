@@ -13,17 +13,20 @@ namespace TeachMe.Areas.Teacher.Controllers
         private readonly IndexRecallViewModelProvider indexRecallViewModelProvider;
         private readonly IndexJobsViewModelProvider indexJobsViewModelProvider;
         private readonly IndexUserJobsViewModelProvider indexUserJobsViewModelProvider;
+        private readonly IndexUserSuitableJobsViewModelProvider indexUserSuitableJobsViewModelProvider;
 
         public HomeController(IProjectTypeProvider projectTypeProvider,
                               IProjectInfoProvider projectInfoProvider,
                               IndexRecallViewModelProvider indexRecallViewModelProvider,
                               IndexJobsViewModelProvider indexJobsViewModelProvider,
-                              IndexUserJobsViewModelProvider indexUserJobsViewModelProvider)
+                              IndexUserJobsViewModelProvider indexUserJobsViewModelProvider,
+                              IndexUserSuitableJobsViewModelProvider indexUserSuitableJobsViewModelProvider)
             : base(projectTypeProvider, projectInfoProvider)
         {
             this.indexRecallViewModelProvider = indexRecallViewModelProvider;
             this.indexJobsViewModelProvider = indexJobsViewModelProvider;
             this.indexUserJobsViewModelProvider = indexUserJobsViewModelProvider;
+            this.indexUserSuitableJobsViewModelProvider = indexUserSuitableJobsViewModelProvider;
         }
 
         public ActionResult Index()
@@ -32,9 +35,15 @@ namespace TeachMe.Areas.Teacher.Controllers
             {
                 Recalls = indexRecallViewModelProvider.Get(),
                 LoginViewModel = new LoginViewModel {RememberMe = true},
-                Jobs = indexJobsViewModelProvider.Get(),
-                UserInfo = new IndexUserInfoViewModel {Jobs = indexUserJobsViewModelProvider.Get(ApplicationUser)}
+                Jobs = indexJobsViewModelProvider.Get()
             };
+
+            if (ApplicationUser != null)
+            {
+                viewModel.UserInfo.Jobs = indexUserJobsViewModelProvider.Get(ApplicationUser);
+                viewModel.UserInfo.SuitableJobs = indexUserSuitableJobsViewModelProvider.Get(ApplicationUser);
+            }
+
             return View(viewModel);
         }
 
