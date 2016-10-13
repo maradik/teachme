@@ -1,11 +1,12 @@
-﻿@using TeachMe.Models.Jobs
+﻿@using TeachMe.Extensions
+@using TeachMe.Models.Jobs
 @using TeachMe.Services.Jobs
 @model Job
 
 @if (Model.Status == JobStatus.Draft && !JobOpeningSpecification.Instance.IsSatisfiedBy(Model))
 {
     <div class="alert alert-warning">
-        Задача в статусе <span style="font-weight: bold;">@Model.Status</span> и недоступна для выполнения. <br />
+        Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
         Пополните баланс на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
     </div>
 }

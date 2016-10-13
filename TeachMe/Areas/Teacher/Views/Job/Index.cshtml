@@ -45,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.GetStudentUser().UserName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Status)
+            @item.Status.GetHumanAnnotation()
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreationTicks, "DateTimeUtcTicks")
