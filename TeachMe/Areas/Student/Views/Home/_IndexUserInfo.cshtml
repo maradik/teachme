@@ -3,12 +3,18 @@
 @using TeachMe.Models.Jobs
 
 <h2><span class="glyphicon glyphicon-user text-warning"></span> Мои задачи</h2>
-<hr />
+<hr/>
+@{
+    var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+}
+@if (Model.Jobs.Length == 0)
+{
+    <div style="font-style: italic;">Нет задач</div>
+}
 @foreach (var job in Model.Jobs)
 {
-    var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
     <div style="margin-top: 20px;">
-        <div style="font-size: 1.2em;">@Html.ActionLink(job.Title,"Details", "Job", new { job.Id }, new object())</div>
+        <div>@Html.ActionLink(job.Title,"Details", "Job", new { job.Id }, new object())</div>
         <div>
             <span class="label label-primary">@job.SubjectTitle</span>
             <span class="label label-danger">@job.Cost руб.</span>
