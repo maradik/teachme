@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
@@ -27,6 +28,14 @@ namespace TeachMe.Controllers
         {
             Response.SetCookie(new HttpCookie(ProjectTypeProvider.CookieName, ProjectType.Student.ToString()));
             return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+#if !DEBUG
+            throw new HttpException((int) HttpStatusCode.NotFound, null);
+#endif
+            base.OnActionExecuting(filterContext);
         }
     }
 }
