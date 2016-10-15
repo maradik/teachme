@@ -27,6 +27,9 @@
         AbortOffered = 7,
 
         [HumanAnnotation("Отменено")]
-        Aborted = 8
+        Aborted = 8,
+
+        [HumanAnnotation("В арбитраже")]
+        InArbitrage = 9
     }
 }

@@ -33,6 +33,9 @@
         Edit = 9,
 
         [HumanAnnotation("Удалить")]
-        Delete = 10
+        Delete = 10,
+
+        [HumanAnnotation("Не отменять")]
+        RejectAbort = 11
     }
 }

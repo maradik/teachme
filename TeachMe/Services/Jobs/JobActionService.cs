@@ -43,6 +43,7 @@ namespace TeachMe.Services.Jobs
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
             Tuple.Create(JobStatus.AbortOffered, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Teacher)),
+            Tuple.Create(JobStatus.AbortOffered, new JobActionByUserRole(JobActionType.RejectAbort, UserRole.Teacher)),
             Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
             Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
             Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Accept, UserRole.Student)),
@@ -113,6 +114,9 @@ namespace TeachMe.Services.Jobs
                 case JobActionType.ConfirmAbort:
                     job.Status = JobStatus.Aborted;
                     cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
+                    break;
+                case JobActionType.RejectAbort:
+                    job.Status = JobStatus.InArbitrage;
                     break;
                 case JobActionType.Edit:
                     return job;
