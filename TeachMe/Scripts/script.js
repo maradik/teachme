@@ -108,18 +108,74 @@ var doJobAction = function (actionButton) {
 
 var touchImages = function (imageElements) {
     imageElements = imageElements || $(document);
-    imageElements.find(".gallery-container").photobox("a.gallery-item",{
+    imageElements.find(".gallery-container").photobox("a.gallery-item", {
         time: 0,
         autoplay: false,
         loop: false,
         thumbs: false,
         zoomable: true
     });
-}
+};
 
 var showConfirmation = function (text) {
     return !!confirm(text);
 }
+
+var initJobActionDropdownLoader = function (projectArea) {
+    $("button[id^='actionDropdownMenu']").click(function () {
+        var dropDownButton = $(this);
+        var attributeOfLoaded = "data-actionsloaded";
+        if (!dropDownButton.attr(attributeOfLoaded)) {
+            var actionsContainer = dropDownButton.parent("div").find("ul");
+            var actionElement = $("<li><a href='#'>Загрузка...</a></li>");
+            actionsContainer.append(actionElement);
+            var jobId = dropDownButton.attr("data-jobid");
+            $.ajax(
+                "/" + projectArea + "Job/_GetAvailableActions?jobId=" + jobId,
+                {
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: "{}",
+                    dataType: "json",
+                    success: function (jobActions) {
+                        actionsContainer.html("");
+                        if (jobActions.length != 0) {
+                            jobActions.forEach(function (jobAction) {
+                                var actionElement = $("<a href='#' />");
+                                actionElement.text(jobAction.Text);
+                                actionElement.attr("data-jobactiontype", jobAction.Value);
+                                actionElement.attr("data-jobid", jobId);
+                                actionElement.attr("data-redirectactionname", "Index");
+                                if (jobAction.Value == 10 /*delete*/) {
+                                    actionElement.attr("data-jobactionconfirmation", 'Удалить задачу?');
+                                }
+                                actionElement.click(function () {
+                                    doJobAction(this);
+                                });
+                                var actionElementLi = $("<li/>");
+                                actionElementLi.html(actionElement);
+                                actionsContainer.append(actionElementLi);
+                            });
+                        }
+                        else {
+                            var dummyActionElement = $("<li><a href='#'>Нет действий</a></li>");
+                            dummyActionElement.click(function () { return false; });
+                            actionsContainer.html(dummyActionElement);
+                        }
+                    }
+                }
+            );
+            dropDownButton.attr(attributeOfLoaded, "true");
+        }
+        return true;
+    });
+};
+
+var ProjectAreas = {
+    Root: "",
+    Teacher: "Teacher/",
+    Student: "Student/"
+};
 
 $(function () {
     $("[data-action=removeAttachment]").click(function () {
@@ -133,4 +189,3 @@ $(function () {
 
     touchImages();
 });
-

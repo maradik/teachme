@@ -1,5 +1,6 @@
 ﻿@using TeachMe.Extensions
-@model IEnumerable<TeachMe.Models.Jobs.Job>
+@using TeachMe.Models.Jobs
+@model IEnumerable<Job>
 
 @{
     ViewBag.Title = "Мои задачи";
@@ -7,53 +8,44 @@
 
 <h2>Мои задачи</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SubjectId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TeacherCost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentUserId)
-        </th> 
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationTicks)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.GetSubject().Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TeacherCost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GetStudentUser().UserName)
-        </td>
-        <td>
-            @item.Status.GetHumanAnnotation()
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationTicks, "DateTimeUtcTicks")
-        </td>
-        <td>
-            @Html.ActionLink("Просмотреть", "Details", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+@using (Html.BeginForm("DoJobAction", null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("jobId")
+    @Html.Hidden("jobActionType")
+    @Html.Hidden("redirectActionName")
+    <table class="table">
+        @{
+            var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div>@Html.ActionLink(item.Title, "Details", new { id = item.Id })</div>
+                    <div style="margin-top: 5px;">
+                        <span class="label label-primary">@Html.DisplayFor(modelItem => item.GetSubject().Title)</span>
+                        <span class="label label-danger">@Html.DisplayFor(modelItem => item.TeacherCost) руб.</span>
+                        <span class="label @(successJobStatuses.Contains(item.Status) ? "label-success" : "label-warning")">@item.Status.GetHumanAnnotation()</span>
+                        <span class="label label-info">Автор:&nbsp;@item.GetStudentUser().UserName</span>
+                        <span class="label label-default">@Html.DisplayFor(x => item.CreationTicks, "DateTimeUtcTicks")</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown" style="float: right; margin-right: 40px;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="@("actionDropdownMenu" + item.Id)" data-jobid="@item.Id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Действие
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="@("actionDropdownMenu" + item.Id)"></ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+            }
+<script>
+    $(function() {
+        initJobActionDropdownLoader(ProjectAreas.Teacher);
+    });
+</script>

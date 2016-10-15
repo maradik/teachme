@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TeachMe.DataAccess;
 using TeachMe.DataAccess.Jobs;
+using TeachMe.Extensions;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
@@ -52,10 +53,17 @@ namespace TeachMe.Areas.Teacher.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType)
+        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType, string redirectActionName = nameof(Details))
         {
             jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
-            return RedirectToAction(nameof(Details), new {id = jobId});
+            return RedirectToAction(redirectActionName, new {id = jobId});
+        }
+
+        public ActionResult _GetAvailableActions(Guid jobId)
+        {
+            var job = jobRepository.Get(jobId);
+            var availableActions = jobActionService.GetAvailableActions(job, ApplicationUser);
+            return Json(availableActions.Select(x => new { Value = (int)x, Text = x.GetHumanAnnotation() }), JsonRequestBehavior.AllowGet);
         }
     }
 }
