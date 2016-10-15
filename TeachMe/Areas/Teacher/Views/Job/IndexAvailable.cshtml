@@ -1,5 +1,6 @@
 ﻿@using TeachMe.Extensions
-@model IEnumerable<TeachMe.Models.Jobs.Job>
+@using TeachMe.Models.Jobs
+@model IEnumerable<Job>
 
 @{
     ViewBag.Title = "Доступные задачи";
@@ -7,7 +8,27 @@
 
 <h2>Доступные задачи</h2>
 
-<table class="table">
+<table class="table visible-xs visible-sm">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div>@Html.ActionLink(item.Title, "Details", new { id = item.Id })</div>
+                <div style="margin-top: 5px;">
+                    <span class="label label-primary">@Html.DisplayFor(modelItem => item.GetSubject().Title)</span>
+                    <span class="label label-danger">@Html.DisplayFor(modelItem => item.TeacherCost) руб.</span>
+                    <span class="label label-info">Автор:&nbsp;@item.GetStudentUser().UserName</span>
+                    <span class="label label-default">@Html.DisplayFor(x => item.CreationTicks, "DateTimeUtcTicks")</span>
+                </div>
+            </td>
+            <td>
+                @Html.Partial("_JobActions", Tuple.Create(item.Id, new[] { JobActionType.Take }))
+            </td>
+        </tr>
+    }
+</table>
+
+<table class="table visible-md visible-lg">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.SubjectId)
@@ -22,36 +43,32 @@
             @Html.DisplayNameFor(model => model.StudentUserId)
         </th> 
         <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.CreationTicks)
         </th>
-        <th></th>
+        <th>
+        </th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.GetSubject().Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @Html.ActionLink(item.Title, "Details", new { id = item.Id })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TeacherCost)
+            @Html.DisplayFor(modelItem => item.TeacherCost)&nbsp;руб.
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.GetStudentUser().UserName)
         </td>
         <td>
-            @item.Status.GetHumanAnnotation()
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.CreationTicks, "DateTimeUtcTicks")
         </td>
         <td>
-            @Html.ActionLink("Просмотреть", "Details", new { id=item.Id })
+            @Html.Partial("_JobActions", Tuple.Create(item.Id, new[] { JobActionType.Take }))
         </td>
     </tr>
 }

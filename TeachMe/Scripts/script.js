@@ -89,18 +89,19 @@ var loadNewMessages = function (successCallback) {
 
 var doJobAction = function (actionButton) {
     actionButton = $(actionButton);
+    var form = actionButton.parents("form:first");
     var actionConfirmationText = actionButton.attr("data-jobactionconfirmation");
     if (!actionConfirmationText || confirm(actionConfirmationText)) {
-        $("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
+        form.find("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
         var jobId = actionButton.attr("data-jobId");
         if (jobId) {
-            $("input[name=jobId]:first").val(jobId);
+            form.find("input[name=jobId]:first").val(jobId);
         }
         var redirectActionName = actionButton.attr("data-redirectactionname");
         if (redirectActionName) {
-            $("input[name=redirectActionName]:first").val(redirectActionName);
+            form.find("input[name=redirectActionName]:first").val(redirectActionName);
         }
-        $(actionButton).parents("form:first").submit();
+        form.submit();
     } else {
         return false;
     }

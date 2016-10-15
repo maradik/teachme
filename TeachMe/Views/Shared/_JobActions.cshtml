@@ -11,8 +11,8 @@
     @using (Html.BeginForm("DoJobAction", null, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        @Html.Hidden("jobId", jobId)
-        @Html.Hidden("jobActionType")
+        @Html.Hidden("jobId", jobId, new { Id = "jobId" + Guid.NewGuid() })
+        @Html.Hidden("jobActionType", null, new { Id = "jobActionType" + Guid.NewGuid() })
         foreach (var actionType in actionTypes)
         {
             <button data-jobactiontype="@((int) actionType)" @Html.Raw( actionType == JobActionType.Delete ? "data-jobactionconfirmation='Удалить задачу?'" : "")>@actionType.GetHumanAnnotation()</button>
