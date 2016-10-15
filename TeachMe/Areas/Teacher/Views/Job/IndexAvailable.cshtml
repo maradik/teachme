@@ -1,6 +1,7 @@
 ﻿@using TeachMe.Extensions
 @using TeachMe.Models.Jobs
-@model IEnumerable<Job>
+@using TeachMe.Areas.Teacher.Models.Jobs
+@model IndexAvailableViewModel
 
 @{
     ViewBag.Title = "Доступные задачи";
@@ -8,8 +9,18 @@
 
 <h2>Доступные задачи</h2>
 
+<div style="margin-bottom: 10px;">
+    @using (Html.BeginForm("IndexAvailable", null, FormMethod.Get))
+    {
+        <div class="form-horizontal">
+            @Html.CheckBoxFor(x => x.ShowOnlySuitableJobs, new { Id = "ShowOnlySuitableJobs" })
+            @Html.LabelFor(x => x.ShowOnlySuitableJobs, new { @class = "control-label" })
+        </div>
+    }
+</div>
+
 <table class="table visible-xs visible-sm">
-    @foreach (var item in Model)
+    @foreach (var item in Model.Jobs)
     {
         <tr>
             <td>
@@ -31,25 +42,25 @@
 <table class="table visible-md visible-lg">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SubjectId)
+            @Html.DisplayNameFor(model => model.Jobs.FirstOrDefault().SubjectId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Jobs.FirstOrDefault().Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TeacherCost)
+            @Html.DisplayNameFor(model => model.Jobs.FirstOrDefault().TeacherCost)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StudentUserId)
+            @Html.DisplayNameFor(model => model.Jobs.FirstOrDefault().StudentUserId)
         </th> 
         <th>
-            @Html.DisplayNameFor(model => model.CreationTicks)
+            @Html.DisplayNameFor(model => model.Jobs.FirstOrDefault().CreationTicks)
         </th>
         <th>
         </th>
     </tr>
 
-@foreach (var item in Model)
+@foreach (var item in Model.Jobs)
 {
     <tr>
         <td>
@@ -74,3 +85,11 @@
 }
 
 </table>
+
+<script>
+    $(function () {
+        $("#ShowOnlySuitableJobs").click(function () {
+            $(this).parents("form:first").submit();
+        });
+    });
+</script>

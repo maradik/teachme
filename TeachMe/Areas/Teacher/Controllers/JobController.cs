@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TeachMe.Areas.Teacher.Models.Jobs;
 using TeachMe.DataAccess;
 using TeachMe.DataAccess.Jobs;
 using TeachMe.Extensions;
@@ -11,6 +12,7 @@ using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
 using TeachMe.Services.Jobs;
 using TeachMe.ViewModels.Jobs;
+using System.Linq.Expressions;
 
 namespace TeachMe.Areas.Teacher.Controllers
 {
@@ -35,10 +37,22 @@ namespace TeachMe.Areas.Teacher.Controllers
             return View(jobs);
         }
 
-        public ActionResult IndexAvailable()
+        public ActionResult IndexAvailable(bool showOnlySuitableJobs = false)
         {
-            var jobs = jobRepository.GetAllByStatus(JobStatus.Opened).OrderByDescending(x => x.CreationTicks).ToArray();
-            return View(jobs);
+            Expression<Func<Job, bool>> whereExpression;
+
+            if (showOnlySuitableJobs)
+            {
+                whereExpression = x => x.Status == JobStatus.Opened && ApplicationUser.SubjectIds.Contains(x.SubjectId);
+            }
+            else
+            {
+                whereExpression = x => x.Status == JobStatus.Opened;
+            }
+
+            var jobs = jobRepository.Get(whereExpression, x => x.CreationTicks, SortOrder.Descending);
+            var viewModel = new IndexAvailableViewModel { Jobs = jobs, ShowOnlySuitableJobs = showOnlySuitableJobs };
+            return View(viewModel);
         }
 
         public ActionResult Details(Guid id)

@@ -244,6 +244,7 @@
     <Compile Include="Areas\Teacher\Models\Home\IndexUserSuitableJobViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexUserJobViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexViewModel.cs" />
+    <Compile Include="Areas\Teacher\Models\Jobs\IndexAvailableViewModel.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
