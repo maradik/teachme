@@ -29,13 +29,13 @@
         [HumanAnnotation("Подтвердить отмену")]
         ConfirmAbort = 8,
 
+        [HumanAnnotation("Не отменять")]
+        RejectAbort = 9,
+
         [HumanAnnotation("Изменить")]
-        Edit = 9,
+        Edit = 100,
 
         [HumanAnnotation("Удалить")]
-        Delete = 10,
-
-        [HumanAnnotation("Не отменять")]
-        RejectAbort = 11
+        Delete = 101
     }
 }
