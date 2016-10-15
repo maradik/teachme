@@ -3,10 +3,20 @@
 @using TeachMe.Services.Jobs
 @model Job
 
-@if (Model.Status == JobStatus.Draft && !JobOpeningSpecification.Instance.IsSatisfiedBy(Model))
+@if (Model.Status == JobStatus.Draft)
 {
-    <div class="alert alert-warning">
-        Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
-        Пополните баланс на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
-    </div>
+    if (!JobOpeningSpecification.Instance.IsSatisfiedBy(Model))
+    {
+        <div class="alert alert-warning">
+            Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
+            Пополните баланс на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
+            Опубликуйте ее и она станет доступна исполнителям.
+        </div>
+    }
 }

@@ -2,7 +2,7 @@
 {
     public enum JobActionType
     {
-        [HumanAnnotation("Скрыть")]
+        [HumanAnnotation("Сделать черновиком")]
         Hide = 0,
 
         [HumanAnnotation("Опубликовать")]
