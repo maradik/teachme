@@ -14,10 +14,10 @@
     @Html.Hidden("jobId")
     @Html.Hidden("jobActionType")
     @Html.Hidden("redirectActionName")
-    <table class="table">
-        @{
-            var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
-        }
+
+    var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+
+    <table class="table visible-xs visible-sm">
         @foreach (var item in Model)
         {
             <tr>
@@ -43,6 +43,65 @@
             </tr>
         }
     </table>
+    <table class="table visible-md visible-lg">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SubjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentUserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationTicks)
+            </th>
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GetSubject().Title)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Title, "Details", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeacherCost)&nbsp;руб.
+                </td>
+                <td>
+                    <span class="label @(successJobStatuses.Contains(item.Status) ? "label-success" : "label-warning")">@item.Status.GetHumanAnnotation()</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GetStudentUser().UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationTicks, "DateTimeUtcTicks")
+                </td>
+                <td>
+                    <div class="dropdown" style="float: right; margin-right: 40px;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="@("actionDropdownMenu2" + item.Id)" data-jobid="@item.Id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Действие
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="@("actionDropdownMenu2" + item.Id)"></ul>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+
             }
 <script>
     $(function() {
