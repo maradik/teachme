@@ -17,16 +17,19 @@ namespace TeachMe.Services.Jobs.JobActionHandlers
 
         public void Handle(Job job, JobActionType actionType, ApplicationUser user)
         {
+            if (string.IsNullOrEmpty(job.TeacherUserId))
+                return;
+
             switch (actionType)
             {
                 case JobActionType.Accept:
-                    NotificateUser(job.GetStudentUser(), $"Поступила оплата за задачу {(int)job.TeacherCost} руб.");
+                    NotificateUser(job.GetTeacherUser(), $"Поступила оплата за задачу {(int)job.TeacherCost} руб.");
                     break;
                 case JobActionType.Reject:
-                    NotificateUser(job.GetStudentUser(), "Задача отправлена Вам на доработку.");
+                    NotificateUser(job.GetTeacherUser(), "Задача отправлена Вам на доработку.");
                     break;
                 case JobActionType.OfferAbort:
-                    NotificateUser(job.GetStudentUser(), "Заказчик предлагает отменить Вашу задачу.");
+                    NotificateUser(job.GetTeacherUser(), "Заказчик предлагает отменить Вашу задачу.");
                     break;
             }
         }
