@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using Microsoft.AspNet.Identity;
 using TeachMe.Converters;
 using TeachMe.DataAccess.FileUploading;
@@ -15,12 +16,15 @@ using TeachMe.ViewModels.Jobs;
 using TeachMe.Helpers.Settings;
 using TeachMe.Services.General;
 using TeachMe.Extensions;
+using TeachMe.Services.Jobs.JobActionHandlers;
 
 namespace TeachMe.Areas.Student.Controllers
 {
     [Authorize]
     public class JobController : StudentControllerBase
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(JobController));
+
         private readonly IJobRepository jobRepository;
         private readonly IUploadedFileRepository uploadedFileRepository;
         private readonly IUploadedFileConverter uploadFileConverter;
@@ -94,9 +98,21 @@ namespace TeachMe.Areas.Student.Controllers
 
                 job.StudentUserId = User.Identity.GetUserId();
                 job.TeacherUserId = string.Empty;
-                job.Status = jobOpeningSpecification.IsSatisfiedBy(job) ? JobStatus.Opened : JobStatus.Draft;
+                job.Status = JobStatus.Draft;
                 job.CommissionRate = ApplicationSettings.JobCommissionRate;
                 jobRepository.Write(job);
+
+                try
+                {
+                    if (jobActionService.GetAvailableActions(job, ApplicationUser).Contains(JobActionType.Open))
+                    {
+                        job = jobActionService.DoAction(job.Id, JobActionType.Open, ApplicationUser);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Не удалось опубликовать задачу Id={job.Id} при создании.", e);
+                }
 
                 return RedirectToAction("Details", new {job.Id});
             }

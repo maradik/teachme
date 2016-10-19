@@ -302,6 +302,7 @@
     <Compile Include="Services\Jobs\IJobEditingSpecification.cs" />
     <Compile Include="Services\Jobs\JobActionHandlers\TeacherNotificationJobActionHandler.cs" />
     <Compile Include="Services\Jobs\JobActionHandlers\StudentNotificationJobActionHandler.cs" />
+    <Compile Include="Services\Jobs\JobActionHandlers\TeacherNotificationJobCreationHandler.cs" />
     <Compile Include="Services\Jobs\JobDeletionSpecification.cs" />
     <Compile Include="Services\Jobs\JobEditingSpecification.cs" />
     <Compile Include="Services\Notifications\ICustomSmsService.cs" />
