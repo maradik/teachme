@@ -81,6 +81,18 @@ namespace TeachMe
             }
             return manager;
         }
+
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
+        {
+            user.CreationTicks = DateTime.UtcNow.Ticks;
+            return base.CreateAsync(user);
+        }
+
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
+        {
+            user.CreationTicks = DateTime.UtcNow.Ticks;
+            return base.CreateAsync(user, password);
+        }
     }
 
     // Настройка диспетчера входа для приложения.

@@ -23,6 +23,7 @@ namespace TeachMe.Models.Users
         public UserAccess Access { get { return access ?? (access = new UserAccess()); } set { access = value; } }
         public UserCash Cash { get { return cash ?? (cash = new UserCash()); } set { cash = value; } }
         public List<int> SubjectIds { get { return subjectIds ?? (subjectIds = new List<int>()); } set { subjectIds = value; } }
+        public long CreationTicks { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
