@@ -66,7 +66,12 @@ namespace TeachMe.Areas.Student.Controllers
         public ActionResult Details(Guid id)
         {
             var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
-            return View(new JobDetailsViewModel {Job = job, JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser)});
+            return View(new JobDetailsViewModel
+            {
+                Job = job,
+                JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser),
+                ChatIsVisible = !string.IsNullOrEmpty(job.TeacherUserId)
+            });
         }
 
         // GET: Job/Create

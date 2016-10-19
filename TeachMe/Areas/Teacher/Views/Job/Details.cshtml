@@ -20,7 +20,7 @@
     @Html.ActionLink("Список доступных задач", "IndexAvailable")
 </div>
 
-@if (!string.IsNullOrEmpty(Model.Job.TeacherUserId))
+@if (Model.ChatIsVisible)
 {
     <h3>Обсуждение с заказчиком</h3>
 

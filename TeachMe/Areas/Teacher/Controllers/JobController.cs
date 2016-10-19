@@ -59,10 +59,12 @@ namespace TeachMe.Areas.Teacher.Controllers
         {
             var job = jobRepository.Get(id);
 
-            if (!string.IsNullOrEmpty(job.TeacherUserId) && job.TeacherUserId != ApplicationUser.Id)
-                throw new HttpException((int) HttpStatusCode.Forbidden, null);
-
-            return View(new JobDetailsViewModel {Job = job, JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser)});
+            return View(new JobDetailsViewModel
+            {
+                Job = job,
+                JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser),
+                ChatIsVisible = !string.IsNullOrEmpty(job.TeacherUserId) && job.TeacherUserId == ApplicationUser.Id
+            });
         }
 
         [HttpPost]

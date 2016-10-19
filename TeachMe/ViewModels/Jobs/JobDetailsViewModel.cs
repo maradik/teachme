@@ -6,5 +6,6 @@ namespace TeachMe.ViewModels.Jobs
     {
         public Job Job { get; set; }
         public JobActionType[] JobAvailableActions { get; set; }
+        public bool ChatIsVisible { get; set; }
     }
 }
