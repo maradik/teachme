@@ -22,6 +22,9 @@ namespace TeachMe.Services.Jobs.JobActionHandlers
                 case JobActionType.Accept:
                     NotificateUser(job.GetStudentUser(), $"Поступила оплата за задачу {(int)job.TeacherCost} руб.");
                     break;
+                case JobActionType.Reject:
+                    NotificateUser(job.GetStudentUser(), "Задача отправлена Вам на доработку.");
+                    break;
                 case JobActionType.OfferAbort:
                     NotificateUser(job.GetStudentUser(), "Заказчик предлагает отменить Вашу задачу.");
                     break;
