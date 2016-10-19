@@ -2,22 +2,49 @@
 @using TeachMe.Models.Jobs
 @model Job
 
-@Html.HiddenFor(model => model.Id, new {id = "jobId"})
+@Html.HiddenFor(model => model.Id, new { id = "jobId" })
 <dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Status)
-    </dt>
-
-    <dd>
-        @Model.Status.GetHumanAnnotation()
-    </dd>
-
     <dt>
         @Html.DisplayNameFor(model => model.SubjectId)
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.GetSubject().Title)
+        <span class="label label-primary">@Html.DisplayFor(model => model.GetSubject().Title)</span>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.TeacherCost)
+    </dt>
+
+    <dd>
+        <span class="label label-danger">@Html.DisplayFor(model => model.TeacherCost) руб.</span>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Status)
+    </dt>
+
+    <dd>
+        @{
+            var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+        }        
+        <span class="label @(successJobStatuses.Contains(Model.Status) ? "label-success" : "label-warning")">@Model.Status.GetHumanAnnotation()</span>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.StudentUserId)
+    </dt>
+
+    <dd>
+        <span class="label label-info">@Model.GetStudentUser().UserName</span>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreationTicks)
+    </dt>
+
+    <dd>
+        <span class="label label-default">@Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")</span>
     </dd>
 
     <dt>
@@ -29,47 +56,29 @@
     </dd>
 
     <dt>
-        @Html.DisplayNameFor(model => model.TeacherCost)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.TeacherCost)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.CreationTicks)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.StudentUserId)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.GetStudentUser().UserName)
-    </dd>
-
-    <dt>
         @Html.DisplayNameFor(model => model.Attachments)
     </dt>
 
     <dd>
-        @foreach (var attachment in Model.Attachments.OrderByDescending(x => x.Type))
-        {
-            <div style="margin: 10px 0 10px 0;">
-                @switch (attachment.Type)
-                {
-                    case JobAttachmentType.Image:
-                        <img src="~/Uploads/@attachment.FileName" title="@attachment.OriginFileName" style="max-width: 200px;"/>
-                        break;
-                    default:
-                        <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">@attachment.OriginFileName</a>
-                        break;
-                }
-            </div>
-        }
+        <div class="row gallery-container">
+            @foreach (var attachment in Model.Attachments.Where(x => x.Type == JobAttachmentType.Image))
+            {
+                <div class="col-xs-4 col-sm-3">
+                    <div style="margin: 10px 0 10px 0;">
+                        <a href="~/Uploads/@attachment.FileName?width=1280" class="gallery-item" data-gallery="@("job" + Model.Id)">
+                            <img src="~/Uploads/@attachment.FileName?width=200" title="@attachment.OriginFileName" style="max-width: 100%;"/>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row">
+            @foreach (var attachment in Model.Attachments.Where(x => x.Type != JobAttachmentType.Image))
+            {
+                <div style="margin: 10px 0 10px 0;">
+                    <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">Скачать @attachment.OriginFileName</a>
+                </div>
+            }
+        </div>
     </dd>
 </dl>
