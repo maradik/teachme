@@ -15,6 +15,7 @@ using TeachMe.Services.General;
 
 namespace TeachMe.Controllers
 {
+    [Authorize]
     public class JobChatController : ControllerBase
     {
         private const string ModelBindingPrefix = nameof(JobChatController);
