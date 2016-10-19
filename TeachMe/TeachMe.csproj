@@ -300,6 +300,7 @@
     <Compile Include="Services\Jobs\IJobActionCustomHandler.cs" />
     <Compile Include="Services\Jobs\IJobDeletionSpecification.cs" />
     <Compile Include="Services\Jobs\IJobEditingSpecification.cs" />
+    <Compile Include="Services\Jobs\InvalidJobActionException.cs" />
     <Compile Include="Services\Jobs\JobActionHandlers\TeacherNotificationJobActionHandler.cs" />
     <Compile Include="Services\Jobs\JobActionHandlers\StudentNotificationJobActionHandler.cs" />
     <Compile Include="Services\Jobs\JobActionHandlers\TeacherNotificationJobCreationHandler.cs" />

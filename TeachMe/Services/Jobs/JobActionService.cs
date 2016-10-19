@@ -66,7 +66,7 @@ namespace TeachMe.Services.Jobs
             var job = jobRepository.Get(jobId);
 
             if (!GetAvailableActions(job, user).Contains(actionType))
-                throw new InvalidOperationException($"Недопустимое действие {actionType} над задачей {job.Id}, {nameof(user)}={user.Id}");
+                throw new InvalidJobActionException($"Недопустимое действие {actionType} над задачей {job.Id}, {nameof(user)}={user.Id}");
 
             foreach (var customHandler in customHandlers)
             {
