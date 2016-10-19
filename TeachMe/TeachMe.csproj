@@ -300,6 +300,7 @@
     <Compile Include="Services\Jobs\IJobActionCustomHandler.cs" />
     <Compile Include="Services\Jobs\IJobDeletionSpecification.cs" />
     <Compile Include="Services\Jobs\IJobEditingSpecification.cs" />
+    <Compile Include="Services\Jobs\JobActionHandlers\TeacherNotificationJobActionHandler.cs" />
     <Compile Include="Services\Jobs\JobActionHandlers\StudentNotificationJobActionHandler.cs" />
     <Compile Include="Services\Jobs\JobDeletionSpecification.cs" />
     <Compile Include="Services\Jobs\JobEditingSpecification.cs" />
@@ -380,7 +381,6 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Views\JobChat\_CreateMessage.cshtml" />
     <Content Include="Areas\Student\Views\Job\_JobStatusInfo.cshtml" />
-    <Content Include="Areas\Teacher\Views\Job\_JobInfo.cshtml" />
     <Content Include="Areas\Student\Views\Job\_JobInfo.cshtml" />
     <Content Include="Areas\Student\Views\Home\_IndexJumbotron.cshtml" />
     <Content Include="Areas\Student\Views\Home\_IndexRecall.cshtml" />
@@ -395,6 +395,7 @@
     <Content Include="Areas\Teacher\Views\Home\_IndexSuitableUserJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexUserProfile.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\UserIndex.cshtml" />
+    <Content Include="Areas\Teacher\Views\Job\_JobInfo.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
