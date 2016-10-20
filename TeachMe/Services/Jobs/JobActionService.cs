@@ -38,8 +38,7 @@ namespace TeachMe.Services.Jobs
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Hide, UserRole.Student)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Take, UserRole.Teacher)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Cancel, UserRole.Student)),
-            Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Edit, UserRole.Student, new ISpecification<Job>[] {JobEditingSpecification.Instance})),
-            Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Delete, UserRole.Student, new ISpecification<Job>[] {JobDeletionSpecification.Instance})),
+            Tuple.Create(JobStatus.Cancelled, new JobActionByUserRole(JobActionType.Delete, UserRole.Student, new ISpecification<Job>[] {JobDeletionSpecification.Instance})),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
             Tuple.Create(JobStatus.AbortOffered, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Teacher)),
@@ -84,14 +83,15 @@ namespace TeachMe.Services.Jobs
             {
                 case JobActionType.Hide:
                     job.Status = JobStatus.Draft;
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.Open:
                     job.Status = JobStatus.Opened;
+                    cashOperationService.FreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.Take:
                     job.Status = JobStatus.InWorking;
                     job.TeacherUserId = user.Id;
-                    cashOperationService.FreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.Finish:
                     job.Status = JobStatus.Finished;
@@ -104,12 +104,14 @@ namespace TeachMe.Services.Jobs
                     break;
                 case JobActionType.Cancel:
                     job.Status = JobStatus.Cancelled;
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.Reject:
                     job.Status = JobStatus.InReWorking;
                     break;
                 case JobActionType.OfferAbort:
                     job.Status = JobStatus.AbortOffered;
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.ConfirmAbort:
                     job.Status = JobStatus.Aborted;

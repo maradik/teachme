@@ -37,9 +37,13 @@
         <dd>
             @Model.Cash.PhysicalAmount руб.
         </dd>
-        <dt>Доступный баланс:</dt>
+        <dt>Зарезервировано:</dt>
         <dd>
-            @Model.Cash.AvailableAmount руб.
+            @Model.Cash.FrozenAmount руб.
+        </dd>
+        <dt>Доступно:</dt>
+        <dd>
+            <span class="text-danger" style="font-weight: bold;">@Model.Cash.AvailableAmount руб.</span>
         </dd>
         <dt>Пополнить баланс:</dt>
         <dd>

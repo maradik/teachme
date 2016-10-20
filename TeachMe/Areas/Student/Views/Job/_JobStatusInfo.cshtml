@@ -9,7 +9,7 @@
     {
         <div class="alert alert-warning">
             Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
-            Пополните баланс на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
+            @Html.ActionLink("Пополните баланс", "Index", "Manage", new {area = ""}, null) на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
         </div>
     }
     else

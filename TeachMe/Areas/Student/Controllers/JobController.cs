@@ -30,7 +30,6 @@ namespace TeachMe.Areas.Student.Controllers
         private readonly IUploadedFileConverter uploadFileConverter;
         private readonly IJobAttachmentConverter attachmentConverter;
         private readonly IJobActionService jobActionService;
-        private readonly IJobOpeningSpecification jobOpeningSpecification;
 
         public JobController(IJobRepository jobRepository,
                              IUploadedFileRepository uploadedFileRepository,
@@ -39,8 +38,7 @@ namespace TeachMe.Areas.Student.Controllers
                              ISubjectReference subjectReference,
                              IJobActionService jobActionService,
                              IProjectTypeProvider projectTypeProvider,
-                             IProjectInfoProvider projectInfoProvider,
-                             IJobOpeningSpecification jobOpeningSpecification)
+                             IProjectInfoProvider projectInfoProvider)
             : base(projectTypeProvider, projectInfoProvider)
         {
             this.jobRepository = jobRepository;
@@ -48,7 +46,6 @@ namespace TeachMe.Areas.Student.Controllers
             this.uploadFileConverter = uploadFileConverter;
             this.attachmentConverter = attachmentConverter;
             this.jobActionService = jobActionService;
-            this.jobOpeningSpecification = jobOpeningSpecification;
 
             ViewBag.Subjects = subjectReference.GetAll();
         }
@@ -165,11 +162,6 @@ namespace TeachMe.Areas.Student.Controllers
                     var uploadedJobAttachments = uploadedFiles.Where(x => x != null).Select(uploadFileConverter.ToUploadedJobAttachment).ToArray();
                     uploadedFileRepository.Save(uploadedJobAttachments);
                     job.Attachments.AddRange(uploadedJobAttachments.Select(attachmentConverter.FromUploadedJobAttachment));
-                }
-
-                if (!jobOpeningSpecification.IsSatisfiedBy(job))
-                {
-                    job.Status = JobStatus.Draft;
                 }
 
                 jobRepository.Write(job);
