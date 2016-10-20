@@ -13,11 +13,14 @@ using TeachMe.Services.General;
 using TeachMe.Services.Jobs;
 using TeachMe.ViewModels.Jobs;
 using System.Linq.Expressions;
+using log4net;
 
 namespace TeachMe.Areas.Teacher.Controllers
 {
     public class JobController : TeacherControllerBase
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(JobController));
+
         private readonly IJobActionService jobActionService;
         private readonly IJobRepository jobRepository;
 
@@ -68,11 +71,31 @@ namespace TeachMe.Areas.Teacher.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType, string redirectActionName = nameof(Details))
+        public ActionResult _DoJobAction(Guid jobId, JobActionType jobActionType)
         {
-            jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
-            return RedirectToAction(redirectActionName, new {id = jobId});
+            try
+            {
+                jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
+            }
+            catch (InvalidJobActionException e)
+            {
+                return Json(new JobActionResult
+                {
+                    HasErrors = true,
+                    ErrorMessage = $"Не удалось выполнить действие \"{jobActionType.GetHumanAnnotation()}\", т.к. другой пользователь изменил состояние задачи."
+                });
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Не удалось применить действие {jobActionType} к задаче {jobId}", e);
+                return Json(new JobActionResult
+                {
+                    HasErrors = true,
+                    ErrorMessage = $"Неопознанная ошибка! Не удалось выполнить действие \"{jobActionType.GetHumanAnnotation()}\".",
+                    RedirectUrl = Url.Action(nameof(Index))
+                });
+            }
+            return Json(new JobActionResult());
         }
 
         public ActionResult _GetAvailableActions(Guid jobId)

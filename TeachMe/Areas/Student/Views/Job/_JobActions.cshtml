@@ -1,0 +1,23 @@
+﻿@model Tuple<Guid, JobActionType[]>
+@using TeachMe.Extensions
+@using TeachMe.Models.Jobs
+
+@{
+    var jobId = Model.Item1;
+    var actionTypes = Model.Item2;
+}
+
+<div>
+    @foreach (var actionType in actionTypes)
+    {
+        <button class="btn btn-primary" data-jobId="@jobId" data-jobactiontype="@((int) actionType)" @Html.Raw( actionType == JobActionType.Delete ? "data-jobactionconfirmation='Удалить задачу?'" : "")>@actionType.GetHumanAnnotation()</button>
+    }
+</div>
+
+<script>
+    $(function() {
+        $("button[data-jobactiontype]").click(function () {
+            return doJobAction(this, ProjectAreas.Student);
+        });
+    });
+</script>

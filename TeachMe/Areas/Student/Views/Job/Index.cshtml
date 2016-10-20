@@ -12,21 +12,15 @@
     @Html.ActionLink("Создать новую", "Create")
 </p>
 
-@using (Html.BeginForm("DoJobAction", null, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("jobId")
-    @Html.Hidden("jobActionType")
-    @Html.Hidden("redirectActionName")
-    <table class="table">
+<table class="table">
     @{
-        var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+        var successJobStatuses = new[] {JobStatus.Finished, JobStatus.Accepted};
     }
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                <div>@Html.ActionLink(item.Title, "Details", new { id = item.Id })</div>
+                <div>@Html.ActionLink(item.Title, "Details", new {id = item.Id})</div>
                 <div style="margin-top: 5px;">
                     <span class="label label-primary">@Html.DisplayFor(modelItem => item.GetSubject().Title)</span>
                     <span class="label label-danger">@Html.DisplayFor(modelItem => item.StudentCost) руб.</span>
@@ -50,8 +44,8 @@
             </td>
         </tr>
     }
-    </table>
-    }
+</table>
+
 <script>
     $(function() {
         initJobActionDropdownLoader(ProjectAreas.Student);

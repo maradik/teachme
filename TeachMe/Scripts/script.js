@@ -87,24 +87,47 @@ var loadNewMessages = function (successCallback) {
     }
 };
 
-var doJobAction = function (actionButton) {
+var doingJobAction = false;
+var doJobAction = function (actionButton, projectArea) {
     actionButton = $(actionButton);
-    var form = actionButton.parents("form:first");
+    var formData = new FormData();
+    formData.append("__RequestVerificationToken", $("[name=__RequestVerificationToken]:first").val());
     var actionConfirmationText = actionButton.attr("data-jobactionconfirmation");
     if (!actionConfirmationText || confirm(actionConfirmationText)) {
-        form.find("input[name=jobActionType]:first").val(actionButton.attr("data-jobactiontype"));
+        var jobActionType = actionButton.attr("data-jobactiontype");
+        formData.append("jobActionType", jobActionType);
         var jobId = actionButton.attr("data-jobId");
         if (jobId) {
-            form.find("input[name=jobId]:first").val(jobId);
+            formData.append("jobId", jobId);
         }
-        var redirectActionName = actionButton.attr("data-redirectactionname");
-        if (redirectActionName) {
-            form.find("input[name=redirectActionName]:first").val(redirectActionName);
+        if (doingJobAction === false) {
+            doingJobAction = true;
+            $.ajax(
+                {
+                    url: "/" + projectArea + "Job/_DoJobAction",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.HasErrors === true) {
+                            alert(response.ErrorMessage);
+                        }
+                        if (response.RedirectUrl) {
+                            window.location = response.RedirectUrl;
+                        } else {
+                            window.location.reload();
+                        }
+                    },
+                    complete: function () {
+                        doingJobAction = false;
+                    }
+                }
+            );
         }
-        form.submit();
-    } else {
-        return false;
-    }
+    } 
+    return false;
 };
 
 var touchImages = function (imageElements) {
@@ -146,12 +169,11 @@ var initJobActionDropdownLoader = function (projectArea) {
                                 actionElement.text(jobAction.Text);
                                 actionElement.attr("data-jobactiontype", jobAction.Value);
                                 actionElement.attr("data-jobid", jobId);
-                                actionElement.attr("data-redirectactionname", "Index");
-                                if (jobAction.Value == 10 /*delete*/) {
+                                if (jobAction.Value == 101 /*delete*/) {
                                     actionElement.attr("data-jobactionconfirmation", 'Удалить задачу?');
                                 }
                                 actionElement.click(function () {
-                                    doJobAction(this);
+                                    return doJobAction(this, projectArea);
                                 });
                                 var actionElementLi = $("<li/>");
                                 actionElementLi.html(actionElement);

@@ -231,6 +231,7 @@
     <Compile Include="Areas\Student\Models\Home\IndexViewModel.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeController.cs" />
+    <Compile Include="ViewModels\Jobs\JobActionResult.cs" />
     <Compile Include="Areas\Teacher\Controllers\JobController.cs" />
     <Compile Include="Areas\Teacher\Controllers\TeacherControllerBase.cs" />
     <Compile Include="Areas\Teacher\Models\Home\IndexJobsViewModelProvider.cs" />
@@ -398,6 +399,7 @@
     <Content Include="Areas\Teacher\Views\Home\_IndexUserProfile.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\UserIndex.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\_JobInfo.cshtml" />
+    <Content Include="Areas\Student\Views\Job\_JobActions.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -450,7 +452,7 @@
     <Content Include="Views\Shared\_Login.cshtml" />
     <None Include="Areas\Student\Views\Job\Create.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeUtcTicks.cshtml" />
-    <Content Include="Views\Shared\_JobActions.cshtml" />
+    <Content Include="Areas\Teacher\Views\Job\_JobActions.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Payment\ShowFail.cshtml" />
     <None Include="Views\Payment\ShowSuccess.cshtml" />

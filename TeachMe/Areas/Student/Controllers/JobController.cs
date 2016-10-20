@@ -197,15 +197,36 @@ namespace TeachMe.Areas.Student.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DoJobAction(Guid jobId, JobActionType jobActionType, string redirectActionName = nameof(Details))
+        public ActionResult _DoJobAction(Guid jobId, JobActionType jobActionType)
         {
             if (jobActionType == JobActionType.Edit)
-                return RedirectToAction(nameof(Edit), new { id = jobId });
+                return Json(new JobActionResult { RedirectUrl = Url.Action(nameof(Edit), new { id = jobId }) });
 
-            var updatedJob = jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
-            return updatedJob != null 
-                ? RedirectToAction(redirectActionName, new {id = jobId})
-                : RedirectToAction(nameof(Index));
+            Job updatedJob;
+            try
+            {
+                updatedJob = jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
+            }
+            catch (InvalidJobActionException e)
+            {
+                return Json(new JobActionResult
+                {
+                    HasErrors = true,
+                    ErrorMessage = $"Не удалось выполнить действие \"{jobActionType.GetHumanAnnotation()}\", т.к. другой пользователь изменил состояние задачи."
+                });
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Не удалось применить действие {jobActionType} к задаче {jobId}", e);
+                return Json(new JobActionResult
+                {
+                    HasErrors = true,
+                    ErrorMessage = $"Неопознанная ошибка! Не удалось выполнить действие \"{jobActionType.GetHumanAnnotation()}\".",
+                    RedirectUrl = Url.Action(nameof(Index))
+                });
+            }
+
+            return Json(new JobActionResult { RedirectUrl = updatedJob == null ? Url.Action(nameof(Index)) : ""});
         }
 
         public ActionResult _GetAvailableActions(Guid jobId)
