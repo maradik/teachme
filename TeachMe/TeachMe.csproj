@@ -221,6 +221,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\StudentControllerBase.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexJobMessagesViewModelProvider.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexUserJobMessageViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexUserJobsViewModelProvider.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexJobsViewModelProvider.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexUserJobViewModel.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Areas\Student\Models\Home\IndexRecallViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexRecallViewModelProvider.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexUserInfoViewModel.cs" />
+    <Compile Include="Areas\Student\Models\Home\IndexUserProfileViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexViewModel.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeController.cs" />
@@ -393,13 +396,16 @@
     <Content Include="Areas\Teacher\Views\Home\_IndexRecall.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Student\Views\Home\_IndexUserInfo.cshtml" />
+    <Content Include="Areas\Student\Views\Home\_IndexUserJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexUserJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexSuitableUserJobs.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\_IndexUserProfile.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\UserIndex.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\_JobInfo.cshtml" />
     <Content Include="Areas\Student\Views\Job\_JobActions.cshtml" />
+    <Content Include="Areas\Student\Views\Home\UserIndex.cshtml" />
+    <Content Include="Areas\Student\Views\Home\_IndexUserJobMessages.cshtml" />
+    <Content Include="Areas\Student\Views\Home\_IndexUserProfile.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -1,0 +1,23 @@
+﻿@model TeachMe.Areas.Student.Models.Home.IndexUserInfoViewModel
+
+@{
+    ViewBag.Title = "";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @{
+            Html.RenderPartial("_IndexUserJobs", Model.Jobs);
+        }
+    </div>
+    <div class="col-md-4">
+        @{
+            Html.RenderPartial("_IndexUserJobMessages", Model.JobMessages);
+        }
+    </div>
+    <div class="col-md-4">
+        @{
+            Html.RenderPartial("_IndexUserProfile", Model.Profile);
+        }
+    </div>
+</div>

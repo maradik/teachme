@@ -1,0 +1,24 @@
+﻿@model TeachMe.Areas.Student.Models.Home.IndexUserProfileViewModel
+
+<h2><span class="glyphicon glyphicon-user text-primary"></span> Мой профиль</h2>
+<hr/>
+
+<dl class="dl-horizontal">
+    <dt>
+        Имя пользователя:
+    </dt>
+
+    <dd>
+        @Model.UserName
+    </dd>
+
+    <dt>
+        Баланс:
+    </dt>
+
+    <dd>
+        @Model.CashMoney руб.
+    </dd>
+</dl>
+
+@Html.ActionLink("Личный кабинет", "Index", "Manage", new { Area = "" }, null)

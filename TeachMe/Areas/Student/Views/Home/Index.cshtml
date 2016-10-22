@@ -23,14 +23,7 @@
     </div>
     <div class="col-md-4">
         @{
-            if (Request.IsAuthenticated)
-            {
-                Html.RenderPartial("_IndexUserInfo", Model.UserInfo);
-            }
-            else
-            {
-                Html.RenderPartial("_Login", Model.LoginViewModel);
-            }
+            Html.RenderPartial("_Login", Model.LoginViewModel);
         }
     </div>
 </div>

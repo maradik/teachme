@@ -1,17 +1,17 @@
-﻿@model TeachMe.Areas.Student.Models.Home.IndexUserInfoViewModel
+﻿@model TeachMe.Areas.Student.Models.Home.IndexUserJobViewModel[]
 @using TeachMe.Extensions
 @using TeachMe.Models.Jobs
 
-<h2><span class="glyphicon glyphicon-user text-warning"></span> Мои задачи</h2>
+<h2><span class="glyphicon glyphicon-time text-warning"></span> Мои задачи</h2>
 <hr/>
 @{
     var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
 }
-@if (Model.Jobs.Length == 0)
+@if (Model.Length == 0)
 {
     <div style="font-style: italic;">Нет задач</div>
 }
-@foreach (var job in Model.Jobs)
+@foreach (var job in Model)
 {
     <div style="margin-top: 20px;">
         <div>@Html.ActionLink(job.Title,"Details", "Job", new { job.Id }, new object())</div>
