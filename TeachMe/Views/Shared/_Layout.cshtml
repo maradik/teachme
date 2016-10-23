@@ -34,6 +34,10 @@
                         <li>@Html.ActionLink("Мои задачи", "Index", "Job", new {area = "Teacher"}, null)</li>
                         <li>@Html.ActionLink("Доступные задачи", "IndexAvailable", "Job", new { area = "Teacher" }, null)</li>
                     }
+                    @if (Request.IsAuthenticated && ((ApplicationUser)ViewBag.ApplicationUser).Roles.Contains(UserRole.Admin.Name))
+                    {
+                        <li>@Html.ActionLink("Все выплаты", "IndexAll", "Payout", new { area = "" }, null)</li>
+                    }
                     <li>@Html.ActionLink("О проекте", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
                 </ul>
