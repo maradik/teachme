@@ -1,0 +1,66 @@
+﻿@using TeachMe.Extensions
+@using TeachMe.Models.Payouts
+@model Payout[]
+
+@{
+    ViewBag.Title = "Все выплаты";
+}
+
+<h2>Все выплаты</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CreationTicks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().GetUser().UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Recipient.QiwiPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AdminComment)
+        </th>
+        <th>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationTicks, "DateTimeUtcTicks")
+        </td>
+        <td>
+            @item.Status.GetHumanAnnotation()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount) руб.
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GetUser().UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recipient.QiwiPhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdminComment)
+        </td>
+        <td>
+            @if (item.Status == PayoutStatus.Pending)
+            {
+                <div>
+                    @Html.ActionLink("Выполнить", "Perform", new { id = item.Id }) |
+                    @Html.ActionLink("Отменить", "Discard", new { id = item.Id })
+                </div>
+            }
+        </td>
+    </tr>
+}
+
+</table>

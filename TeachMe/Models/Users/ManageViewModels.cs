@@ -75,7 +75,8 @@ namespace TeachMe.Models.Users
     public class AddPhoneNumberViewModel
     {
         [Required]
-        [Phone]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\+7[\d]{10}$", ErrorMessage = "Введите номер телефона в формате +7xxxxxxxxxx")]
         [Display(Name = "Номер телефона")]
         public string Number { get; set; }
     }
@@ -87,7 +88,8 @@ namespace TeachMe.Models.Users
         public string Code { get; set; }
 
         [Required]
-        [Phone]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\+7[\d]{10}$", ErrorMessage = "Введите номер телефона в формате +7xxxxxxxxxx")]
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
     }

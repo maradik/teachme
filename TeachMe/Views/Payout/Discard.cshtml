@@ -1,0 +1,38 @@
+﻿@model TeachMe.ViewModels.Payouts.PayoutDiscardViewModel
+
+@{
+    ViewBag.Title = "Отмена платежа";
+}
+
+<h2>Отмена платежа</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AdminComment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.AdminComment, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdminComment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Отменить платеж" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад к списку", "IndexAll")
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

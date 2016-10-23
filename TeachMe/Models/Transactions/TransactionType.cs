@@ -4,6 +4,7 @@
     {
         Undefined = 0,
         CompleteJobPayment = 1,
-        InvoicePayment = 2
+        InvoicePayment = 2,
+        Payout = 3
     }
 }

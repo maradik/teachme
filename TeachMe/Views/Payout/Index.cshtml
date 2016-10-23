@@ -1,0 +1,75 @@
+﻿@using TeachMe.Extensions
+@using TeachMe.Models.Payouts
+@model TeachMe.ViewModels.Payouts.PayoutIndexViewModel
+
+@{
+    ViewBag.Title = "Выплаты";
+}
+
+<h2>Выплаты</h2>
+
+<div class="alert alert-info">
+    <p>Выплаты денежных средств осуществляются на персональный кошелек <a href="https://qiwi.ru/" target="_blank" style="text-decoration: underline;">QIWI</a> <b>без комиссий</b>.</p>
+    <p>QIWI позволяет перевести деньги на банковскую карту, оплатить услуги мобильной связи и многое другое.</p>
+    <p>Если у Вас еще нет кошелька QIWI - <a href="https://qiwi.ru/" target="_blank" style="text-decoration: underline;">зарегистрируйте</a> его, это быстро.</p>
+</div>
+
+@if (Model.JustCreated)
+{
+    <div class="alert alert-success">
+        <p>Ваша заявка на выплату создана и будет обработана в течение 7 дней.</p>
+        <p>Указанная сумма на Вашем счете зарезервирована.</p>
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Создать заявку на выплату", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Payouts.FirstOrDefault().CreationTicks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Payouts.FirstOrDefault().Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Payouts.FirstOrDefault().Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Payouts.FirstOrDefault().Recipient.QiwiPhoneNumber)
+        </th> 
+        <th>
+            @Html.DisplayNameFor(model => model.Payouts.FirstOrDefault().AdminComment)
+        </th>
+    </tr>
+
+@foreach (var item in Model.Payouts) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationTicks, "DateTimeUtcTicks")
+        </td>
+        <td>
+            @{
+                var statusClass = item.Status == PayoutStatus.Pending
+                                      ? "label-warning"
+                                      : item.Status == PayoutStatus.Done
+                                            ? "label-success" : "label-danger";
+            }
+
+            <span class="label @Html.Raw(statusClass)">@item.Status.GetHumanAnnotation()</span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount) руб.
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recipient.QiwiPhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdminComment)
+        </td>
+    </tr>
+}
+
+</table>

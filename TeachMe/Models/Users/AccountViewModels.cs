@@ -84,6 +84,7 @@ namespace TeachMe.Models.Users
 
         [Display(Name = "Номер телефона")]
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\+7[\d]{10}$", ErrorMessage = "Введите номер телефона в формате +7xxxxxxxxxx")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Категории задач")]
