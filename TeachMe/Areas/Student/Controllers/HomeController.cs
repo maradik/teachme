@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using TeachMe.Areas.Student.Models.Home;
+using TeachMe.Helpers.Settings;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
 
@@ -62,9 +63,8 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var contactViewModel = new ContactViewModel { Email = ApplicationSettings.StudentContactEmail };
+            return View(contactViewModel);
         }
     }
 }

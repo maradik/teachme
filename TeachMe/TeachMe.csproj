@@ -221,6 +221,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\StudentControllerBase.cs" />
+    <Compile Include="Areas\Student\Models\Home\ContactViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexJobMessagesViewModelProvider.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexUserJobMessageViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexUserJobsViewModelProvider.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Areas\Student\Models\Home\IndexViewModel.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Teacher\Models\Home\ContactViewModel.cs" />
     <Compile Include="Controllers\PayoutController.cs" />
     <Compile Include="DataAccess\Payouts\PayoutRepositoryParameters.cs" />
     <Compile Include="DataAccess\Payouts\IPayoutRepository.cs" />
@@ -421,6 +423,7 @@
     <Content Include="Areas\Student\Views\Home\UserIndex.cshtml" />
     <Content Include="Areas\Student\Views\Home\_IndexUserJobMessages.cshtml" />
     <Content Include="Areas\Student\Views\Home\_IndexUserProfile.cshtml" />
+    <Content Include="Areas\Student\Views\Home\Contact.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -449,7 +452,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\About.cshtml" />
-    <Content Include="Views\Shared\Contact.cshtml" />
+    <Content Include="Areas\Teacher\Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />

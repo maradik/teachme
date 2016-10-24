@@ -1,0 +1,13 @@
+﻿@model TeachMe.Areas.Student.Models.Home.ContactViewModel
+@{
+    ViewBag.Title = "Контакты";
+}
+<h2>@ViewBag.Title</h2>
+
+<p>По любым вопросам пишите нам на электронную почту.</p>
+
+<p>Служба технической поддержки ответит на Ваши вопросы в кротчайшие сроки.</p>
+
+<address>
+    <strong>Email:</strong>   <a href="mailto:@(Model.Email)">@Model.Email</a><br />
+</address>
