@@ -7,7 +7,7 @@ namespace TeachMe.Models.Jobs
 {
     public class Job : IEntity<Guid>
     {
-        private const double MinCost = 50;
+        private const double MinCost = 100;
         private const double MaxCost = double.MaxValue;
 
         private List<JobAttachment> attachments;

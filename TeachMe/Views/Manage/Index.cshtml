@@ -44,7 +44,10 @@
         <dt>Доступно:</dt>
         <dd>
             <span class="text-danger" style="font-weight: bold;">@Model.Cash.AvailableAmount руб.</span>
-            @Html.ActionLink("Выплаты", "Index", "Payout", new { area = ""}, null)
+            @if (Model.NeedShowPayoutLink)
+            {
+                @Html.ActionLink("Выплаты", "Index", "Payout", new { area = "" }, null)
+            }
         </dd>
         <dt>Пополнить баланс:</dt>
         <dd>

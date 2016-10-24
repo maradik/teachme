@@ -64,7 +64,8 @@ namespace TeachMe.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 Cash = ApplicationUser.Cash,
-                UserName = ApplicationUser.UserName
+                UserName = ApplicationUser.UserName,
+                NeedShowPayoutLink = ApplicationUser.Roles.Contains(UserRole.Teacher.Name)
             };
             model.Payment.Amount = 100;
             return View(model);
