@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "О нас";
+}
+<h2>О проекте</h2>
+
+<p>Наш сервис помогает сократить время, затрачиваемое на учебу.</p>
+<p>Вы публикуете на нашем сайте задачу (например, из домашнего задания), и преподаватель со стажем в кротчайшие сроки ее решает.</p>
+
+<h2>Публикация задачи</h2>
+Инструкция для мобильных устройств:
+<ol>
+    <li>@Html.ActionLink("Зарегистрируйтесь", "Register", "Account", new { area = "" }, new { target = "_blank" }) на сайте, это легко!</li>
+    <li>В главном меню нажмите @Html.ActionLink("Новая задача", "Create", "Job", null, new { target = "_blank" })<br /></li>
+    <li>Заполните <b>Предмет</b>, <b>Заголовок</b>, <b>Стоимость</b>.</li>
+    <li>Прикрепите файл, для этого нажмите <b>"Выберите файл"</b> и сделайте фото задачи камерой смартфона.</li>
+    <li>
+        <div>Нажмите <b>Создать</b> и задача будет сохранена:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-student-jobcreate.png?width=430" class="gallery-item">
+                <img src="~/Content/Images/help-student-jobcreate.png?width=100" style="margin: 3px 0 5px 0;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>В разделе главного меню @Html.ActionLink("Мои задачи", "Index", "Job", null, new { target = "_blank" }) вы можете просмотреть ее:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-student-jobcreate-result.png?width=430" class="gallery-item">
+                <img src="~/Content/Images/help-student-jobcreate-result.png?width=100" style="margin: 3px 0 5px 0;" />
+            </a>
+        </div>
+    </li>
+</ol>
+
+<div class="alert alert-info">
+    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Задача доступна для преподавателей только, если у нее статус <span class="label label-warning">Опубликовано</span>.</p>
+    <p>Опубликуйте ее нажатием соответствующей кнопки.</p>
+</div>
+
+<div class="alert alert-info">
+    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Задачу можно отредактировать только, если у нее статус <span class="label label-warning">Черновик</span>.</p>
+    <p>Для этого нажмите на кнопку <b>"Сделать черновиком"</b>.</p>
+</div>
+
+<h2>Обсуждение задачи с преподавателем</h2>
+<ol>
+    <li>Как только преподаватель начнет решать задачу - Вы получите смс-уведомление.</li>
+    <li>
+        <div>На странице просмотра задачи появится Чат с возможностью отправки сообщений:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-student-job-chat.png?width=430" class="gallery-item">
+                <img src="~/Content/Images/help-student-job-chat.png?width=100" style="margin: 3px 0 5px 0;" />
+            </a>
+        </div>
+    </li>
+</ol>
+
+<div class="alert alert-danger">
+    <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Периодически проверяйте чат на наличие новых сообщений от преподавателя.</p>
+</div>
+
+<div class="alert alert-info">
+    <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Если задачу долго никто не берется решать - попробуйте увеличить ее <b>Стоимость</b>.</p>
+</div>
+
+<h2>Проверка решения</h2>
+<ol>
+    <li>Как только преподаватель решит задачу - Вы получите смс-уведомление.</li>
+    <li>На странице просмотра задачи проверьте в чате наличие сообщения с решением.</li>
+    <li>
+        <div>Если все Ок - нажмите <b>"Принять работу"</b>; если решение не полное или не качественное - <b>"На доработку"</b>:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-student-job-finish.png?width=430" class="gallery-item">
+                <img src="~/Content/Images/help-student-job-finish.png?width=100" style="margin: 3px 0 5px 0;" />
+            </a>
+        </div>
+    </li>
+</ol>
+
+<div class="alert alert-danger">
+    <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Если отправляете задачу <b>на доработку</b> - обязательно в чате укажите причину.</p>
+</div>
