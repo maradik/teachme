@@ -79,3 +79,44 @@
 <div class="alert alert-danger">
     <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Если отправляете задачу <b>на доработку</b> - обязательно в чате укажите причину.</p>
 </div>
+
+<h2>Пополнение кошелька</h2>
+
+<ol>
+    <li>У каждого пользователя на сайте есть персональный кошелек.</li>
+    <li>
+        <div>Чтобы пополнить баланс перейдите в @Html.ActionLink("Личный кабинет", "Index", "Manage", new { area = "" }, new { target = "_blank" }), укажите <b>Сумму</b> и нажмите кнопку <b>"Оплатить"</b>.</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-student-payment.png?width=430" class="gallery-item">
+                <img src="~/Content/Images/help-student-payment.png?width=100" style="margin: 3px 0 5px 0;" />
+            </a>
+        </div>
+    </li>
+    <li>Откроется платежная система Robokassa, где Вы сможете произвести пополнение кошелька любым удобным способом.</li>
+</ol>
+
+<div class="alert alert-info">
+    <p>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        Кошелек содержит информацию:
+    </p>
+    <ul>
+        <li><b>Баланс</b> - общая сумма на кошельке.</li>
+        <li><b>Зарезервировано</b> - сумма, заблокированная для оплаты опубликованных задач.</li>
+        <li><b>Доступно</b> - сумма <b>Баланса</b> за вычетом <b>Зарезервированной</b> суммы.</li>
+    </ul>
+</div>
+
+<div class="alert alert-info">
+    <p>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        Денежные потоки:
+    </p>
+    <ul>
+        <li>В момент публикации задачи ее стоимость становится <b>Зарезервированной</b>.</li>
+        <li>Если задача переведена в черновик или отменена, то ее стоимость снимается с <b>Резерва</b> и становится <b>Доступной</b>.</li>
+        <li>Если задача решена, то ее стоимость снимается с <b>Резерва</b> и зачисляется на кошелек преподавателя.</li>
+    </ul>
+</div>
+
+Вы можете связаться с нами по любым вопросам при помощи страницы @Html.ActionLink("Контакты", "Contact", "Home", null, new { target = "_blank" }).

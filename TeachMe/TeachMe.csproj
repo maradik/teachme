@@ -376,6 +376,7 @@
     <Content Include="Content\Images\help-student-job-finish.png" />
     <Content Include="Content\Images\help-student-jobcreate-result.png" />
     <Content Include="Content\Images\help-student-jobcreate.png" />
+    <Content Include="Content\Images\help-student-payment.png" />
     <Content Include="Content\Images\irina.jpg" />
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\mariya-andreevna.jpg" />
