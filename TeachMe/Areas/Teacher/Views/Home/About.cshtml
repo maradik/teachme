@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "О нас";
+}
+<h2>О проекте</h2>
+
+<p>Наш сервис помогает преподавателю быстро и легко обеспечить себе дополнительный доход.</p>
+<p>Студенты и школьники публикуют задачи - а Вы их решаете и получаете за это денежное вознаграждение.</p>
+
+<h2>Поиск задачи</h2>
+<ol>
+    <li>Для начала - @Html.ActionLink("зарегистрируйтесь", "Register", "Account", new { area = "" }, new { target = "_blank" }), это быстро.</li>
+    <li>
+        <div>Номер телефона нужен для <b>бесплатных</b> СМС-уведомлений и выплат. Выберите категории задач, которые будете решать.</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-register.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-register.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>В главном меню выберите @Html.ActionLink("Доступные задачи", "IndexAvailable", "Job", null, new { target = "_blank" }).</li>
+    <li>
+        <div>Найдите подходящую задачу и перейдите по ссылке для просмотра деталей:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-indexavailable.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-indexavailable.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>Если готовы решить задачу, нажмите на кнопку "Взять в работу":</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-details.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-details.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>В нижней части окна появится чат, где Вы можете вести переписку с заказчиком:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-chat.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-chat.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+</ol>
+
+<h2>Решение задачи</h2>
+<ol>
+    <li>Быстро перейти к решаемой задаче можно через главное меню @Html.ActionLink("Мои задачи", "Index", "Job", null, new { target = "_blank" })</li>
+    <li>
+        <div>Когда работа выполнена, сфотографируйте решение и прикрепите его к сообщению в чате. А также нажмите на кнопку "Работы выполнены":</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-jobcomplete.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-jobcomplete.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>Заказчик проверит работу и перечислит за нее деньги:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-jobaccepted.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-jobaccepted.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+</ol>
+
+<div class="alert alert-info">
+    <p>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        В случае некачественного решения заказчик в праве отправить задачу на доработку. При этом, задача получит статус <span class="label label-warning">В работе (повторно)</span>.
+    </p>
+    <p>Вам следует учесть замечания и прикрепить новое решение.</p>
+</div>
+
+<div class="alert alert-success">
+    <p>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        Все денежные средства, необходимые на оплату Вашего труда, заблаговременно резервируются на счете Заказчика.
+    </p>
+    <p>
+        Поэтому, ситуация с выполненной и неоплаченной работой - <b>исключена</b>!
+    </p>
+</div>

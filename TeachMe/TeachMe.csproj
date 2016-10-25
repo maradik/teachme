@@ -377,6 +377,12 @@
     <Content Include="Content\Images\help-student-jobcreate-result.png" />
     <Content Include="Content\Images\help-student-jobcreate.png" />
     <Content Include="Content\Images\help-student-payment.png" />
+    <Content Include="Content\Images\help-teacher-chat.png" />
+    <Content Include="Content\Images\help-teacher-details.png" />
+    <Content Include="Content\Images\help-teacher-indexavailable.png" />
+    <Content Include="Content\Images\help-teacher-jobaccepted.png" />
+    <Content Include="Content\Images\help-teacher-jobcomplete.png" />
+    <Content Include="Content\Images\help-teacher-register.png" />
     <Content Include="Content\Images\irina.jpg" />
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\mariya-andreevna.jpg" />
@@ -430,6 +436,7 @@
     <Content Include="Areas\Student\Views\Home\_IndexUserProfile.cshtml" />
     <Content Include="Areas\Student\Views\Home\Contact.cshtml" />
     <Content Include="Areas\Student\Views\Home\About.cshtml" />
+    <Content Include="Areas\Teacher\Views\Home\About.cshtml" />
     <None Include="Views\JobChat\_JobMessage.cshtml" />
     <None Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -457,7 +464,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\About.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
