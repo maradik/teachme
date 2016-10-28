@@ -22,7 +22,15 @@
         <div>Найдите подходящую задачу и перейдите по ссылке для просмотра деталей:</div>
         <div class="gallery-container">
             <a href="~/Content/Images/help-teacher-indexavailable.png?width=1024" class="gallery-item">
-                <img src="~/Content/Images/help-teacher-indexavailable.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+                <img src="~/Content/Images/help-teacher-indexavailable.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;"/>
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>Нажмите на прикрепленные изображения, чтобы увеличить их. Если изображение окажется перевернутым, воспользуйтесь кнопкой:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-details-rotate.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-details-rotate.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
             </a>
         </div>
     </li>
@@ -82,3 +90,51 @@
         Поэтому, ситуация с выполненной и неоплаченной работой - <b>исключена</b>!
     </p>
 </div>
+
+<h2>Выплата денег на карту, телефон</h2>
+<ol>
+    <li>Оплата за решенные задачи поступает на Ваш личный кошелек, его состояние можно посмотреть в @Html.ActionLink("личном кабинете", "Index", "Manage", new { area = "" }, new { target = "_blank" }).</li>
+    <li>
+        <div>Для вывода денег в @Html.ActionLink("личном кабинете", "Index", "Manage", new { area = "" }, new { target = "_blank" }) нажмите @Html.ActionLink("Выплаты", "Index", "Payout", new { area = "" }, new { target = "_blank" }):</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-payoutfrommanage.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-payoutfrommanage.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>Перед Вами список выплат, нажмите @Html.ActionLink("Создать заявку на выплату", "Create", "Payout", new { area = "" }, new { target = "_blank" }):</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-payoutindex.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-payoutindex.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>Заполните Сумму, Номер телефона в QIWI и нажмите "Создать":</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-payoutcreate.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-payoutcreate.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        <div>Ваша заявка будет обработана в кратчайшие сроки:</div>
+        <div class="gallery-container">
+            <a href="~/Content/Images/help-teacher-payoutjustcreate.png?width=1024" class="gallery-item">
+                <img src="~/Content/Images/help-teacher-payoutjustcreate.png?width=300" style="margin: 3px 0 5px 0; border: 1px solid gray;" />
+            </a>
+        </div>
+    </li>
+    <li>
+        Когда выплата будет произведена, Вы получите СМС-уведомление.
+    </li>
+</ol>
+
+<div class="alert alert-success">
+    <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Выплаты денежных средств осуществляются на персональный кошелек <a href="https://qiwi.ru/" target="_blank" style="text-decoration: underline;">QIWI</a> <b>без комиссий</b>.</p>
+    <p>QIWI позволяет перевести деньги на банковскую карту, оплатить услуги мобильной связи и многое другое.</p>
+    <p>Если у Вас еще нет кошелька QIWI - <a href="https://qiwi.ru/" target="_blank" style="text-decoration: underline;">создайте</a> его, это быстро.</p>
+</div>
+
+<p>Вы можете связаться с нами по любым вопросам при помощи страницы @Html.ActionLink("Контакты", "Contact", "Home", null, new { target = "_blank" }).</p>

@@ -378,10 +378,15 @@
     <Content Include="Content\Images\help-student-jobcreate.png" />
     <Content Include="Content\Images\help-student-payment.png" />
     <Content Include="Content\Images\help-teacher-chat.png" />
+    <Content Include="Content\Images\help-teacher-details-rotate.png" />
     <Content Include="Content\Images\help-teacher-details.png" />
     <Content Include="Content\Images\help-teacher-indexavailable.png" />
     <Content Include="Content\Images\help-teacher-jobaccepted.png" />
     <Content Include="Content\Images\help-teacher-jobcomplete.png" />
+    <Content Include="Content\Images\help-teacher-payoutcreate.png" />
+    <Content Include="Content\Images\help-teacher-payoutfrommanage.png" />
+    <Content Include="Content\Images\help-teacher-payoutindex.png" />
+    <Content Include="Content\Images\help-teacher-payoutjustcreate.png" />
     <Content Include="Content\Images\help-teacher-register.png" />
     <Content Include="Content\Images\irina.jpg" />
     <Content Include="Content\Images\loading.gif" />
