@@ -13,7 +13,7 @@ using TeachMe.ViewModels.Payouts;
 
 namespace TeachMe.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = UserRole.Names.Teacher + "," + UserRole.Names.Admin)]
     public class PayoutController : ControllerBase
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PayoutController));
