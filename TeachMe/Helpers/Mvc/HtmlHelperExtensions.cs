@@ -15,7 +15,7 @@ namespace TeachMe.Helpers.Mvc
                                                                        object htmlAttributes = null,
                                                                        SelectListItem emptyElement = null)
         {
-            emptyElement = emptyElement ?? new SelectListItem { Value = 0.ToString(), Text = "Выберите значение" };
+            emptyElement = emptyElement ?? new SelectListItem { Value = 0.ToString(), Text = "[Выберите значение]" };
             return htmlHelper.DropDownListFor(expression, new[] {emptyElement}.Concat(selectList), htmlAttributes);
         }
     }
