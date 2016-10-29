@@ -2,7 +2,7 @@
 var jQueryExtensions = {
     escapeMetaChars: function (input) {
         return input.replace(
-            new RegExp(/[\!\"\#\$\%\&\'\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~]/, "g"),
+            new RegExp('[\!\"\#\$\%\&\'\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~]', "g"),
             function(match) { return "\\" + match; });
     }
 };
