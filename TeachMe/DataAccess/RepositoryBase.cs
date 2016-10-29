@@ -5,6 +5,7 @@ using MongoDB.Driver.Builders;
 using TeachMe.Models;
 using System.Linq.Expressions;
 using System.Linq;
+using TeachMe.Helpers.Settings;
 
 namespace TeachMe.DataAccess
 {
@@ -17,7 +18,8 @@ namespace TeachMe.DataAccess
         protected RepositoryBase(RepositoryBaseParameters parameters)
         {
             var client = new MongoClient(ConfigurationManager.ConnectionStrings[parameters.ConnectionStringName].ConnectionString);
-            Collection = client.GetServer().GetDatabase(parameters.DatabaseName).GetCollection<TModel>(parameters.CollectionName);
+            var databaseName = ApplicationSettings.MongoDatabasePrefix + parameters.DatabaseName;
+            Collection = client.GetServer().GetDatabase(databaseName).GetCollection<TModel>(parameters.CollectionName);
         }
 
         public virtual void Write(TModel model)

@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using TeachMe.Models.Users;
+using TeachMe.Helpers.Settings;
 
 namespace TeachMe
 {
@@ -37,7 +38,7 @@ namespace TeachMe
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new ApplicationUserStore("Mongo", "TeachMe"));
+            var manager = new ApplicationUserManager(new ApplicationUserStore("Mongo", ApplicationSettings.MongoDatabasePrefix + "TeachMe"));
             // Настройка логики проверки имен пользователей
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
