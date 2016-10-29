@@ -17,7 +17,7 @@ namespace TeachMe.ProjectsSupport
                 return projectTypeFromCookie;
             }
 #endif
-            return context.Request.Url.Port == 8080 ? ProjectType.Teacher : ProjectType.Student;
+            return context.Request.Url.Host.Contains("goteacher.ru") ? ProjectType.Teacher : ProjectType.Student;
         }
     }
 }
