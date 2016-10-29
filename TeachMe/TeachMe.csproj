@@ -372,31 +372,81 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\help-student-job-chat.png" />
-    <Content Include="Content\Images\help-student-job-finish.png" />
-    <Content Include="Content\Images\help-student-jobcreate-result.png" />
-    <Content Include="Content\Images\help-student-jobcreate.png" />
-    <Content Include="Content\Images\help-student-payment.png" />
-    <Content Include="Content\Images\help-teacher-chat.png" />
-    <Content Include="Content\Images\help-teacher-details-rotate.png" />
-    <Content Include="Content\Images\help-teacher-details.png" />
-    <Content Include="Content\Images\help-teacher-indexavailable.png" />
-    <Content Include="Content\Images\help-teacher-jobaccepted.png" />
-    <Content Include="Content\Images\help-teacher-jobcomplete.png" />
-    <Content Include="Content\Images\help-teacher-payoutcreate.png" />
-    <Content Include="Content\Images\help-teacher-payoutfrommanage.png" />
-    <Content Include="Content\Images\help-teacher-payoutindex.png" />
-    <Content Include="Content\Images\help-teacher-payoutjustcreate.png" />
-    <Content Include="Content\Images\help-teacher-register.png" />
-    <Content Include="Content\Images\irina.jpg" />
-    <Content Include="Content\Images\loading.gif" />
-    <Content Include="Content\Images\mariya-andreevna.jpg" />
-    <Content Include="Content\Images\natalya.jpg" />
-    <Content Include="Content\Images\tanushka.jpg" />
-    <Content Include="Content\Images\valentina-petrovna.jpg" />
-    <Content Include="Content\Images\vika.jpg" />
-    <Content Include="Content\Images\mikle.jpg" />
-    <Content Include="Content\Images\vano.jpg" />
+    <Content Include="Content\Images\help-student-job-chat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-student-job-finish.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-student-jobcreate-result.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-student-jobcreate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-student-payment.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-chat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-details-rotate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-details.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-indexavailable.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-jobaccepted.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-jobcomplete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-payoutcreate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-payoutfrommanage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-payoutindex.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-payoutjustcreate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\help-teacher-register.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\irina.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\loading.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\mariya-andreevna.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\natalya.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\tanushka.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\valentina-petrovna.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\vika.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\mikle.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\vano.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\photobox\jquery.photobox.js" />
     <Content Include="Content\photobox\photobox.css" />
     <Content Include="favicon.ico" />
@@ -442,8 +492,8 @@
     <Content Include="Areas\Student\Views\Home\Contact.cshtml" />
     <Content Include="Areas\Student\Views\Home\About.cshtml" />
     <Content Include="Areas\Teacher\Views\Home\About.cshtml" />
-    <None Include="Views\JobChat\_JobMessage.cshtml" />
-    <None Include="Views\JobChat\_GetMessages.cshtml" />
+    <Content Include="Views\JobChat\_JobMessage.cshtml" />
+    <Content Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -491,12 +541,12 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
-    <None Include="Areas\Student\Views\Job\Create.cshtml" />
+    <Content Include="Areas\Student\Views\Job\Create.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeUtcTicks.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\_JobActions.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Payment\ShowFail.cshtml" />
-    <None Include="Views\Payment\ShowSuccess.cshtml" />
+    <Content Include="Views\Payment\ShowFail.cshtml" />
+    <Content Include="Views\Payment\ShowSuccess.cshtml" />
     <Content Include="Views\Payout\Index.cshtml" />
     <Content Include="Views\Payout\Create.cshtml" />
     <Content Include="Views\Payout\IndexAll.cshtml" />

@@ -249,3 +249,4 @@ ModelManifest.xml
 TeachMe/imagecache/**/*.jpg
 TeachMe/imagecache/**/*.png
 TeachMe/imagecache/**/*.gif
+TeachMe/Properties/PublishProfiles/local.pubxml

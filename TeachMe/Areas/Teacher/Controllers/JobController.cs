@@ -77,7 +77,7 @@ namespace TeachMe.Areas.Teacher.Controllers
             {
                 jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
             }
-            catch (InvalidJobActionException e)
+            catch (InvalidJobActionException)
             {
                 return Json(new JobActionResult
                 {

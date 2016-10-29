@@ -199,7 +199,7 @@ namespace TeachMe.Areas.Student.Controllers
             {
                 updatedJob = jobActionService.DoAction(jobId, jobActionType, ApplicationUser);
             }
-            catch (InvalidJobActionException e)
+            catch (InvalidJobActionException)
             {
                 return Json(new JobActionResult
                 {
