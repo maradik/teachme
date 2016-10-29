@@ -8,15 +8,23 @@
     if (!JobOpeningSpecification.Instance.IsSatisfiedBy(Model))
     {
         <div class="alert alert-warning">
-            Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
+            <span class="glyphicon glyphicon-warning-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
             @Html.ActionLink("Пополните баланс", "Index", "Manage", new {area = ""}, null) на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
         </div>
     }
     else
     {
         <div class="alert alert-warning">
-            Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
+            <span class="glyphicon glyphicon-warning-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
             Опубликуйте ее и она станет доступна исполнителям.
         </div>
     }
+}
+
+@if (Model.Status == JobStatus.Opened)
+{
+    <div class="alert alert-info">
+        <span class="glyphicon glyphicon-info-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и ожидает исполнителя. <br />
+        Если задача не может найти исполнителя - попробуйте повысить стоимость.
+    </div>
 }
