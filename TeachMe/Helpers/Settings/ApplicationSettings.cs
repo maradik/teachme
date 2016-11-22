@@ -24,6 +24,7 @@ namespace TeachMe.Helpers.Settings
         public static bool RobokassaIsInTest => SafeGetBool("RobokassaIsInTest") ?? false;
 
         public static bool SmsNotificationEnabled => SafeGetBool("SmsNotificationEnabled") ?? false;
+        public static int TeachersCountForNewJobNotification => SafeGetInt("TeachersCountForNewJobNotification") ?? 0;
 
         public static int SmsAeroServicePriority => SafeGetInt("SmsAeroServicePriority") ?? 0;
         public static string SmsAeroLogin => ConfigurationManager.AppSettings["SmsAeroLogin"] ?? string.Empty;

@@ -9,7 +9,6 @@ namespace TeachMe.Services.Jobs.JobActionHandlers
 {
     public class TeacherNotificationJobCreationHandler : IJobActionCustomHandler
     {
-        private const int NotifiedUsersLimit = 5;
         private readonly ISmsService smsService;
         private readonly ApplicationUserManager applicationUserManager;
 
@@ -29,7 +28,7 @@ namespace TeachMe.Services.Jobs.JobActionHandlers
                                                                  x.SubjectIds.Contains(job.SubjectId) &&
                                                                  x.PhoneNumber != null)
                                                      .OrderByDescending(x => x.CreationTicks)
-                                                     .Take(NotifiedUsersLimit)
+                                                     .Take(ApplicationSettings.TeachersCountForNewJobNotification)
                                                      .ToArray();
 
             var jobSubject = job.GetSubject();
