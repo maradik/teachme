@@ -48,7 +48,8 @@ namespace TeachMe.Areas.Student.Controllers
                 {
                     Recalls = indexRecallViewModelProvider.Get(),
                     Jobs = indexJobsViewModelProvider.Get(),
-                    LoginViewModel = new TeachMe.Models.Users.LoginViewModel { RememberMe = true }
+                    LoginViewModel = new TeachMe.Models.Users.LoginViewModel { RememberMe = true },
+                    GiftAmountForNewUser = (int) ApplicationSettings.StudentInitialCash
                 };
                 return View("Index", viewModel);
             }

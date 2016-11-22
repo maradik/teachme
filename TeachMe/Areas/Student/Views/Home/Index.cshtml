@@ -24,6 +24,12 @@
     <div class="col-md-4">
         @{
             Html.RenderPartial("_Login", Model.LoginViewModel);
+            if (Model.GiftAmountForNewUser != 0)
+            {
+                <div class="alert alert-success">
+                    <span class="text-danger" style="font-weight: bold;">Акция!</span> При регистрации @Model.GiftAmountForNewUser&nbsp;руб. в подарок!
+                </div>
+            }
         }
     </div>
 </div>
