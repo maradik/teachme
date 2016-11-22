@@ -552,6 +552,7 @@
     <Content Include="Views\Payout\IndexAll.cshtml" />
     <Content Include="Views\Payout\Perform.cshtml" />
     <Content Include="Views\Payout\Discard.cshtml" />
+    <Content Include="Views\Shared\_YandexMetrika.cshtml" />
     <None Include="Views\TestEnter\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

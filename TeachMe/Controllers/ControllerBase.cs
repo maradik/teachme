@@ -40,6 +40,16 @@ namespace TeachMe.Controllers
             ViewBag.ApplicationUser = ApplicationUser;
             ViewBag.ProjectName = lazyProjectName.Value;
             ViewBag.ProjectTitle = lazyProjectTitle.Value;
+            ViewBag.IsDebug = IsDebugMode();
+        }
+
+        private bool IsDebugMode()
+        {
+#if DEBUG
+            return true;
+#else
+            return false;
+#endif
         }
     }
 }
