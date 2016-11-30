@@ -21,6 +21,12 @@ namespace TeachMe.References
             new Subject(12, "Химия 10-11 класс"),
             new Subject(13, "Иностранный язык 5-9 класс"),
             new Subject(14, "Иностранный язык 10-11 класс"),
+            new Subject(101, "Дипломная работа (студент)"),
+            new Subject(102, "Курсовая работа (студент)"),
+            new Subject(103, "Контрольная работа (студент)"),
+            new Subject(104, "Реферат (студент)"),
+            new Subject(105, "Доклад (студент)"),
+
         }.ToDictionary(x => x.Id);
 
         private static ISubjectReference instance;
