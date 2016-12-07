@@ -15,14 +15,14 @@ namespace TeachMe.Areas.Student.Models.Home
                 {
                     AuthorName = "Вика",
                     Grade = 10,
-                    Text = "Консультант быстро обнаружил ошибку в моем решении и ответ сошелся! Огромное спасибо!",
+                    Text = "Это самый удобный онлайн-решебник из всех, которые я когда-либо встречала.",
                     PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/vika.jpg")
                 },
                 new IndexRecallViewModel
                 {
                     AuthorName = "Mikle",
                     Grade = 8,
-                    Text = "Спасибо за помощь в поиске литературы для реферата по биологии.",
+                    Text = "Теперь можно не тратить время на скучную физику, она все равно мне не пригодится.",
                     PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/mikle.jpg")
                 },
                 new IndexRecallViewModel
