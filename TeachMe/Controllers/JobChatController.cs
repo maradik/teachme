@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using TeachMe.Converters;
 using TeachMe.DataAccess;
 using TeachMe.DataAccess.FileUploading;
@@ -19,6 +20,7 @@ namespace TeachMe.Controllers
     public class JobChatController : ControllerBase
     {
         private const string ModelBindingPrefix = nameof(JobChatController);
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(JobChatController));
 
         private readonly IJobRepository jobRepository;
         private readonly IJobMessageRepository jobMessageRepository;
@@ -88,8 +90,9 @@ namespace TeachMe.Controllers
                 ModelState.Clear();
                 return PartialView(CreateJobMessage(jobMessage.JobId));
             }
-            catch
+            catch (Exception e)
             {
+                Logger.Error("Не удалось создать сообщение", e);
                 return PartialView();
             }
         }

@@ -118,8 +118,9 @@ namespace TeachMe.Areas.Student.Controllers
 
                 return RedirectToAction("Details", new {job.Id});
             }
-            catch
+            catch (Exception e)
             {
+                Logger.Error("Не удалось создать задачу", e);
                 return View();
             }
         }
@@ -168,8 +169,9 @@ namespace TeachMe.Areas.Student.Controllers
 
                 return RedirectToAction("Details", new {job.Id});
             }
-            catch
+            catch (Exception e)
             {
+                Logger.Error($"Не удалось изменить задачу JobId={id}", e);
                 job.Attachments = job.Attachments.OrderByDescending(x => x.Type).ToList();
                 return View(job);
             }
