@@ -75,8 +75,10 @@
         <div class="row">
             @foreach (var attachment in Model.Attachments.Where(x => x.Type != JobAttachmentType.Image))
             {
-                <div style="margin: 10px 0 10px 0;">
-                    <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">Скачать @attachment.OriginFileName</a>
+                <div class="col-xs-12">
+                    <div style="margin: 10px 0 10px 0;">
+                        <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">Скачать @attachment.OriginFileName</a>
+                    </div>
                 </div>
             }
         </div>
