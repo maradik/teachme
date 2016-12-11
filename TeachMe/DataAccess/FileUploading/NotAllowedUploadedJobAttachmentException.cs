@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.IO;
 using System.Linq;
 using TeachMe.Models.Jobs;
@@ -7,7 +7,7 @@ namespace TeachMe.DataAccess.FileUploading
 {
     public class NotAllowedUploadedJobAttachmentException : Exception
     {
-        private const string DefaultMessage = "Ôàéëû-ïðèëîæåíèÿ ê çàäà÷å çàïðåùåíû.";
+        private const string DefaultMessage = "Ð¤Ð°Ð¹Ð»Ñ‹-Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ðº Ð·Ð°Ð´Ð°Ñ‡Ðµ Ð·Ð°Ð¿Ñ€ÐµÑ‰ÐµÐ½Ñ‹.";
 
         public NotAllowedUploadedJobAttachmentException(UploadedJobAttachment uploadedJobAttachment, string message = DefaultMessage) 
             : this(new[] { uploadedJobAttachment }, message)
@@ -24,7 +24,7 @@ namespace TeachMe.DataAccess.FileUploading
 
         private static string BuildFullMessage(UploadedJobAttachment[] uploadedJobAttachments, string message)
         {
-            return message + " Ðàñøèðåíèÿ:" + string.Join(",", uploadedJobAttachments.Select(x => Path.GetExtension(x.FileName)));
+            return message + " Ð Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ñ:" + string.Join(",", uploadedJobAttachments.Select(x => Path.GetExtension(x.FileName)));
         }
     }
 }
