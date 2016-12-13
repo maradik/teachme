@@ -26,7 +26,7 @@ namespace TeachMe.References
             new Subject(103, "Контрольная работа (студент)"),
             new Subject(104, "Реферат (студент)"),
             new Subject(105, "Доклад (студент)"),
-
+            new Subject(999, "Прочее"),
         }.ToDictionary(x => x.Id);
 
         private static ISubjectReference instance;
