@@ -1,14 +1,14 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using log4net;
 using TeachMe.Helpers.Settings;
 
-namespace TeachMe.Services.Notifications.SmsAero
+namespace TeachMe.Services.Notifications.SmsIntel
 {
     public class SmsIntelService : ICustomSmsService
     {

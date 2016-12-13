@@ -146,6 +146,8 @@ namespace TeachMe.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             ViewBag.Subjects = subjectReference.GetAll();
+            model.SubjectIds = model.SubjectIds.Distinct().ToList();
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
