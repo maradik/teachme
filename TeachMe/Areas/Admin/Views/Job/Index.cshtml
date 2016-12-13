@@ -1,0 +1,53 @@
+﻿@using TeachMe.Extensions
+@using TeachMe.Models.Jobs
+@model IEnumerable<Job>
+
+@{
+    ViewBag.Title = "Задачи";
+}
+
+<h2>Мои задачи</h2>
+
+<table class="table">
+    @{
+        var successJobStatuses = new[] {JobStatus.Finished, JobStatus.Accepted};
+    }
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Title)</th>
+        <th>Стоимость (заказчик)</th>
+        <th>Стоимость (исполнитель)</th>
+        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().StudentUserId)</th>
+        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TeacherUserId)</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div>@Html.ActionLink(item.Title, "Details", new {id = item.Id})</div>
+                <div style="margin-top: 5px;">
+                    <span class="label label-primary">@Html.DisplayFor(modelItem => item.GetSubject().Title)</span>
+                    <span class="label @(successJobStatuses.Contains(item.Status) ? "label-success" : "label-warning")">@item.Status.GetHumanAnnotation()</span>
+                    <span class="label label-default">@Html.DisplayFor(x => item.CreationTicks, "DateTimeUtcTicks")</span>
+                </div>
+            </td>
+            <td>
+                <span class="label label-danger">@Html.DisplayFor(modelItem => item.StudentCost) руб.</span>
+            </td>
+            <td>
+                <span class="label label-danger">@Html.DisplayFor(modelItem => item.TeacherCost) руб.</span>
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.StudentUserId))
+                {
+                    <span class="label label-info">@Html.DisplayFor(modelItem => item.GetStudentUser().UserName)</span>
+                }
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.TeacherUserId))
+                {
+                    <span class="label label-info">@Html.DisplayFor(modelItem => item.GetTeacherUser().UserName)</span>
+                }
+            </td>
+        </tr>
+    }
+</table>

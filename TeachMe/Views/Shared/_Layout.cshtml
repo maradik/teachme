@@ -23,23 +23,27 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Главная", "Index", "Home")</li>
-                    @if (Request.IsAuthenticated && ((ApplicationUser)ViewBag.ApplicationUser).Roles.Contains(UserRole.Student.Name))
+                    <li>@Html.ActionLink("Главная", "Index", "Home", new { area = "" }, null)</li>
+                    @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Новая задача", "Create", "Job", new { area = "Student" }, null)</li>
-                        <li>@Html.ActionLink("Мои задачи", "Index", "Job", new { area = "Student" }, null)</li>
+                        if (((ApplicationUser) ViewBag.ApplicationUser).Roles.Contains(UserRole.Admin.Name))
+                        {
+                            <li>@Html.ActionLink("Все выплаты", "IndexAll", "Payout", new {area = ""}, null)</li>
+                            <li>@Html.ActionLink("Задачи", "Index", "Job", new { area = "Admin" }, null)</li>
+                        }
+                        else if (((ApplicationUser)ViewBag.ApplicationUser).Roles.Contains(UserRole.Student.Name))
+                        {
+                            <li>@Html.ActionLink("Новая задача", "Create", "Job", new { area = "Student" }, null)</li>
+                            <li>@Html.ActionLink("Мои задачи", "Index", "Job", new { area = "Student" }, null)</li>
+                        }
+                        else if (((ApplicationUser)ViewBag.ApplicationUser).Roles.Contains(UserRole.Teacher.Name))
+                        {
+                            <li>@Html.ActionLink("Мои задачи", "Index", "Job", new {area = "Teacher"}, null)</li>
+                            <li>@Html.ActionLink("Доступные задачи", "IndexAvailable", "Job", new { area = "Teacher" }, null)</li>
+                        }
                     }
-                    @if (Request.IsAuthenticated && ((ApplicationUser)ViewBag.ApplicationUser).Roles.Contains(UserRole.Teacher.Name))
-                    {
-                        <li>@Html.ActionLink("Мои задачи", "Index", "Job", new {area = "Teacher"}, null)</li>
-                        <li>@Html.ActionLink("Доступные задачи", "IndexAvailable", "Job", new { area = "Teacher" }, null)</li>
-                    }
-                    @if (Request.IsAuthenticated && ((ApplicationUser)ViewBag.ApplicationUser).Roles.Contains(UserRole.Admin.Name))
-                    {
-                        <li>@Html.ActionLink("Все выплаты", "IndexAll", "Payout", new { area = "" }, null)</li>
-                    }
-                    <li>@Html.ActionLink("О нас", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("О нас", "About", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Контакты", "Contact", "Home", new { area = "" }, null)</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
