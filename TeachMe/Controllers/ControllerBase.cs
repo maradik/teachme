@@ -10,7 +10,7 @@ using TeachMe.Services.General;
 
 namespace TeachMe.Controllers
 {
-    public class ControllerBase : Controller
+    public abstract class ControllerBase : Controller
     {
         private readonly Lazy<ApplicationUserManager> lazyUserManager;
         private readonly Lazy<ApplicationUser> lazyApplicationUser;
@@ -18,7 +18,7 @@ namespace TeachMe.Controllers
         private readonly Lazy<string> lazyProjectName;
         private readonly Lazy<string> lazyProjectTitle;
 
-        public ControllerBase(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider)
+        protected ControllerBase(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider)
         {
             lazyUserManager = new Lazy<ApplicationUserManager>(() => HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>());
             lazyApplicationUser =

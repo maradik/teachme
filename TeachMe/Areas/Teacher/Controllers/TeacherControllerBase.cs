@@ -9,9 +9,9 @@ using ControllerBase = TeachMe.Controllers.ControllerBase;
 namespace TeachMe.Areas.Teacher.Controllers
 {
     [Authorize(Roles = UserRole.Names.Teacher)]
-    public class TeacherControllerBase : ControllerBase
+    public abstract class TeacherControllerBase : ControllerBase
     {
-        public TeacherControllerBase(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider) 
+        protected TeacherControllerBase(IProjectTypeProvider projectTypeProvider, IProjectInfoProvider projectInfoProvider) 
             : base(projectTypeProvider, projectInfoProvider)
         {
         }
