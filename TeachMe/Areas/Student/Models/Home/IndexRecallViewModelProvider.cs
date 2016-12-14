@@ -13,29 +13,29 @@ namespace TeachMe.Areas.Student.Models.Home
             {
                 new IndexRecallViewModel
                 {
-                    AuthorName = "Вика",
-                    Grade = 10,
-                    Text = "Это самый удобный онлайн-решебник из всех, которые я когда-либо встречала.",
-                    PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/vika.jpg")
-                },
-                new IndexRecallViewModel
-                {
-                    AuthorName = "Mikle",
-                    Grade = 8,
-                    Text = "Теперь можно не тратить время на скучную физику, она все равно мне не пригодится.",
-                    PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/mikle.jpg")
-                },
-                new IndexRecallViewModel
-                {
-                    AuthorName = "Танюшка",
-                    Grade = 11,
-                    Text = "Благодаря этому сайту я всегда могу перепроверить правильность решенных мной задач.",
+                    AuthorName = "Татьяна",
+                    Status = "Студент 2 курса",
+                    Text = "Благодаря этому сайту я успешно сдала рефераты по физике, термеху, БЖД.",
                     PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/tanushka.jpg")
                 },
                 new IndexRecallViewModel
                 {
+                    AuthorName = "Mikle",
+                    Status = "Студент 1 курса",
+                    Text = "Сдал курсач по нормам права на хор. Сделали за день, спасибо!",
+                    PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/mikle.jpg")
+                },
+                new IndexRecallViewModel
+                {
+                    AuthorName = "Вика",
+                    Status = "10 класс",
+                    Text = "Здорово, что при заказе я сама определяю цену работы.",
+                    PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/vika.jpg")
+                },
+                new IndexRecallViewModel
+                {
                     AuthorName = "Vano",
-                    Grade = 9,
+                    Status = "11 класс",
                     Text = "Респект авторам этого сайта! Теперь у меня куча свободного времени на личные дела.",
                     PhotoUrl = VirtualPathUtility.ToAbsolute("~/Content/Images/vano.jpg")
                 }
