@@ -10,7 +10,15 @@
         <div class="panel-heading">
             <h4 class="panel-title">
                 <span class="glyphicon glyphicon-comment"></span>
-                @(isCurrentUserAuthor ? "Вы" : Model.GetUser().UserName)
+                @if (isCurrentUserAuthor)
+                {
+                    @("Вы")
+                }
+                else
+                {
+                    var authorUser = Model.GetUser();
+                    @(authorUser.IsAdmin() ? "Администратор" : authorUser.UserName)
+                }
                 <span style="font-style: italic;">@Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")</span>
             </h4>
         </div>

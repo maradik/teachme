@@ -244,6 +244,7 @@
     <Compile Include="DataAccess\Payouts\PayoutRepositoryParameters.cs" />
     <Compile Include="DataAccess\Payouts\IPayoutRepository.cs" />
     <Compile Include="DataAccess\Payouts\PayoutRepository.cs" />
+    <Compile Include="Extensions\ApplicationUserExtenstions.cs" />
     <Compile Include="Extensions\PayoutExtensions.cs" />
     <Compile Include="Models\Payouts\Payout.cs" />
     <Compile Include="Models\Payouts\PayoutRecipient.cs" />
@@ -499,6 +500,8 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Job\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Job\_JobInfo.cshtml" />
     <Content Include="Views\JobChat\_JobMessage.cshtml" />
     <Content Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

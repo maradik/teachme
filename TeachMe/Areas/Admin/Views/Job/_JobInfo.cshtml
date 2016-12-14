@@ -1,0 +1,108 @@
+﻿@using TeachMe.Extensions
+@using TeachMe.Models.Jobs
+@model Job
+
+@Html.HiddenFor(model => model.Id, new { id = "jobId" })
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.SubjectId)
+    </dt>
+
+    <dd>
+        <span class="label label-primary">@Html.DisplayFor(model => model.GetSubject().Title)</span>
+    </dd>
+
+    <dt>
+        Стоимость (Заказчик)
+    </dt>
+
+    <dd>
+        <span class="label label-danger">@Html.DisplayFor(model => model.StudentCost) руб.</span>
+    </dd>
+
+    <dt>
+        Стоимость (Исполнитель)
+    </dt>
+
+    <dd>
+        <span class="label label-danger">@Html.DisplayFor(model => model.TeacherCost) руб.</span>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Status)
+    </dt>
+
+    <dd>
+        @{
+            var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+        }        
+        <span class="label @(successJobStatuses.Contains(Model.Status) ? "label-success" : "label-warning")">@Model.Status.GetHumanAnnotation()</span>
+    </dd>
+    
+    @if (!string.IsNullOrEmpty(Model.StudentUserId))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentUserId)
+        </dt>
+
+        <dd>
+            <span class="label label-info">@Model.GetStudentUser().UserName</span>
+        </dd>
+    }    
+
+    @if (!string.IsNullOrEmpty(Model.TeacherUserId))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.TeacherUserId)
+        </dt>
+
+        <dd>
+            <span class="label label-info">@Model.GetTeacherUser().UserName</span>
+        </dd>
+    }
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreationTicks)
+    </dt>
+
+    <dd>
+        <span class="label label-default">@Html.DisplayFor(model => model.CreationTicks, "DateTimeUtcTicks")</span>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Attachments)
+    </dt>
+
+    <dd>
+        <div class="row gallery-container">
+            @foreach (var attachment in Model.Attachments.Where(x => x.Type == JobAttachmentType.Image))
+            {
+                <div class="col-xs-4 col-sm-3">
+                    <div style="margin: 10px 0 10px 0;">
+                        <a href="~/Uploads/@attachment.FileName?width=1280" class="gallery-item" data-gallery="@("job" + Model.Id)">
+                            <img src="~/Uploads/@attachment.FileName?width=200" title="@attachment.OriginFileName" style="max-width: 100%;"/>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row">
+            @foreach (var attachment in Model.Attachments.Where(x => x.Type != JobAttachmentType.Image))
+            {
+                <div class="col-xs-12">
+                    <div style="margin: 10px 0 10px 0;">
+                        <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">Скачать @attachment.OriginFileName</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </dd>
+</dl>

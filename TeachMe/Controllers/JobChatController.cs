@@ -6,10 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using log4net;
 using TeachMe.Converters;
-using TeachMe.DataAccess;
 using TeachMe.DataAccess.FileUploading;
 using TeachMe.DataAccess.Jobs;
-using TeachMe.Models;
+using TeachMe.Extensions;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
@@ -106,7 +105,7 @@ namespace TeachMe.Controllers
         {
             var job = jobRepository.Get(jobId);
 
-            if (job.TeacherUserId != ApplicationUser.Id && job.StudentUserId != ApplicationUser.Id)
+            if (job.TeacherUserId != ApplicationUser.Id && job.StudentUserId != ApplicationUser.Id && !ApplicationUser.IsAdmin())
                 throw new HttpException((int) HttpStatusCode.Forbidden,
                                         $"У пользователя {ApplicationUser.UserName} нет доступа к чату задачи {job.Id}");
         }

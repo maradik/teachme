@@ -1,0 +1,32 @@
+﻿@model TeachMe.Areas.Admin.Models.Jobs.JobDetailsViewModel
+
+@{
+    ViewBag.Title = "Задача: " + Html.Encode(Model.Job.Title);
+}
+
+<h2>Задача: @Model.Job.Title</h2>
+
+<div>
+    <hr/>
+    @Html.Partial("_JobInfo", Model.Job)
+</div>
+
+<p>
+    @Html.ActionLink("Назад к списку", "Index")
+</p>
+
+@if (Model.ChatIsVisible)
+{
+    <h3>Обсуждение</h3>
+
+    <div id="jobMessageContainer"></div>
+    <div id="newJobMessageContainer">
+        @Html.Action("_CreateMessage", "JobChat", new {JobId = Model.Job.Id, area = ""})
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            autoLoadNewMessages();
+        });
+    </script>
+}
