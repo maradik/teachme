@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /account/
+Disallow: /manage/
+Disallow: /job/
+Disallow: /admin/
+Disallow: /uploads/
+Disallow: /*readme.txt
+Disallow: /*readme.md
+Allow: /
