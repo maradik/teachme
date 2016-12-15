@@ -197,7 +197,8 @@ var initJobActionDropdownLoader = function (projectArea) {
 var ProjectAreas = {
     Root: "",
     Teacher: "Teacher/",
-    Student: "Student/"
+    Student: "Student/",
+    Admin: "Admin/"
 };
 
 $(function () {

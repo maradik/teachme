@@ -8,5 +8,15 @@ namespace TeachMe.Extensions
         {
             return user.Roles.Contains(UserRole.Admin.Name);
         }
+
+        public static bool IsStudent(this ApplicationUser user)
+        {
+            return user.Roles.Contains(UserRole.Student.Name);
+        }
+
+        public static bool IsTeacher(this ApplicationUser user)
+        {
+            return user.Roles.Contains(UserRole.Teacher.Name);
+        }
     }
 }

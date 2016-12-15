@@ -35,25 +35,26 @@ namespace TeachMe.Services.Jobs
             Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Open, UserRole.Student, new ISpecification<Job>[] {JobOpeningSpecification.Instance})),
             Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Edit, UserRole.Student, new ISpecification<Job>[] {JobEditingSpecification.Instance})),
             Tuple.Create(JobStatus.Draft, new JobActionByUserRole(JobActionType.Delete, UserRole.Student, new ISpecification<Job>[] {JobDeletionSpecification.Instance})),
-            Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Hide, UserRole.Student)),
+            Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Hide, new [] {UserRole.Student, UserRole.Admin})),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Take, UserRole.Teacher)),
             Tuple.Create(JobStatus.Opened, new JobActionByUserRole(JobActionType.Cancel, UserRole.Student)),
             Tuple.Create(JobStatus.Cancelled, new JobActionByUserRole(JobActionType.Delete, UserRole.Student, new ISpecification<Job>[] {JobDeletionSpecification.Instance})),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
             Tuple.Create(JobStatus.InWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
-            Tuple.Create(JobStatus.AbortOffered, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Teacher)),
+            Tuple.Create(JobStatus.AbortOffered, new JobActionByUserRole(JobActionType.ConfirmAbort, new [] {UserRole.Teacher, UserRole.Admin})),
             Tuple.Create(JobStatus.AbortOffered, new JobActionByUserRole(JobActionType.RejectAbort, UserRole.Teacher)),
             Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.Finish, UserRole.Teacher)),
             Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.OfferAbort, UserRole.Student)),
-            Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Accept, UserRole.Student)),
-            Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Reject, UserRole.Student))
+            Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Accept, new [] {UserRole.Student, UserRole.Admin})),
+            Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Reject, UserRole.Student)),
+            Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.Accept, UserRole.Admin)),
+            Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Admin))
         }.ToLookup(x => x.Item1, x => x.Item2);
 
         public JobActionType[] GetAvailableActions(Job job, ApplicationUser user)
         {
             return AvailableActionsForStatus.Contains(job.Status)
-                       ? AvailableActionsForStatus[job.Status].Where(x => user.Roles.Contains(x.UserRole.Name))
-                                                              .Where(x => x.UserRole == UserRole.Teacher ? IsTeacherHasAccess(job, user) : IsStudentHasAccess(job, user))
+                       ? AvailableActionsForStatus[job.Status].Where(x => x.IsUserHasAccess(user, job))
                                                               .Where(x => x.Specifications.Length == 0 || x.Specifications.All(y => y.IsSatisfiedBy(job)))
                                                               .Select(x => x.ActionType)
                                                               .ToArray()
@@ -90,6 +91,10 @@ namespace TeachMe.Services.Jobs
                     cashOperationService.FreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.Take:
+                    if (job.StudentUserId == user.Id)
+                    {
+                        throw new InvalidOperationException($"Нельзя быть одновременно заказчиком и исполнителем в одной задаче! Пользователь: {user.UserName}");
+                    }
                     job.Status = JobStatus.InWorking;
                     job.TeacherUserId = user.Id;
                     break;
@@ -111,7 +116,6 @@ namespace TeachMe.Services.Jobs
                     break;
                 case JobActionType.OfferAbort:
                     job.Status = JobStatus.AbortOffered;
-                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
                     break;
                 case JobActionType.ConfirmAbort:
                     job.Status = JobStatus.Aborted;
@@ -138,28 +142,31 @@ namespace TeachMe.Services.Jobs
             return job;
         }
 
-        public bool IsStudentHasAccess(Job job, ApplicationUser user)
-        {
-            return job.StudentUserId == user.Id;
-        }
-
-        public bool IsTeacherHasAccess(Job job, ApplicationUser user)
-        {
-            return (string.IsNullOrEmpty(job.TeacherUserId) || job.TeacherUserId == user.Id) && job.StudentUserId != user.Id;
-        }
-
         private class JobActionByUserRole
         {
             public JobActionByUserRole(JobActionType actionType, UserRole userRole, ISpecification<Job>[] specifications = null)
+                : this(actionType, new[] { userRole }, specifications)
+            {
+            }
+
+            public JobActionByUserRole(JobActionType actionType, UserRole[] userRoles, ISpecification<Job>[] specifications = null)
             {
                 ActionType = actionType;
-                UserRole = userRole;
+                UserRoles = userRoles;
                 Specifications = specifications ?? new ISpecification<Job>[0];
             }
 
             public JobActionType ActionType { get; }
-            public UserRole UserRole { get; }
+            public UserRole[] UserRoles { get; }
             public ISpecification<Job>[] Specifications { get; }
+
+            public bool IsUserHasAccess(ApplicationUser user, Job job)
+            {
+                var filteredUserRoles = UserRoles.Select(y => y.Name).Intersect(user.Roles).ToArray();
+                return filteredUserRoles.Contains(UserRole.Admin.Name) ||
+                    (filteredUserRoles.Contains(UserRole.Student.Name) && job.StudentUserId == user.Id && job.TeacherUserId != user.Id) ||
+                    (filteredUserRoles.Contains(UserRole.Teacher.Name) && (string.IsNullOrEmpty(job.TeacherUserId) || job.TeacherUserId == user.Id) && job.StudentUserId != user.Id);
+            }
         }
     }
 }
