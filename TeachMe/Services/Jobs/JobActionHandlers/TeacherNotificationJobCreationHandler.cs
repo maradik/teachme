@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using TeachMe.Extensions;
 using TeachMe.Helpers.Settings;
 using TeachMe.Models.Jobs;
@@ -23,11 +24,12 @@ namespace TeachMe.Services.Jobs.JobActionHandlers
             if (actionType != JobActionType.Open)
                 return;
 
+            var random = new Random();
             var teacherUsers = applicationUserManager.Users
                                                      .Where(x => x.Roles.Contains(UserRole.Teacher.Name) &&
                                                                  x.SubjectIds.Contains(job.SubjectId) &&
                                                                  x.PhoneNumber != null)
-                                                     .OrderByDescending(x => x.CreationTicks)
+                                                     .OrderBy(x => random.Next())
                                                      .Take(ApplicationSettings.TeachersCountForNewJobNotification)
                                                      .ToArray();
 
