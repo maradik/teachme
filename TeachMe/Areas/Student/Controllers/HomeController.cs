@@ -44,12 +44,17 @@ namespace TeachMe.Areas.Student.Controllers
             }
             else
             {
+                var promoModalHiddenCookie = HttpContext.Request.Cookies["promoModalHidden"];
+                bool promoModalHidden;
+                bool.TryParse(promoModalHiddenCookie?.Value, out promoModalHidden);
+
                 var viewModel = new IndexViewModel
                 {
                     Recalls = indexRecallViewModelProvider.Get(),
                     Jobs = indexJobsViewModelProvider.Get(),
                     LoginViewModel = new TeachMe.Models.Users.LoginViewModel { RememberMe = true },
-                    GiftAmountForNewUser = (int) ApplicationSettings.StudentInitialCash
+                    GiftAmountForNewUser = (int) ApplicationSettings.StudentInitialCash,
+                    NeedShowPromoModal = (int)ApplicationSettings.StudentInitialCash > 0 && !promoModalHidden
                 };
                 return View("Index", viewModel);
             }
