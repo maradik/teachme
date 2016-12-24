@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,6 +15,7 @@ namespace TeachMe.Controllers
     [Authorize]
     public class PaymentController : ControllerBase
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(PaymentController));
         private readonly IInvoiceActionService invoiceActionService;
 
         public PaymentController(IProjectTypeProvider projectTypeProvider,
@@ -41,25 +43,44 @@ namespace TeachMe.Controllers
         [HttpPost]
         public ActionResult SetResult(string outSum, string invId, string signatureValue)
         {
-            var amount = double.Parse(outSum, CultureInfo.InvariantCulture);
-            var invoiceId = int.Parse(invId, CultureInfo.InvariantCulture);
+            try
+            {
+                var amount = double.Parse(outSum, CultureInfo.InvariantCulture);
+                var invoiceId = int.Parse(invId, CultureInfo.InvariantCulture);
 
-            AssertSignatureIsValid(amount, invoiceId, signatureValue, ApplicationSettings.RobokassaPassword2);
+                AssertSignatureIsValid(amount, invoiceId, signatureValue, ApplicationSettings.RobokassaPassword2);
 
-            invoiceActionService.PayInvoice(invoiceId);
+                invoiceActionService.PayInvoice(invoiceId);
 
-            return Content($"OK{invId}");
+                Logger.Info($"Уведомление о платеже на сумму {outSum} по счету {invId}");
+                return Content($"OK{invId}");
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Ошибка при получении уведомления о платеже на сумму {outSum} по счету {invId}", e);
+                throw;
+            }
         }
 
         public ActionResult ShowSuccess(double outSum, int invId, string signatureValue)
         {
-            AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword1);
+            try
+            {
+                AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword1);
+                Logger.Info($"Удачный платеж на сумму {outSum} по счету {invId}");
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Ошибка при отображении страницы удачного платежа на сумму {outSum} по счету {invId}", e);
+                throw;
+            }
 
             return View();
         }
 
         public ActionResult ShowFail(double outSum, int invId, string signatureValue)
         {
+            Logger.Warn($"Неудачный платеж на сумму {outSum} по счету {invId}");
             return View();
         }
 
