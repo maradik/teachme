@@ -43,21 +43,21 @@ namespace TeachMe.Controllers
         [HttpPost]
         public ActionResult SetResult(string outSum, string invId, string signatureValue)
         {
+            var amount = double.Parse(outSum, CultureInfo.InvariantCulture);
+            var invoiceId = int.Parse(invId, CultureInfo.InvariantCulture);
+
             try
             {
-                var amount = double.Parse(outSum, CultureInfo.InvariantCulture);
-                var invoiceId = int.Parse(invId, CultureInfo.InvariantCulture);
-
                 AssertSignatureIsValid(amount, invoiceId, signatureValue, ApplicationSettings.RobokassaPassword2);
 
                 invoiceActionService.PayInvoice(invoiceId);
 
-                Logger.Info($"Уведомление о платеже на сумму {outSum} по счету {invId}");
+                Logger.Info($"Уведомление о платеже на сумму {amount} по счету {invoiceId}");
                 return Content($"OK{invId}");
             }
             catch (Exception e)
             {
-                Logger.Error($"Ошибка при получении уведомления о платеже на сумму {outSum} по счету {invId}", e);
+                Logger.Error($"Ошибка при получении уведомления о платеже на сумму {amount} по счету {invoiceId}", e);
                 throw;
             }
         }
