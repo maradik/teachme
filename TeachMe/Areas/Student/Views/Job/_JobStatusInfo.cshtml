@@ -8,8 +8,13 @@
     if (!JobOpeningSpecification.Instance.IsSatisfiedBy(Model))
     {
         <div class="alert alert-warning">
-            <span class="glyphicon glyphicon-warning-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
-            @Html.ActionLink("Пополните баланс", "Index", "Manage", new {area = ""}, null) на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
+            <div>
+                <span class="glyphicon glyphicon-warning-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
+                @Html.ActionLink("Пополните баланс", "Index", "Manage", new { area = "" }, null) на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
+            </div>
+            <div style="border-top: 1px solid; margin-top: 5px; padding-top: 5px;">
+                <small>* Если по какой-то причине задача не будет решена или решение будет некачественным, вы можете вернуть свои деньги.</small>
+            </div>
         </div>
     }
     else

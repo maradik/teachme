@@ -20,6 +20,7 @@ namespace TeachMe.Models.Users
         public string UserName { get; set; }
         public PaymentViewModel Payment { get { return payment ?? (payment = new PaymentViewModel()); } set { payment = value; } }
         public bool NeedShowPayoutLink { get; set; }
+        public bool NeedShowPaymentLink { get; set; }
 
         public class PaymentViewModel
         {

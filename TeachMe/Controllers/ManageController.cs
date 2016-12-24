@@ -10,6 +10,7 @@ using TeachMe.Models;
 using TeachMe.Models.Users;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
+using TeachMe.Extensions;
 
 namespace TeachMe.Controllers
 {
@@ -65,7 +66,8 @@ namespace TeachMe.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 Cash = ApplicationUser.Cash,
                 UserName = ApplicationUser.UserName,
-                NeedShowPayoutLink = ApplicationUser.Roles.Contains(UserRole.Teacher.Name)
+                NeedShowPayoutLink = ApplicationUser.IsTeacher(),
+                NeedShowPaymentLink = ApplicationUser.IsStudent()
             };
             model.Payment.Amount = 100;
             return View(model);
