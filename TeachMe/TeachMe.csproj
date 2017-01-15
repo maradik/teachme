@@ -246,6 +246,7 @@
     <Compile Include="DataAccess\Payouts\PayoutRepository.cs" />
     <Compile Include="Extensions\ApplicationUserExtenstions.cs" />
     <Compile Include="Extensions\PayoutExtensions.cs" />
+    <Compile Include="Helpers\Payments\Robokassa\RobokassaPaymentHelper.cs" />
     <Compile Include="Models\Payouts\Payout.cs" />
     <Compile Include="Models\Payouts\PayoutRecipient.cs" />
     <Compile Include="Models\Payouts\PayoutStatus.cs" />

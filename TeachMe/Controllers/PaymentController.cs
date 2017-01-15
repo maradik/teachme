@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
 using TeachMe.Extensions;
+using TeachMe.Helpers.Payments.Robokassa;
 using TeachMe.Helpers.Settings;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
@@ -30,7 +31,7 @@ namespace TeachMe.Controllers
         {
             var invoice = invoiceActionService.CreateInvoice(amount, ApplicationUser.Id, "Пополнение лицевого счета");
 
-            return Redirect(BuildRobokassaPaymentUrl(
+            return Redirect(RobokassaPaymentHelper.BuildRobokassaPaymentUrl(
                 ApplicationSettings.RobokassaLogin,
                 ApplicationSettings.RobokassaPassword1,
                 invoice.Amount,
@@ -43,13 +44,12 @@ namespace TeachMe.Controllers
         [HttpPost]
         public ActionResult SetResult(string outSum, string invId, string signatureValue)
         {
-            var amount = double.Parse(outSum, CultureInfo.InvariantCulture);
-            var invoiceId = int.Parse(invId, CultureInfo.InvariantCulture);
-
             try
             {
-                AssertSignatureIsValid(amount, invoiceId, signatureValue, ApplicationSettings.RobokassaPassword2);
+                RobokassaPaymentHelper.AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword2);
 
+                var amount = double.Parse(outSum, CultureInfo.InvariantCulture);
+                var invoiceId = int.Parse(invId, CultureInfo.InvariantCulture);
                 invoiceActionService.PayInvoice(invoiceId);
 
                 Logger.Info($"Уведомление о платеже на сумму {amount} по счету {invoiceId}");
@@ -57,16 +57,16 @@ namespace TeachMe.Controllers
             }
             catch (Exception e)
             {
-                Logger.Error($"Ошибка при получении уведомления о платеже на сумму {amount} по счету {invoiceId}", e);
+                Logger.Error($"Ошибка при получении уведомления о платеже на сумму {outSum} по счету {invId}", e);
                 throw;
             }
         }
 
-        public ActionResult ShowSuccess(double outSum, int invId, string signatureValue)
+        public ActionResult ShowSuccess(string outSum, string invId, string signatureValue)
         {
             try
             {
-                AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword1);
+                RobokassaPaymentHelper.AssertSignatureIsValid(outSum, invId, signatureValue, ApplicationSettings.RobokassaPassword1);
                 Logger.Info($"Удачный платеж на сумму {outSum} по счету {invId}");
             }
             catch (Exception e)
@@ -82,46 +82,6 @@ namespace TeachMe.Controllers
         {
             Logger.Warn($"Неудачный платеж на сумму {outSum} по счету {invId}");
             return View();
-        }
-
-        private static void AssertSignatureIsValid(double amount, int invoiceId, string signatureValue, string robokassaPassword)
-        {
-            string reconstructedSignatureValue = $"{amount.ToString("0.00", CultureInfo.InvariantCulture)}:{invoiceId}:{robokassaPassword}";
-
-            if (!string.Equals(reconstructedSignatureValue.GetMd5Hash(), signatureValue, StringComparison.InvariantCultureIgnoreCase))
-            {
-                throw new Exception($"Bad sign {signatureValue} for {nameof(amount)}={amount}, {nameof(invoiceId)}={invoiceId}");
-            }
-        }
-
-        private string BuildRobokassaPaymentUrl(string robokassaLogin, string robokassaPassword1, double amount, int invoiceId, string description, bool testPayment)
-        {
-            if (string.IsNullOrEmpty(robokassaLogin))
-                throw new ArgumentException("Value cannot be null or empty.", nameof(robokassaLogin));
-
-            if (string.IsNullOrEmpty(robokassaPassword1))
-                throw new ArgumentException("Value cannot be null or empty.", nameof(robokassaPassword1));
-
-            if (amount <= 0)
-                throw new ArgumentOutOfRangeException(nameof(amount));
-
-            if (invoiceId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(invoiceId));
-
-            if (string.IsNullOrEmpty(description))
-                throw new ArgumentException("Value cannot be null or empty.", nameof(description));
-
-            var amountString = amount.ToString("0.00", CultureInfo.InvariantCulture);
-
-            var paymentHash = $"{robokassaLogin}:{amountString}:{invoiceId}:{robokassaPassword1}".GetMd5Hash();
-
-            return string.Format("https://auth.robokassa.ru/Merchant/Index.aspx?MrchLogin={0}&OutSum={1}&InvId={2}&Desc={3}&SignatureValue={4}&isTest={5}&Culture=ru",
-                                 Url.Encode(robokassaLogin),
-                                 amountString,
-                                 invoiceId,
-                                 Url.Encode(description),
-                                 paymentHash,
-                                 testPayment ? "1" : "0");
         }
     }
 }
