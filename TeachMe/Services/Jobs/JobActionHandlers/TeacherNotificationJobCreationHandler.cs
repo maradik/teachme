@@ -29,6 +29,9 @@ namespace TeachMe.Services.Jobs.JobActionHandlers
                                                      .Where(x => x.Roles.Contains(UserRole.Teacher.Name) &&
                                                                  x.SubjectIds.Contains(job.SubjectId) &&
                                                                  x.PhoneNumber != null)
+                                                     .OrderByDescending(x => x.CreationTicks)
+                                                     .Take(100)
+                                                     .ToArray()
                                                      .OrderBy(x => random.Next())
                                                      .Take(ApplicationSettings.TeachersCountForNewJobNotification)
                                                      .ToArray();
