@@ -135,7 +135,7 @@ namespace TeachMe.Controllers
         public ActionResult Register()
         {
             ViewBag.Subjects = subjectReference.GetAll();
-            return View(new RegisterViewModel());
+            return View(new RegisterViewModel { GiftAmountForNewUser = (int)GetInitialCash() });
         }
 
         //
@@ -146,8 +146,9 @@ namespace TeachMe.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             ViewBag.Subjects = subjectReference.GetAll();
+            model.GiftAmountForNewUser = (int)GetInitialCash();
             model.SubjectIds = model.SubjectIds.Distinct().ToList();
-
+            
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
@@ -446,6 +447,11 @@ namespace TeachMe.Controllers
             }
 
             return new[] {ProjectType == ProjectType.Student ? UserRole.Student : UserRole.Teacher};
+        }
+
+        private double GetInitialCash()
+        {
+            return ProjectType == ProjectType.Student ? (int)ApplicationSettings.StudentInitialCash : (int)ApplicationSettings.TeacherInitialCash;
         }
 
         #region Вспомогательные приложения

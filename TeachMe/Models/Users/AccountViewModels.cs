@@ -89,6 +89,8 @@ namespace TeachMe.Models.Users
 
         [Display(Name = "Категории задач")]
         public List<int> SubjectIds { get { return subjectIds ?? (subjectIds = new List<int>()); } set { subjectIds = value; } }
+
+        public int GiftAmountForNewUser { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -12,7 +12,16 @@
 {
     @Html.AntiForgeryToken()
     <hr />
+    if (Model.GiftAmountForNewUser > 0)
+    {
+        <div class="alert alert-success">
+            <p>Дарим <b class="text-danger">@Model.GiftAmountForNewUser&nbsp;руб.</b> на лицевой счет!</p>
+            <p>Зарегистрируйтесь, это быстро!</p>
+        </div>
+    }
+
     @Html.ValidationSummary("", new { @class = "text-danger" })
+
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
