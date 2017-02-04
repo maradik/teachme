@@ -13,7 +13,7 @@
         <div>
             @if (job.CanBeShown)
             {
-                @Html.ActionLink(job.Title, "Details", "Job", new { job.Id }, null)
+                @Html.ActionLink(job.Title, "DetailsForAnonymous", "Job", new { job.Id }, null)
             }
             else
             {

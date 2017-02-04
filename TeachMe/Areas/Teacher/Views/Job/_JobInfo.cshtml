@@ -36,7 +36,7 @@
     </dt>
 
     <dd>
-        <span class="label label-info">@Model.GetStudentUser().UserName</span>
+        <span class="label label-info">@(Request.IsAuthenticated ? Model.GetStudentUser().UserName : "***")</span>
     </dd>
 
     <dt>

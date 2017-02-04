@@ -58,6 +58,29 @@ namespace TeachMe.Areas.Teacher.Controllers
             return View(viewModel);
         }
 
+        [AllowAnonymous]
+        public ActionResult DetailsForAnonymous(Guid id)
+        {
+            if (Request.IsAuthenticated)
+            {
+                Logger.Warn($"Метод {nameof(DetailsForAnonymous)} контроллера {typeof(JobController)} недоступен авторизованным пользователям");
+                return RedirectToAction("Details", new {id});
+            }
+
+            var job = jobRepository.Get(id);
+
+            if (job?.Status != JobStatus.Opened)
+            {
+                Logger.Warn($"Невозможно отобразить задачу {id} анонимному пользователю, т.к. она уже в работе");
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(new JobDetailsForAnonymousViewModel
+            {
+                Job = job
+            });
+        }
+
         public ActionResult Details(Guid id)
         {
             var job = jobRepository.Get(id);
