@@ -45,7 +45,7 @@
                     <h4 class="modal-title" id="myModalLabel">Специальное предложение!</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Дарим тебе <b class="text-success">@Model.GiftAmountForNewUser&nbsp;руб.</b> на лицевой счет!</p>
+                    <p>Дарим <b class="text-success">@Model.GiftAmountForNewUser&nbsp;руб.</b> на лицевой счет!</p>
                     <p>Закажи решение любой задачи!</p>
                 </div>
                 <div class="modal-footer">
@@ -60,7 +60,7 @@
         $(function () {
             window.setTimeout(function () {
                 $('#promoModal').modal({});
-            }, 15000);
+            }, 11000);
 
             $('#promoModal').on('hidden.bs.modal', function (e) {
                 document.cookie = "promoModalHidden=true;path=/";
