@@ -223,6 +223,7 @@
     <Compile Include="Areas\Admin\Controllers\JobController.cs" />
     <Compile Include="Areas\Admin\Models\Jobs\JobDetailsViewModel.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Student\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\StudentControllerBase.cs" />
     <Compile Include="Areas\Student\Models\Home\ContactViewModel.cs" />
@@ -440,6 +441,7 @@
     <Content Include="Content\Images\natalya.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\referat.jpg" />
     <Content Include="Content\Images\tanushka.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -511,6 +513,7 @@
     <Content Include="Areas\Admin\Views\Job\_JobActions.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\DetailsForAnonymous.cshtml" />
     <Content Include="Areas\Student\Views\Home\_IndexInfoBlocks.cshtml" />
+    <Content Include="Areas\Student\Views\Article\Referat.cshtml" />
     <Content Include="Views\JobChat\_JobMessage.cshtml" />
     <Content Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

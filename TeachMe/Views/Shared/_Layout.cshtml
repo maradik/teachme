@@ -1,4 +1,5 @@
 ﻿@using TeachMe.Models.Users
+@using TeachMe.ProjectsSupport
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +62,14 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year – @ViewBag.ProjectTitle</p>
+            <p>
+                &copy; @DateTime.Now.Year – @ViewBag.ProjectTitle
+                @if (ViewBag.ProjectType == ProjectType.Student && !Request.IsAuthenticated)
+                {
+                    @(" | ")
+                    @Html.ActionLink("Заказать реферат", "Referat", "Article", new { area = "Student" }, null)
+                }
+            </p>
         </footer>
     </div>
 

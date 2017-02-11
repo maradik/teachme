@@ -27,3 +27,11 @@ textarea {
 .dl-horizontal dt {
     margin-bottom: 2px;
 }
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-right {
+    text-align: right;
+}
