@@ -510,6 +510,7 @@
     <Content Include="Areas\Admin\Views\Job\_JobInfo.cshtml" />
     <Content Include="Areas\Admin\Views\Job\_JobActions.cshtml" />
     <Content Include="Areas\Teacher\Views\Job\DetailsForAnonymous.cshtml" />
+    <Content Include="Areas\Student\Views\Home\_IndexInfoBlocks.cshtml" />
     <Content Include="Views\JobChat\_JobMessage.cshtml" />
     <Content Include="Views\JobChat\_GetMessages.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
