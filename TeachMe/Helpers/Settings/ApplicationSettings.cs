@@ -17,6 +17,8 @@ namespace TeachMe.Helpers.Settings
 
         public static string StudentContactEmail => SafeGetString("StudentContactEmail") ?? "";
         public static string TeacherContactEmail => SafeGetString("TeacherContactEmail") ?? "";
+        public static string StudentContactPhone => SafeGetString("StudentContactPhone") ?? "";
+        public static string TeacherContactPhone => SafeGetString("TeacherContactPhone") ?? "";
 
         public static string RobokassaLogin => ConfigurationManager.AppSettings["RobokassaLogin"] ?? string.Empty;
         public static string RobokassaPassword1 => ConfigurationManager.AppSettings["RobokassaPassword1"] ?? string.Empty;

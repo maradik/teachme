@@ -61,7 +61,7 @@ namespace TeachMe.Areas.Teacher.Controllers
 
         public ActionResult Contact()
         {
-            var contactViewModel = new ContactViewModel { Email = ApplicationSettings.TeacherContactEmail };
+            var contactViewModel = new ContactViewModel { Email = ApplicationSettings.TeacherContactEmail, Phone = ApplicationSettings.TeacherContactPhone };
             return View(contactViewModel);
         }
     }
