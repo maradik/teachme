@@ -442,6 +442,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\referat.jpg" />
+    <Content Include="Content\Images\resheniezadach.jpg" />
     <Content Include="Content\Images\tanushka.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -516,6 +517,7 @@
     <Content Include="Areas\Student\Views\Article\Referat.cshtml" />
     <Content Include="Views\JobChat\_JobMessage.cshtml" />
     <Content Include="Views\JobChat\_GetMessages.cshtml" />
+    <Content Include="Areas\Student\Views\Article\ReshenieZadach.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -17,5 +17,10 @@ namespace TeachMe.Areas.Student.Controllers
         {
             return View();
         }
+
+        public ActionResult ReshenieZadach()
+        {
+            return View();
+        }
     }
 }
