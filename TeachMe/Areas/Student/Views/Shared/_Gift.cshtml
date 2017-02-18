@@ -1,0 +1,36 @@
+﻿@model TeachMe.Areas.Student.Models.Shared.GiftViewModel
+
+@if (Model.NeedShowPromoModal)
+{
+    <!-- Modal -->
+    <div class="modal fade" id="promoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header alert alert-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Специальное предложение!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Дарим <b class="text-success">@Model.GiftAmountForNewUser&nbsp;руб.</b> на лицевой счет!</p>
+                    <p>Закажи решение любой задачи!</p>
+                </div>
+                <div class="modal-footer">
+                    @Html.ActionLink("Попробовать!", "Register", "Account", new { area = "" }, new { @class = "btn btn-primary", @type = "button" })
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Спасибо, я подумаю</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            window.setTimeout(function () {
+                $('#promoModal').modal({});
+            }, 11000);
+
+            $('#promoModal').on('hidden.bs.modal', function (e) {
+                document.cookie = "promoModalHidden=true;path=/";
+            });
+        });
+    </script>
+}

@@ -238,6 +238,8 @@
     <Compile Include="Areas\Student\Models\Home\IndexUserInfoViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexUserProfileViewModel.cs" />
     <Compile Include="Areas\Student\Models\Home\IndexViewModel.cs" />
+    <Compile Include="Areas\Student\Models\Shared\GiftViewModelProvider.cs" />
+    <Compile Include="Areas\Student\Models\Shared\GiftViewModel.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeController.cs" />
     <Compile Include="Areas\Teacher\Models\Home\ContactViewModel.cs" />
@@ -518,6 +520,7 @@
     <Content Include="Views\JobChat\_JobMessage.cshtml" />
     <Content Include="Views\JobChat\_GetMessages.cshtml" />
     <Content Include="Areas\Student\Views\Article\ReshenieZadach.cshtml" />
+    <Content Include="Areas\Student\Views\Shared\_Gift.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -582,7 +585,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Views\Shared\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\Home\" />

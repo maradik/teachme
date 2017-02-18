@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using TeachMe.Areas.Student.Models.Home;
+using TeachMe.Areas.Student.Models.Shared;
 using TeachMe.Helpers.Settings;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
@@ -13,19 +14,22 @@ namespace TeachMe.Areas.Student.Controllers
         private readonly IndexJobsViewModelProvider indexJobsViewModelProvider;
         private readonly IndexUserJobsViewModelProvider indexUserJobsViewModelProvider;
         private readonly IndexUserJobMessagesViewModelProvider indexUserJobMessagesViewModelProvider;
+        private readonly GiftViewModelProvider giftViewModelProvider;
 
         public HomeController(IProjectTypeProvider projectTypeProvider,
                               IProjectInfoProvider projectInfoProvider,
                               IndexRecallViewModelProvider indexRecallViewModelProvider,
                               IndexJobsViewModelProvider indexJobsViewModelProvider,
                               IndexUserJobsViewModelProvider indexUserJobsViewModelProvider,
-                              IndexUserJobMessagesViewModelProvider indexUserJobMessagesViewModelProvider) 
+                              IndexUserJobMessagesViewModelProvider indexUserJobMessagesViewModelProvider,
+                              GiftViewModelProvider giftViewModelProvider) 
             : base(projectTypeProvider, projectInfoProvider)
         {
             this.indexRecallViewModelProvider = indexRecallViewModelProvider;
             this.indexJobsViewModelProvider = indexJobsViewModelProvider;
             this.indexUserJobsViewModelProvider = indexUserJobsViewModelProvider;
             this.indexUserJobMessagesViewModelProvider = indexUserJobMessagesViewModelProvider;
+            this.giftViewModelProvider = giftViewModelProvider;
         }
 
         public ActionResult Index()
@@ -44,17 +48,12 @@ namespace TeachMe.Areas.Student.Controllers
             }
             else
             {
-                var promoModalHiddenCookie = HttpContext.Request.Cookies["promoModalHidden"];
-                bool promoModalHidden;
-                bool.TryParse(promoModalHiddenCookie?.Value, out promoModalHidden);
-
                 var viewModel = new IndexViewModel
                 {
                     Recalls = indexRecallViewModelProvider.Get(),
                     Jobs = indexJobsViewModelProvider.Get(),
                     LoginViewModel = new TeachMe.Models.Users.LoginViewModel { RememberMe = true },
-                    GiftAmountForNewUser = (int) ApplicationSettings.StudentInitialCash,
-                    NeedShowPromoModal = (int)ApplicationSettings.StudentInitialCash > 0 && !promoModalHidden
+                    GiftViewModel = giftViewModelProvider.Get()
                 };
                 return View("Index", viewModel);
             }

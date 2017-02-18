@@ -1,4 +1,6 @@
-﻿@{
+﻿@model TeachMe.Areas.Student.Models.Shared.GiftViewModel
+
+@{
     ViewBag.Title = "Заказать реферат онлайн срочно";
     ViewBag.MetaDescription = "Мы пишем рефераты на заказ срочно и совсем недорого. Работаем по всей России онлайн.";
     ViewBag.MetaKeywords = "реферат, заказать, купить, на заказ, недорого, онлайн, срочно, цена";
@@ -34,3 +36,7 @@
 <p>Наш сервис обладает <span class="text-success text-bold">безупречной репутацией</span>. Каждый второй заказчик возвращается к нам вновь и вновь.</p>
 
 <p class="text-bold">Итак, для начала @Html.ActionLink("зарегистрируйтесь", "Register", "Account", new { area = "" }, null) - это быстро!</p>
+
+@{
+    Html.RenderPartial("_Gift", Model);
+}
