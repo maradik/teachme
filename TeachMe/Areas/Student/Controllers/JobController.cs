@@ -129,6 +129,7 @@ namespace TeachMe.Areas.Student.Controllers
 
         public ActionResult Edit(Guid id)
         {
+            ViewBag.JobId = id; // костыль для EditorTemplates/JobAttachment.cshtml
             var job = jobActionService.DoAction(id, JobActionType.Edit, ApplicationUser);
             job.Attachments = job.Attachments.OrderByDescending(x => x.Type).ToList();
             return View(job);
@@ -140,6 +141,7 @@ namespace TeachMe.Areas.Student.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Guid id, Job jobViewModel, IEnumerable<HttpPostedFileBase> uploadedFiles)
         {
+            ViewBag.JobId = id; // костыль для EditorTemplates/JobAttachment.cshtml
             var job = jobActionService.DoAction(id, JobActionType.Edit, ApplicationUser);
 
             try
@@ -187,6 +189,14 @@ namespace TeachMe.Areas.Student.Controllers
             var jobViewModelFileNames = new HashSet<string>(jobViewModel.Attachments.Select(y => y.FileName));
             deletedAttachments = job.Attachments.Where(x => !jobViewModelFileNames.Contains(x.FileName)).ToArray();
             job.Attachments = job.Attachments.Where(x => jobViewModelFileNames.Contains(x.FileName)).ToList();
+        }
+
+
+        public FileResult DownloadAttachment(Guid jobId, Guid attachmentId)
+        {
+            var job = jobRepository.Get(jobId);
+            var attachment = job.Attachments.Single(x => x.Id == attachmentId);
+            return attachmentConverter.ToFileResult(attachment);
         }
 
         [HttpPost]

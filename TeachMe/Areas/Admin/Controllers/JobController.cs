@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using log4net;
+using TeachMe.Converters;
 using TeachMe.DataAccess;
 using TeachMe.DataAccess.Jobs;
 using TeachMe.Extensions;
@@ -20,16 +22,19 @@ namespace TeachMe.Areas.Admin.Controllers
 
         private readonly IJobRepository jobRepository;
         private readonly IJobActionService jobActionService;
+        private readonly IJobAttachmentConverter attachmentConverter;
 
         public JobController(IJobRepository jobRepository,
                              ISubjectReference subjectReference,
                              IJobActionService jobActionService,
+                             IJobAttachmentConverter attachmentConverter,
                              IProjectTypeProvider projectTypeProvider,
                              IProjectInfoProvider projectInfoProvider)
             : base(projectTypeProvider, projectInfoProvider)
         {
             this.jobRepository = jobRepository;
             this.jobActionService = jobActionService;
+            this.attachmentConverter = attachmentConverter;
 
             ViewBag.Subjects = subjectReference.GetAll();
         }
@@ -49,6 +54,13 @@ namespace TeachMe.Areas.Admin.Controllers
                 JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser),
                 ChatIsVisible = !string.IsNullOrEmpty(job.TeacherUserId)
             });
+        }
+
+        public FileResult DownloadAttachment(Guid jobId, Guid attachmentId)
+        {
+            var job = jobRepository.Get(jobId);
+            var attachment = job.Attachments.Single(x => x.Id == attachmentId);
+            return attachmentConverter.ToFileResult(attachment);
         }
 
         [HttpPost]

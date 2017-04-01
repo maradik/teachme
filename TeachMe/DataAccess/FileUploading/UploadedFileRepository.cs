@@ -17,6 +17,11 @@ namespace TeachMe.DataAccess.FileUploading
             AllowedUploadFileExtensions = new HashSet<string>(ApplicationSettings.AllowedUploadFileExtensions, StringComparer.InvariantCultureIgnoreCase);
         }
 
+        public byte[] Read(string fileName)
+        {
+            return File.ReadAllBytes(BuildFullName(fileName));
+        }
+
         public void Save(UploadedJobAttachment[] uploadedJobAttachments)
         {
             var notAllowedUploadedJobAttachments = uploadedJobAttachments.Where(x => !IsUploadedJobAttachmentAllowed(x)).ToArray();

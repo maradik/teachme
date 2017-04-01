@@ -43,7 +43,7 @@
                 {
                     <div class="col-xs-12">
                         <div style="margin: 10px 0 10px 0;">
-                            <a href="~/Uploads/@attachment.FileName" title="Скачать @attachment.OriginFileName">Скачать @attachment.OriginFileName</a>
+                            @Html.ActionLink($"Скачать {attachment.OriginFileName}", "DownloadAttachment", "JobChat", new {area = "", messageId = Model.Id, attachmentId = attachment.Id}, new {title = $"Скачать {attachment.OriginFileName}"})
                         </div>
                     </div>
                 }

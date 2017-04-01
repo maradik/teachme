@@ -1,6 +1,6 @@
 ﻿@using TeachMe.Models
 @using TeachMe.Models.Jobs
-@model TeachMe.Models.Jobs.JobAttachment
+@model JobAttachment
 
 <div style="margin: 10px 0 10px 0;" class="col-xs-4 col-sm-3 attachment">
     <div>
@@ -16,7 +16,7 @@
                 break;
             default:
                 <div>
-                    <a href="~/Uploads/@Model.FileName" title="Скачать @Model.OriginFileName">@Model.OriginFileName</a>
+                    @Html.ActionLink($"Скачать {Model.OriginFileName}", "DownloadAttachment", new { jobId = ViewBag.JobId, attachmentId = Model.Id }, new { title = $"Скачать {Model.OriginFileName}" })
                 </div>
                 break;
         }

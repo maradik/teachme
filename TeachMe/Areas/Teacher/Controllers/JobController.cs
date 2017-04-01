@@ -14,6 +14,7 @@ using TeachMe.Services.Jobs;
 using TeachMe.ViewModels.Jobs;
 using System.Linq.Expressions;
 using log4net;
+using TeachMe.Converters;
 
 namespace TeachMe.Areas.Teacher.Controllers
 {
@@ -23,15 +24,18 @@ namespace TeachMe.Areas.Teacher.Controllers
 
         private readonly IJobActionService jobActionService;
         private readonly IJobRepository jobRepository;
+        private readonly IJobAttachmentConverter attachmentConverter;
 
         public JobController(IProjectTypeProvider projectTypeProvider,
                              IProjectInfoProvider projectInfoProvider,
                              IJobActionService jobActionService,
-                             IJobRepository jobRepository)
+                             IJobRepository jobRepository,
+                             IJobAttachmentConverter attachmentConverter)
             : base(projectTypeProvider, projectInfoProvider)
         {
             this.jobActionService = jobActionService;
             this.jobRepository = jobRepository;
+            this.attachmentConverter = attachmentConverter;
         }
 
         public ActionResult Index()
@@ -91,6 +95,13 @@ namespace TeachMe.Areas.Teacher.Controllers
                 JobAvailableActions = jobActionService.GetAvailableActions(job, ApplicationUser),
                 ChatIsVisible = !string.IsNullOrEmpty(job.TeacherUserId) && job.TeacherUserId == ApplicationUser.Id
             });
+        }
+
+        public FileResult DownloadAttachment(Guid jobId, Guid attachmentId)
+        {
+            var job = jobRepository.Get(jobId);
+            var attachment = job.Attachments.Single(x => x.Id == attachmentId);
+            return attachmentConverter.ToFileResult(attachment);
         }
 
         [HttpPost]

@@ -16,12 +16,18 @@ namespace TeachMe.Converters
                 {".png", JobAttachmentType.Image},
                 {".jpg", JobAttachmentType.Image},
                 {".jpeg", JobAttachmentType.Image},
+                {".doc", JobAttachmentType.Word},
+                {".docx", JobAttachmentType.Word},
+                {".xls", JobAttachmentType.Excel},
+                {".xlsx", JobAttachmentType.Excel},
+                {".pdf", JobAttachmentType.Pdf}
             };
 
         public UploadedJobAttachment ToUploadedJobAttachment(HttpPostedFileBase uploadedFile)
         {
             return new UploadedJobAttachment
             {
+                Id = Guid.NewGuid(),
                 FileName = BuildFileName(uploadedFile),
                 OriginFileName = Path.GetFileName(uploadedFile.FileName),
                 Type = GetAttachmentFileType(uploadedFile),

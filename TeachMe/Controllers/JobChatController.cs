@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using log4net;
+using MongoDB.Bson.Serialization.Conventions;
 using TeachMe.Converters;
 using TeachMe.DataAccess.FileUploading;
 using TeachMe.DataAccess.Jobs;
@@ -47,6 +48,14 @@ namespace TeachMe.Controllers
         {
             base.OnActionExecuting(filterContext);
             ViewData.TemplateInfo.HtmlFieldPrefix = ModelBindingPrefix;
+        }
+
+        public FileResult DownloadAttachment(Guid messageId, Guid attachmentId)
+        {
+            var jobMessage = jobMessageRepository.Get(messageId);
+            AssertUserHasAccessToJobChat(jobMessage.JobId);
+            var attachment = jobMessage.Attachments.Single(x => x.Id == attachmentId);
+            return attachmentConverter.ToFileResult(attachment);
         }
 
         public PartialViewResult _GetMessages(Guid jobId, long afterTicks = 0)
