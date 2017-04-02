@@ -10,6 +10,7 @@ namespace TeachMe.Helpers.Settings
         public static double TeacherInitialCash => SafeGetDouble("TeacherInitialCash") ?? 0.0;
         public static double StudentInitialCash => SafeGetDouble("StudentInitialCash") ?? 0.0;
         public static double JobCommissionRate => SafeGetDouble("JobCommissionRate") ?? 0.25;
+        public static double JobMinPrepaymentAmount => SafeGetDouble("JobMinPrepaymentAmount") ?? 100;
         public static string StudentProjectName => SafeGetString("StudentProjectName") ?? "";
         public static string StudentProjectTitle => SafeGetString("StudentProjectTitle") ?? "";
         public static string TeacherProjectName => SafeGetString("TeacherProjectName") ?? "";

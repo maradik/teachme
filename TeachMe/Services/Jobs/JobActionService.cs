@@ -3,6 +3,8 @@ using System;
 using System.Linq;
 using TeachMe.DataAccess.FileUploading;
 using TeachMe.DataAccess.Jobs;
+using TeachMe.Extensions;
+using TeachMe.Helpers.Settings;
 using TeachMe.Models.Jobs;
 using TeachMe.Models.Transactions;
 using TeachMe.Models.Users;
@@ -47,6 +49,8 @@ namespace TeachMe.Services.Jobs
             Tuple.Create(JobStatus.InReWorking, new JobActionByUserRole(JobActionType.OfferAbort, new [] {UserRole.Student, UserRole.Admin})),
             Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Accept, new [] {UserRole.Student, UserRole.Admin})),
             Tuple.Create(JobStatus.Finished, new JobActionByUserRole(JobActionType.Reject, UserRole.Student)),
+            Tuple.Create(JobStatus.FinishedWithRemainAmountNeeded, new JobActionByUserRole(JobActionType.ReserveRemainAmount, new [] {UserRole.Student, UserRole.Admin}, new ISpecification<Job>[] {JobReservingRemainAmountSpecification.Instance})),
+            Tuple.Create(JobStatus.FinishedWithRemainAmountNeeded, new JobActionByUserRole(JobActionType.AcceptWithoutRemainAmount, UserRole.Admin)),
             Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.Accept, UserRole.Admin)),
             Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Admin))
         }.ToLookup(x => x.Item1, x => x.Item2);
@@ -84,11 +88,13 @@ namespace TeachMe.Services.Jobs
             {
                 case JobActionType.Hide:
                     job.Status = JobStatus.Draft;
-                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentPrepaymentAmount);
+                    job.StudentPrepaymentAmount = 0;
                     break;
                 case JobActionType.Open:
                     job.Status = JobStatus.Opened;
-                    cashOperationService.FreezeUserMoney(job.StudentUserId, job.StudentCost);
+                    job.StudentPrepaymentAmount = Math.Min(job.StudentCost, job.GetStudentUser().Cash.AvailableAmount);
+                    cashOperationService.FreezeUserMoney(job.StudentUserId, job.StudentPrepaymentAmount);
                     break;
                 case JobActionType.Take:
                     if (job.StudentUserId == user.Id)
@@ -97,19 +103,37 @@ namespace TeachMe.Services.Jobs
                     }
                     job.Status = JobStatus.InWorking;
                     job.TeacherUserId = user.Id;
+                    var prepaymentTransactionDescription = $"Предоплата по задаче {job.Title}";
+                    cashOperationService.TransferMoneyFromUserToUser(job.StudentUserId, job.TeacherUserId, job.StudentPrepaymentAmount, job.PrepaymentCommission, TransactionType.JobPrepayment, prepaymentTransactionDescription);
+                    cashOperationService.FreezeUserMoney(job.TeacherUserId, job.TeacherPrepaymentAmount);
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentPrepaymentAmount);
                     break;
                 case JobActionType.Finish:
+                    job.Status = job.GetStudentRemainAmount() > 0 ? JobStatus.FinishedWithRemainAmountNeeded : JobStatus.Finished;
+                    break;
+                case JobActionType.ReserveRemainAmount:
                     job.Status = JobStatus.Finished;
+                    job.PaymentState |= JobPaymentState.RemainReserved;
+                    cashOperationService.FreezeUserMoney(job.StudentUserId, job.GetStudentRemainAmount());
+                    break;
+                case JobActionType.AcceptWithoutRemainAmount:
+                    job.Status = JobStatus.Accepted;
+                    cashOperationService.UnfreezeUserMoney(job.TeacherUserId, job.TeacherPrepaymentAmount);
                     break;
                 case JobActionType.Accept:
                     job.Status = JobStatus.Accepted;
-                    var transactionDescription = $"Оплата выполненной работы {job.Title}";
-                    cashOperationService.TransferMoneyFromUserToUser(job.StudentUserId, job.TeacherUserId, job.StudentCost, job.Commission, TransactionType.CompleteJobPayment, transactionDescription);
-                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
+                    cashOperationService.UnfreezeUserMoney(job.TeacherUserId, job.TeacherPrepaymentAmount);
+                    if (job.PaymentState.HasFlag(JobPaymentState.RemainReserved) && job.GetStudentRemainAmount() > 0)
+                    {
+                        var transactionDescription = $"Оплата выполненной работы {job.Title}";
+                        cashOperationService.TransferMoneyFromUserToUser(job.StudentUserId, job.TeacherUserId, job.GetStudentRemainAmount(), job.GetRemainCommission(), TransactionType.CompleteJobPayment, transactionDescription);
+                        cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.GetStudentRemainAmount());
+                    }
                     break;
                 case JobActionType.Cancel:
                     job.Status = JobStatus.Cancelled;
-                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
+                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentPrepaymentAmount);
+                    job.StudentPrepaymentAmount = 0;
                     break;
                 case JobActionType.Reject:
                     job.Status = JobStatus.InReWorking;
@@ -119,7 +143,14 @@ namespace TeachMe.Services.Jobs
                     break;
                 case JobActionType.ConfirmAbort:
                     job.Status = JobStatus.Aborted;
-                    cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.StudentCost);
+                    var revertPrepaymentTransactionDescription = $"Предоплата по задаче {job.Title}";
+                    cashOperationService.RevertTransferMoneyFromUserToUser(job.StudentUserId, job.TeacherUserId, job.StudentPrepaymentAmount, job.PrepaymentCommission, TransactionType.JobPrepayment, revertPrepaymentTransactionDescription);
+                    cashOperationService.UnfreezeUserMoney(job.TeacherUserId, job.TeacherPrepaymentAmount);
+                    if (job.PaymentState.HasFlag(JobPaymentState.RemainReserved) && job.GetStudentRemainAmount() > 0)
+                    {
+                        job.PaymentState ^= JobPaymentState.RemainReserved;
+                        cashOperationService.UnfreezeUserMoney(job.StudentUserId, job.GetStudentRemainAmount());
+                    }
                     break;
                 case JobActionType.RejectAbort:
                     job.Status = JobStatus.InArbitrage;

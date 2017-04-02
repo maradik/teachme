@@ -7,8 +7,9 @@ namespace TeachMe.Models.Transactions
     public class TransactionBuilder
     {
         private readonly TransactionType transactionType;
-        private readonly List<TransactionPart> transactionParts = new List<TransactionPart>();
+        private List<TransactionPart> transactionParts = new List<TransactionPart>();
         private string transactionText;
+        private bool revertedTransaction;
 
         private TransactionBuilder(TransactionType transactionType)
         {
@@ -32,6 +33,13 @@ namespace TeachMe.Models.Transactions
             return this;
         }
 
+        public TransactionBuilder Revert()
+        {
+            revertedTransaction = !revertedTransaction;
+            transactionParts = transactionParts.Select(RevertTransactionPart).ToList();
+            return this;
+        }
+
         public Transaction Build()
         {
             var transaction = new Transaction
@@ -39,12 +47,23 @@ namespace TeachMe.Models.Transactions
                 Type = transactionType,
                 Text = transactionText,
                 Parts = transactionParts.ToArray(),
-                Amount = transactionParts.Where(x => x.Type == TransactionPartType.Credit).Sum(x => x.Amount)
+                Amount = transactionParts.Where(x => x.Type == TransactionPartType.Credit).Sum(x => x.Amount),
+                Reverted = revertedTransaction
             };
 
             AssertTransactionIsValid(transaction);
 
             return transaction;
+        }
+
+        private TransactionPart RevertTransactionPart(TransactionPart transactionPart)
+        {
+            return new TransactionPart
+            {
+                Amount = -transactionPart.Amount,
+                Account = transactionPart.Account,
+                Type = transactionPart.Type
+            };
         }
 
         private void AssertTransactionIsValid(Transaction transaction)

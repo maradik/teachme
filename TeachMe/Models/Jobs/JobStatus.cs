@@ -30,6 +30,9 @@
         Aborted = 8,
 
         [HumanAnnotation("В арбитраже")]
-        InArbitrage = 9
+        InArbitrage = 9,
+
+        [HumanAnnotation("Работа выполнена, требуется оплата")]
+        FinishedWithRemainAmountNeeded = 10,
     }
 }

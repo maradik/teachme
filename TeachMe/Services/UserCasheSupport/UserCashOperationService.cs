@@ -19,23 +19,12 @@ namespace TeachMe.Services.UserCasheSupport
 
         public void TransferMoneyFromUserToUser(string sourceUserId, string recipientUserId, double amount, double commissionAmount, TransactionType transactionType, string transactionDescription)
         {
-            if (0 >= amount)
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Значение должно быть больше 0");
+            TransferMoneyFromUserToUserInternal(sourceUserId, recipientUserId, amount, commissionAmount, transactionType, transactionDescription, false);
+        }
 
-            if (0 >= commissionAmount || commissionAmount >= amount)
-                throw new ArgumentOutOfRangeException(nameof(commissionAmount), commissionAmount, $"Значение должно быть больше 0 и меньше {nameof(amount)}={amount}");
-
-            var transaction = TransactionBuilder.With(transactionType)
-                                                .SetText(transactionDescription)
-                                                .AddPart(TransactionPartType.Credit, amount, new TransactionAccount {UserId = sourceUserId})
-                                                .AddPart(TransactionPartType.Commission, commissionAmount)
-                                                .AddPart(TransactionPartType.Debit, amount - commissionAmount, new TransactionAccount {UserId = recipientUserId})
-                                                .Build();
-
-            AddAmountToUserCash(sourceUserId, -amount, UserCashMemberType.Physical, (cash, newAmount) => newAmount >= 0);
-            AddAmountToUserCash(recipientUserId, amount - commissionAmount, UserCashMemberType.Physical);
-
-            transactionRepository.Write(transaction);
+        public void RevertTransferMoneyFromUserToUser(string sourceUserId, string recipientUserId, double amount, double commissionAmount, TransactionType transactionType, string transactionDescription)
+        {
+            TransferMoneyFromUserToUserInternal(sourceUserId, recipientUserId, amount, commissionAmount, transactionType, transactionDescription, true);
         }
 
         public void AddMoneyToUser(string userId, double amount)
@@ -74,6 +63,35 @@ namespace TeachMe.Services.UserCasheSupport
                 throw new ArgumentOutOfRangeException(nameof(amount), amount, "Значение должно быть больше 0");
 
             AddAmountToUserCash(userId, -amount, UserCashMemberType.Frozen, (cash, newAmount) => newAmount >= 0);
+        }
+
+        private void TransferMoneyFromUserToUserInternal(string sourceUserId, string recipientUserId, double amount, double commissionAmount, TransactionType transactionType, string transactionDescription, bool reverted)
+        {
+            if (0 >= amount)
+                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Значение должно быть больше 0");
+
+            if (0 >= commissionAmount || commissionAmount >= amount)
+                throw new ArgumentOutOfRangeException(nameof(commissionAmount), commissionAmount, $"Значение должно быть больше 0 и меньше {nameof(amount)}={amount}");
+
+            var transactionBuilder = TransactionBuilder.With(transactionType)
+                                                .SetText(transactionDescription)
+                                                .AddPart(TransactionPartType.Credit, amount, new TransactionAccount { UserId = sourceUserId })
+                                                .AddPart(TransactionPartType.Commission, commissionAmount)
+                                                .AddPart(TransactionPartType.Debit, amount - commissionAmount, new TransactionAccount { UserId = recipientUserId });
+
+            if (reverted)
+            {
+                transactionBuilder = transactionBuilder.Revert();
+                AddAmountToUserCash(recipientUserId, -(amount - commissionAmount), UserCashMemberType.Physical, (cash, newAmount) => newAmount >= 0);
+                AddAmountToUserCash(sourceUserId, amount, UserCashMemberType.Physical);
+            }
+            else
+            {
+                AddAmountToUserCash(sourceUserId, -amount, UserCashMemberType.Physical, (cash, newAmount) => newAmount >= 0);
+                AddAmountToUserCash(recipientUserId, amount - commissionAmount, UserCashMemberType.Physical);
+            }
+
+            transactionRepository.Write(transactionBuilder.Build());
         }
 
         private void AddAmountToUserCash(string userId, double amount, UserCashMemberType cashMemberType, Func<Models.Users.UserCash, double, bool> isValidCashNewAmount = null)

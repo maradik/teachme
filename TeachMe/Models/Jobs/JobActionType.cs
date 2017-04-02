@@ -32,6 +32,12 @@
         [HumanAnnotation("Не отменять")]
         RejectAbort = 9,
 
+        [HumanAnnotation("Проверить результат")]
+        ReserveRemainAmount = 10,
+
+        [HumanAnnotation("Принять работу (без оплаты остатка)")]
+        AcceptWithoutRemainAmount = 11,
+
         [HumanAnnotation("Изменить")]
         Edit = 100,
 

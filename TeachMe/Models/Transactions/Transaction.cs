@@ -11,6 +11,7 @@ namespace TeachMe.Models.Transactions
         public TransactionType Type { get; set; }
         public double Amount { get; set; }
         public string Text { get; set; }
+        public bool Reverted { get; set; }
         public long CreationTicks { get; set; }
     }
 }

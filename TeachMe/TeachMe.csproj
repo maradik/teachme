@@ -251,9 +251,12 @@
     <Compile Include="Extensions\ApplicationUserExtenstions.cs" />
     <Compile Include="Extensions\PayoutExtensions.cs" />
     <Compile Include="Helpers\Payments\Robokassa\RobokassaPaymentHelper.cs" />
+    <Compile Include="Models\Jobs\JobPaymentState.cs" />
     <Compile Include="Models\Payouts\Payout.cs" />
     <Compile Include="Models\Payouts\PayoutRecipient.cs" />
     <Compile Include="Models\Payouts\PayoutStatus.cs" />
+    <Compile Include="Services\Jobs\IJobReservingRemainAmountSpecification.cs" />
+    <Compile Include="Services\Jobs\JobReservingRemainAmountSpecification.cs" />
     <Compile Include="Services\Payouts\InvalidPayoutAmountException.cs" />
     <Compile Include="Services\Payouts\IPayoutActionService.cs" />
     <Compile Include="Services\Payouts\PayoutActionException.cs" />

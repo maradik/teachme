@@ -37,5 +37,20 @@ namespace TeachMe.Extensions
                                     .GetUserManager<ApplicationUserManager>()
                                     .FindById(job.TeacherUserId);
         }
+
+        public static double GetStudentRemainAmount(this Job job)
+        {
+            return job.StudentCost - job.StudentPrepaymentAmount;
+        }
+
+        public static double GetTeacherRemainAmount(this Job job)
+        {
+            return job.TeacherCost - job.TeacherPrepaymentAmount;
+        }
+
+        public static double GetRemainCommission(this Job job)
+        {
+            return job.Commission - job.PrepaymentCommission;
+        }
     }
 }

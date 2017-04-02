@@ -30,18 +30,29 @@ namespace TeachMe.Models.Jobs
         [Display(Name = "Статус")]
         public JobStatus Status { get; set; }
 
+        public JobPaymentState PaymentState { get; set; }
+
         [Display(Name = "Стоимость")]
         [Range(MinCost, MaxCost, ErrorMessage = "Значение поля {0} должно быть не менее {1}")]
         public double StudentCost { get; set; }
 
+        [Display(Name = "Предоплата")]
+        public double StudentPrepaymentAmount { get; set; }
+
         [Display(Name = "Стоимость")]
         public double TeacherCost => StudentCost - Commission;
+
+        [Display(Name = "Предоплата")]
+        public double TeacherPrepaymentAmount => StudentPrepaymentAmount - PrepaymentCommission;
 
         [Display(Name = "Ставка комиссии")]
         public double CommissionRate { get; set; }
 
         [Display(Name = "Комиссия")]
-        public double Commission => Math.Round(StudentCost*CommissionRate);
+        public double Commission => Math.Round(StudentCost * CommissionRate);
+
+        [Display(Name = "Комиссия по предоплате")]
+        public double PrepaymentCommission => Math.Round(StudentPrepaymentAmount * CommissionRate);
 
         [DisplayName("Фото, документы")]
         public List<JobAttachment> Attachments { get { return attachments ?? (attachments = new List<JobAttachment>()); } set { attachments = value; } }
