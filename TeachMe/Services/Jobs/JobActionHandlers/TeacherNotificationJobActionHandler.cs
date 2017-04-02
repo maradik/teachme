@@ -22,6 +22,9 @@ namespace TeachMe.Services.Jobs.JobActionHandlers
 
             switch (actionType)
             {
+                case JobActionType.AcceptWithoutRemainAmount:
+                    NotificateUser(job.GetTeacherUser(), $"Поступила оплата за задачу {(int)job.TeacherPrepaymentAmount} руб.");
+                    break;
                 case JobActionType.Accept:
                     NotificateUser(job.GetTeacherUser(), $"Поступила оплата за задачу {(int)job.TeacherCost} руб.");
                     break;
