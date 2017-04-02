@@ -63,6 +63,14 @@ namespace TeachMe.Areas.Student.Controllers
         public ActionResult Details(Guid id)
         {
             var job = jobRepository.GetByIdAndStudentUserId(id, ApplicationUser.Id);
+
+            if (job.Status == JobStatus.FinishedWithRemainAmountNeeded && 
+                jobActionService.GetAvailableActions(job, ApplicationUser).Contains(JobActionType.ReserveRemainAmount))
+            {
+                jobActionService.DoAction(job.Id, JobActionType.ReserveRemainAmount, ApplicationUser);
+                return RedirectToAction(nameof(Details), new {id});
+            }
+
             return View(new JobDetailsViewModel
             {
                 Job = job,

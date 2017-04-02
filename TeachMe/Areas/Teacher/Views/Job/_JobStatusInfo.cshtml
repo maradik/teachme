@@ -1,0 +1,12 @@
+﻿@using TeachMe.Extensions
+@using TeachMe.Helpers.Settings
+@using TeachMe.Models.Jobs
+@using TeachMe.Services.Jobs
+@model Job
+
+@if (Model.Status == JobStatus.FinishedWithRemainAmountNeeded || Model.Status == JobStatus.Finished)
+{
+    <div class="alert alert-info">
+        <span class="glyphicon glyphicon-info-sign"></span> Заказчик проверяет результат работы.
+    </div>
+}

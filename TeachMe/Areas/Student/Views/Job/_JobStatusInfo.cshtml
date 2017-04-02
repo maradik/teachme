@@ -1,4 +1,5 @@
 ﻿@using TeachMe.Extensions
+@using TeachMe.Helpers.Settings
 @using TeachMe.Models.Jobs
 @using TeachMe.Services.Jobs
 @model Job
@@ -10,10 +11,10 @@
         <div class="alert alert-warning">
             <div>
                 <span class="glyphicon glyphicon-warning-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и недоступна для выполнения. <br />
-                @Html.ActionLink("Пополните баланс", "Index", "Manage", new { area = "" }, null) на @(Model.StudentCost - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
+                @Html.ActionLink("Пополните баланс", "Index", "Manage", new { area = "" }, null) на @(ApplicationSettings.JobMinPrepaymentAmount - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете опубликовать задачу.
             </div>
             <div style="border-top: 1px solid; margin-top: 5px; padding-top: 5px;">
-                <small>* Если по какой-то причине задача не будет решена или решение будет некачественным, вы можете вернуть свои деньги.</small>
+                <small>* Если по какой-то причине задача не будет решена или решение будет некачественным, деньги вернутся на ваш счет.</small>
             </div>
         </div>
     }
@@ -32,4 +33,20 @@
         <span class="glyphicon glyphicon-info-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и ожидает исполнителя. <br />
         Если задача не может найти исполнителя - попробуйте повысить стоимость.
     </div>
+}
+
+@if (Model.Status == JobStatus.FinishedWithRemainAmountNeeded)
+{
+    if (!JobReservingRemainAmountSpecification.Instance.IsSatisfiedBy(Model))
+    {
+        <div class="alert alert-warning">
+            <div>
+                <span class="glyphicon glyphicon-warning-sign"></span> Задача в статусе <span style="font-weight: bold;">@Model.Status.GetHumanAnnotation()</span> и требует гарантий оплаты. <br />
+                Для этого @Html.ActionLink("пополните баланс", "Index", "Manage", new { area = "" }, null) на оставшуюся сумму @(Model.GetStudentRemainAmount() - ViewBag.ApplicationUser.Cash.AvailableAmount) руб. и сможете проверить решение.
+            </div>
+            <div style="border-top: 1px solid; margin-top: 5px; padding-top: 5px;">
+                <small>* Если по какой-то причине решение окажется некачественным, деньги вернутся на ваш счет.</small>
+            </div>
+        </div>
+    }
 }

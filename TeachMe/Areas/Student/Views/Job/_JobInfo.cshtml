@@ -19,6 +19,17 @@
     <dd>
         <span class="label label-danger">@Html.DisplayFor(model => model.StudentCost) руб.</span>
     </dd>
+    
+    @if (Model.StudentPrepaymentAmount > 0)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentPrepaymentAmount)
+        </dt>
+
+        <dd>
+            <span class="label label-danger">@Html.DisplayFor(model => model.StudentPrepaymentAmount) руб.</span>
+        </dd>
+    }
 
     <dt>
         @Html.DisplayNameFor(model => model.Status)

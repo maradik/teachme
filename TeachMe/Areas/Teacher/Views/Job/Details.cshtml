@@ -6,6 +6,8 @@
 
 <h2>Задача: @Model.Job.Title</h2>
 
+@Html.Partial("_JobStatusInfo", Model.Job)
+
 <div>
     @Html.Partial("_JobActions", Tuple.Create(Model.Job.Id, Model.JobAvailableActions))
 </div>

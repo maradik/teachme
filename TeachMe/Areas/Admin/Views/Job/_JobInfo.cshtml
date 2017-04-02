@@ -20,6 +20,17 @@
         <span class="label label-danger">@Html.DisplayFor(model => model.StudentCost) руб.</span>
     </dd>
 
+    @if (Model.StudentPrepaymentAmount > 0)
+    {
+        <dt>
+            Предоплата (Заказчик)
+        </dt>
+
+        <dd>
+            <span class="label label-danger">@Html.DisplayFor(model => model.StudentPrepaymentAmount) руб.</span>
+        </dd>
+    }
+
     <dt>
         Стоимость (Исполнитель)
     </dt>
@@ -27,6 +38,17 @@
     <dd>
         <span class="label label-danger">@Html.DisplayFor(model => model.TeacherCost) руб.</span>
     </dd>
+
+    @if (Model.TeacherPrepaymentAmount > 0)
+    {
+        <dt>
+            Предоплата (Исполнитель)
+        </dt>
+
+        <dd>
+            <span class="label label-danger">@Html.DisplayFor(model => model.TeacherPrepaymentAmount) руб.</span>
+        </dd>
+    }
 
     <dt>
         @Html.DisplayNameFor(model => model.Status)

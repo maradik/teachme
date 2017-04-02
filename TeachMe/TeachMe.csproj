@@ -524,6 +524,7 @@
     <Content Include="Views\JobChat\_GetMessages.cshtml" />
     <Content Include="Areas\Student\Views\Article\ReshenieZadach.cshtml" />
     <Content Include="Areas\Student\Views\Shared\_Gift.cshtml" />
+    <Content Include="Areas\Teacher\Views\Job\_JobStatusInfo.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
