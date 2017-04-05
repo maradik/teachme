@@ -29,7 +29,8 @@
     </div>
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
+            watchForJobStatus("@Model.Job.Id.ToString()", @((int)Model.Job.Status), ProjectAreas.Admin);
             autoLoadNewMessages();
         });
     </script>

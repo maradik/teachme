@@ -96,5 +96,11 @@ namespace TeachMe.Areas.Admin.Controllers
 
             return Json(new JobActionResult { RedirectUrl = updatedJob == null ? Url.Action(nameof(Index)) : "" });
         }
+
+        public ActionResult _GetStatus(Guid id)
+        {
+            var job = jobRepository.Get(id);
+            return Json((int)job.Status, JsonRequestBehavior.AllowGet);
+        }
     }
 }

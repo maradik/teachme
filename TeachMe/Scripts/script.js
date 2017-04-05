@@ -194,6 +194,40 @@ var initJobActionDropdownLoader = function (projectArea) {
     });
 };
 
+var watchForJobStatus = function(jobId, originStatus, projectArea) {
+    var oldStatus = originStatus;
+
+    var checkForNewJobStatus = function() {
+        $.ajax(
+            "/" + projectArea + "Job/_GetStatus?id=" + jobId,
+            {
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(newStatus) {
+                    if (oldStatus != newStatus) {
+                        oldStatus = newStatus;
+                        if (confirm("Состояние задачи изменилось. Обновить страницу?")) {
+                            location.reload(true);
+                        }
+                    }
+                },
+                
+            }
+        ).always(function() {
+            setTimeout(function () {
+                checkForNewJobStatus();
+            },
+            60000);
+        });
+    };
+
+    setTimeout(function () {
+        checkForNewJobStatus();
+    },
+    60000);
+};
+
 var ProjectAreas = {
     Root: "",
     Teacher: "Teacher/",

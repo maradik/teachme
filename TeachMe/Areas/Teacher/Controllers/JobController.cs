@@ -138,5 +138,11 @@ namespace TeachMe.Areas.Teacher.Controllers
             var availableActions = jobActionService.GetAvailableActions(job, ApplicationUser);
             return Json(availableActions.Select(x => new { Value = (int)x, Text = x.GetHumanAnnotation() }), JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult _GetStatus(Guid id)
+        {
+            var job = jobRepository.GetByIdAndTeacherUserId(id, ApplicationUser.Id);
+            return Json((int)job.Status, JsonRequestBehavior.AllowGet);
+        }
     }
 }
