@@ -13,6 +13,7 @@ using TeachMe.Extensions;
 using TeachMe.Models.Jobs;
 using TeachMe.ProjectsSupport;
 using TeachMe.Services.General;
+using TeachMe.ViewModels.JobChat;
 
 namespace TeachMe.Controllers
 {
@@ -61,7 +62,7 @@ namespace TeachMe.Controllers
         public PartialViewResult _GetMessages(Guid jobId, long afterTicks = 0)
         {
             AssertUserHasAccessToJobChat(jobId);
-            var messages = jobMessageRepository.GetAllByJobIdCreatedAfter(jobId, afterTicks).OrderBy(x => x.CreationTicks).ToArray();
+            var messages = jobMessageRepository.GetAllByJobIdCreatedAfter(jobId, afterTicks).OrderBy(x => x.CreationTicks).Select(x => new JobMessageViewModel(x)).ToArray();
             return PartialView(messages);
         }
 

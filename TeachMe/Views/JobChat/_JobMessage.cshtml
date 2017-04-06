@@ -1,6 +1,7 @@
 ﻿@using TeachMe.Extensions
 @using TeachMe.Models.Jobs
-@model JobMessage
+@using TeachMe.ViewModels.JobChat
+@model JobMessageViewModel
 
 @{
     var isCurrentUserAuthor = Model.UserId == (string)ViewBag.ApplicationUser?.Id;
@@ -31,9 +32,7 @@
                 {
                     <div class="col-xs-4 col-sm-3">
                         <div style="margin: 10px 0 10px 0;">
-                            <a href="~/Uploads/@attachment.FileName?width=1280" class="gallery-item" data-gallery="@("jobcomment" + Model.Id)">
-                                <img src="~/Uploads/@attachment.FileName?width=200" title="@attachment.OriginFileName" style="max-width: 100%;" />
-                            </a>
+                            @attachment.GetHtml(Html)
                         </div>
                     </div>
                 }
@@ -43,7 +42,7 @@
                 {
                     <div class="col-xs-12">
                         <div style="margin: 10px 0 10px 0;">
-                            @Html.ActionLink($"Скачать {attachment.OriginFileName}", "DownloadAttachment", "JobChat", new {area = "", messageId = Model.Id, attachmentId = attachment.Id}, new {title = $"Скачать {attachment.OriginFileName}"})
+                            @attachment.GetHtml(Html)
                         </div>
                     </div>
                 }

@@ -251,6 +251,7 @@
     <Compile Include="Extensions\ApplicationUserExtenstions.cs" />
     <Compile Include="Extensions\PayoutExtensions.cs" />
     <Compile Include="Helpers\Payments\Robokassa\RobokassaPaymentHelper.cs" />
+    <Compile Include="Models\IWithUserId.cs" />
     <Compile Include="Models\Jobs\JobPaymentState.cs" />
     <Compile Include="Models\Payouts\Payout.cs" />
     <Compile Include="Models\Payouts\PayoutRecipient.cs" />
@@ -261,6 +262,8 @@
     <Compile Include="Services\Payouts\IPayoutActionService.cs" />
     <Compile Include="Services\Payouts\PayoutActionException.cs" />
     <Compile Include="Services\Payouts\PayoutActionService.cs" />
+    <Compile Include="ViewModels\JobChat\JobMessageAttachmentViewModel.cs" />
+    <Compile Include="ViewModels\JobChat\JobMessageViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobActionResult.cs" />
     <Compile Include="Areas\Teacher\Controllers\JobController.cs" />
     <Compile Include="Areas\Teacher\Controllers\TeacherControllerBase.cs" />
@@ -309,7 +312,7 @@
     <Compile Include="DataAccess\Transactions\TransactionRepositoryParameters.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\JobExtensions.cs" />
-    <Compile Include="Extensions\JobMessageExtensions.cs" />
+    <Compile Include="Extensions\EntityWithUserIdExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

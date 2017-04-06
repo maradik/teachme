@@ -4,7 +4,7 @@ using TeachMe.Models.Users;
 
 namespace TeachMe.Models.Jobs
 {
-    public class JobMessage : IEntity<Guid>
+    public class JobMessage : IEntity<Guid>, IWithUserId
     {
         private JobAttachment[] attachments;
 
