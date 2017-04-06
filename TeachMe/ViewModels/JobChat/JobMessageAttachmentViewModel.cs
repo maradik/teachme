@@ -5,7 +5,7 @@ using TeachMe.Models.Jobs;
 
 namespace TeachMe.ViewModels.JobChat
 {
-    public class JobMessageAttachmentViewModel
+    public class JobMessageAttachmentViewModel : IJobMessageAttachmentViewModel
     {
         public JobMessageAttachmentViewModel(JobAttachment entity, Guid messageId)
         {

@@ -28,6 +28,7 @@ namespace TeachMe.Controllers
         private readonly IUploadedFileConverter uploadedFileConverter;
         private readonly IJobAttachmentConverter attachmentConverter;
         private readonly IUploadedFileRepository uploadedFileRepository;
+        private readonly IJobMessageViewModelFactory jobMessageViewModelFactory;
 
         public JobChatController(IProjectTypeProvider projectTypeProvider,
                                  IProjectInfoProvider projectInfoProvider,
@@ -35,7 +36,8 @@ namespace TeachMe.Controllers
                                  IJobMessageRepository jobMessageRepository,
                                  IUploadedFileConverter uploadedFileConverter,
                                  IJobAttachmentConverter attachmentConverter,
-                                 IUploadedFileRepository uploadedFileRepository)
+                                 IUploadedFileRepository uploadedFileRepository,
+                                 IJobMessageViewModelFactory jobMessageViewModelFactory)
             : base(projectTypeProvider, projectInfoProvider)
         {
             this.jobRepository = jobRepository;
@@ -43,6 +45,7 @@ namespace TeachMe.Controllers
             this.uploadedFileConverter = uploadedFileConverter;
             this.attachmentConverter = attachmentConverter;
             this.uploadedFileRepository = uploadedFileRepository;
+            this.jobMessageViewModelFactory = jobMessageViewModelFactory;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -62,7 +65,10 @@ namespace TeachMe.Controllers
         public PartialViewResult _GetMessages(Guid jobId, long afterTicks = 0)
         {
             AssertUserHasAccessToJobChat(jobId);
-            var messages = jobMessageRepository.GetAllByJobIdCreatedAfter(jobId, afterTicks).OrderBy(x => x.CreationTicks).Select(x => new JobMessageViewModel(x)).ToArray();
+            var messages = jobMessageRepository.GetAllByJobIdCreatedAfter(jobId, afterTicks)
+                .OrderBy(x => x.CreationTicks)
+                .Select(x => jobMessageViewModelFactory.Create(x, ApplicationUser))
+                .ToArray();
             return PartialView(messages);
         }
 
