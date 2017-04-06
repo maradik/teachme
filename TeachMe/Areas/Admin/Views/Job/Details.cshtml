@@ -19,6 +19,12 @@
     @Html.ActionLink("Назад к списку", "Index")
 </p>
 
+<script type="text/javascript">
+        $(function () {
+            watchForJobStatus("@Model.Job.Id.ToString()", @((int)Model.Job.Status), ProjectAreas.Admin);
+        });
+</script>
+
 @if (Model.ChatIsVisible)
 {
     <h3>Обсуждение</h3>
@@ -30,7 +36,6 @@
 
     <script type="text/javascript">
         $(function () {
-            watchForJobStatus("@Model.Job.Id.ToString()", @((int)Model.Job.Status), ProjectAreas.Admin);
             autoLoadNewMessages();
         });
     </script>
