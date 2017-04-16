@@ -228,6 +228,14 @@ var watchForJobStatus = function(jobId, originStatus, projectArea) {
     60000);
 };
 
+var showLoader = function () {
+    $("#loader").css("width", "100%");
+};
+
+var hideLoader = function () {
+    $("#loader").css("width", "0");
+};
+
 var ProjectAreas = {
     Root: "",
     Teacher: "Teacher/",
@@ -246,4 +254,9 @@ $(function () {
     });
 
     touchImages();
+
+    $("[data-showloader]").click(function () {
+        showLoader();
+        return true;
+    });
 });

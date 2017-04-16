@@ -42,9 +42,10 @@
 }
 
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         var form = $("form#createMessageForm:first");
         var submitCreateMessageForm = function(event) {
+            showLoader();
             event.preventDefault();
             var formData = new FormData(form[0]);
             $.ajax({
@@ -61,6 +62,8 @@
                     $("#newJobMessageContainer").html(data);
                 },
                 error: function() {}
+            }).always(function () {
+                hideLoader();
             });
         }
         form.submit(submitCreateMessageForm);
