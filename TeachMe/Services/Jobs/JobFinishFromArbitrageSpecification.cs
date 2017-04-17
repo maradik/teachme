@@ -11,7 +11,7 @@ namespace TeachMe.Services.Jobs
 
         public bool IsSatisfiedBy(Job job)
         {
-            return !job.PaymentState.HasFlag(JobPaymentState.RemainReserved);
+            return job.GetStudentRemainAmount() > 0 && !job.PaymentState.HasFlag(JobPaymentState.RemainReserved);
         }
     }
 }
