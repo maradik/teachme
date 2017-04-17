@@ -52,7 +52,8 @@ namespace TeachMe.Services.Jobs
             Tuple.Create(JobStatus.FinishedWithRemainAmountNeeded, new JobActionByUserRole(JobActionType.ReserveRemainAmount, new [] {UserRole.Student, UserRole.Admin}, new ISpecification<Job>[] {JobReservingRemainAmountSpecification.Instance})),
             Tuple.Create(JobStatus.FinishedWithRemainAmountNeeded, new JobActionByUserRole(JobActionType.AcceptWithoutRemainAmount, UserRole.Admin)),
             Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.Accept, UserRole.Admin)),
-            Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Admin))
+            Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.ConfirmAbort, UserRole.Admin)),
+            Tuple.Create(JobStatus.InArbitrage, new JobActionByUserRole(JobActionType.Finish, UserRole.Admin, new ISpecification<Job>[] {JobFinishFromArbitrageSpecification.Instance}))
         }.ToLookup(x => x.Item1, x => x.Item2);
 
         public JobActionType[] GetAvailableActions(Job job, ApplicationUser user)
