@@ -39,13 +39,17 @@
             <td>
                 @if (!string.IsNullOrEmpty(item.StudentUserId))
                 {
-                    <span class="label label-info">@Html.DisplayFor(modelItem => item.GetStudentUser().UserName)</span>
+                    var studentUser = item.GetStudentUser();
+                    <span class="label label-info">@Html.DisplayFor(modelItem => studentUser.UserName)</span><br />
+                    <span class="label label-warning">@Html.DisplayFor(modelItem => studentUser.PhoneNumber)</span>
                 }
             </td>
             <td>
                 @if (!string.IsNullOrEmpty(item.TeacherUserId))
                 {
-                    <span class="label label-info">@Html.DisplayFor(modelItem => item.GetTeacherUser().UserName)</span>
+                    var teacherUser = item.GetTeacherUser();
+                    <span class="label label-info">@Html.DisplayFor(modelItem => teacherUser.UserName)</span><br />
+                    <span class="label label-warning">@Html.DisplayFor(modelItem => teacherUser.PhoneNumber)</span>
                 }
             </td>
         </tr>

@@ -54,6 +54,21 @@
         @Html.DisplayNameFor(model => model.Status)
     </dt>
 
+    <dt>
+        Состояние оплаты
+    </dt>
+
+    <dd>
+        @if (Model.PaymentState.HasFlag(JobPaymentState.RemainReserved))
+        {
+            <span class="label label-success">100% оплата</span>
+        }
+        else
+        {
+            <span class="label label-warning">предоплата</span>
+        }
+    </dd>
+
     <dd>
         @{
             var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
@@ -68,7 +83,9 @@
         </dt>
 
         <dd>
-            <span class="label label-info">@Model.GetStudentUser().UserName</span>
+            @{ var studentUser = Model.GetStudentUser(); }
+            <span class="label label-info">@studentUser.UserName</span>
+            <span class="label label-warning">@studentUser.PhoneNumber</span>
         </dd>
     }    
 
@@ -79,7 +96,9 @@
         </dt>
 
         <dd>
-            <span class="label label-info">@Model.GetTeacherUser().UserName</span>
+            @{ var teacherUser = Model.GetTeacherUser(); }
+            <span class="label label-info">@teacherUser.UserName</span>
+            <span class="label label-warning">@teacherUser.PhoneNumber</span>
         </dd>
     }
 
