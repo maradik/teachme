@@ -260,6 +260,7 @@
     <Compile Include="Services\JobChat\JobMessageAttachmentAccessService.cs" />
     <Compile Include="Services\Jobs\IJobFinishFromArbitrageSpecification.cs" />
     <Compile Include="Services\Jobs\IJobReservingRemainAmountSpecification.cs" />
+    <Compile Include="Services\Jobs\JobActionHandlers\JobMessageCreationOnActionHandler.cs" />
     <Compile Include="Services\Jobs\JobFinishFromArbitrageSpecification.cs" />
     <Compile Include="Services\Jobs\JobReservingRemainAmountSpecification.cs" />
     <Compile Include="Services\Payouts\InvalidPayoutAmountException.cs" />
