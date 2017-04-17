@@ -10,7 +10,7 @@
 <div>
     @foreach (var actionType in actionTypes)
     {
-        <button class="btn btn-primary" data-jobId="@jobId" data-jobactiontype="@((int) actionType)" @Html.Raw( actionType == JobActionType.Delete ? "data-jobactionconfirmation='Удалить задачу?'" : "")>@actionType.GetHumanAnnotation()</button>
+        <button class="btn btn-primary" data-showloader="true" data-jobId="@jobId" data-jobactiontype="@((int) actionType)" @Html.Raw( actionType == JobActionType.Delete ? "data-jobactionconfirmation='Удалить задачу?'" : "")>@actionType.GetHumanAnnotation()</button>
     }
 </div>
 

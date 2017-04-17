@@ -169,6 +169,7 @@ var initJobActionDropdownLoader = function (projectArea) {
                                 actionElement.text(jobAction.Text);
                                 actionElement.attr("data-jobactiontype", jobAction.Value);
                                 actionElement.attr("data-jobid", jobId);
+                                actionElement.attr("data-showloader", true);
                                 if (jobAction.Value == 101 /*delete*/) {
                                     actionElement.attr("data-jobactionconfirmation", 'Удалить задачу?');
                                 }
