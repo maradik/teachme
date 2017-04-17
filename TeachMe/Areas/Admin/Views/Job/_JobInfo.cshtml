@@ -54,6 +54,13 @@
         @Html.DisplayNameFor(model => model.Status)
     </dt>
 
+    <dd>
+        @{
+            var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
+        }        
+        <span class="label @(successJobStatuses.Contains(Model.Status) ? "label-success" : "label-warning")">@Model.Status.GetHumanAnnotation()</span>
+    </dd>
+
     <dt>
         Состояние оплаты
     </dt>
@@ -69,13 +76,6 @@
         }
     </dd>
 
-    <dd>
-        @{
-            var successJobStatuses = new[] { JobStatus.Finished, JobStatus.Accepted };
-        }        
-        <span class="label @(successJobStatuses.Contains(Model.Status) ? "label-success" : "label-warning")">@Model.Status.GetHumanAnnotation()</span>
-    </dd>
-    
     @if (!string.IsNullOrEmpty(Model.StudentUserId))
     {
         <dt>
